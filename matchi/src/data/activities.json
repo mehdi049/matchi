@@ -1,0 +1,26 @@
+[
+  {
+    "value": "Paddel",
+    "label": "Paddel"
+  },
+  {
+    "value": "Football",
+    "label": "Football"
+  },
+  {
+    "value": "Basket",
+    "label": "Basket"
+  },
+  {
+    "value": "Tenis",
+    "label": "Tenis"
+  },
+  {
+    "value": "vélo",
+    "label": "Sortie en vélo"
+  },
+  {
+    "value": "moto",
+    "label": "Sortie en moto"
+  }
+]
