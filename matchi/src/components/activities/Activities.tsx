@@ -2,7 +2,7 @@
 
 import { Link } from '@nextui-org/react'
 import H1 from '../typography/H1'
-import Activity from './ActivitiyCard'
+import ActivityCard from './ActivitiyCard'
 import InfoMessage from '../message/InfoMessage'
 import H3 from '../typography/H3'
 
@@ -33,7 +33,7 @@ export default function Activities({ activityName, city }: ActivitiesProps) {
 
           {randomNumber > 0 && (
             <Link
-              href={'/activity/' + activityName?.toLowerCase() + '/tunis'}
+              href={'/activities/' + activityName?.toLowerCase() + '/tunis'}
               underline="hover"
               color="primary"
             >
@@ -49,7 +49,7 @@ export default function Activities({ activityName, city }: ActivitiesProps) {
         ) : (
           <div className="flex flex-wrap gap-4 mt-4">
             {[...Array(randomNumber).keys()].map((x, key) => {
-              return <Activity key={key} />
+              return <ActivityCard key={key} />
             })}
           </div>
         )}
