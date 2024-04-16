@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
-import ActivitySidebar from '@/components/activities/ActivitySidebar'
 import SidebarMember from '@/components/memberSidebar/Sidebar'
 
 export const metadata: Metadata = {

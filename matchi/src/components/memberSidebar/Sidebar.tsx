@@ -1,40 +1,77 @@
 'use client'
 
 import React from 'react'
-import { Listbox, ListboxItem } from '@nextui-org/react'
+import { Badge, Chip, Listbox, ListboxItem } from '@nextui-org/react'
 import FontAwesome from '../fontAwesome/FontAwesome'
-import { faEdge } from '@fortawesome/free-brands-svg-icons'
+import {
+  faAddressBook,
+  faBell,
+  faHeart,
+  faMessage,
+  faUser,
+} from '@fortawesome/free-regular-svg-icons'
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 
 export default function SidebarMember() {
   return (
     <Listbox
+      variant="flat"
       aria-label="User Menu"
       onAction={(key) => alert(key)}
-      className="p-0 gap-0 divide-y divide-default-300/50 dark:divide-default-100/80 bg-content1 max-w-[300px] overflow-visible shadow-small rounded-medium"
+      className="bg-content1 max-w-[300px] overflow-visible shadow-small rounded-medium hidden md:block"
       itemClasses={{
-        base: 'px-3 first:rounded-t-medium last:rounded-b-medium rounded-none gap-3 h-12 data-[hover=true]:bg-default-100/80',
+        base: 'px-3 rounded-none gap-3 h-12 data-[hover=true]:bg-default-200/80',
       }}
     >
-      <ListboxItem key="issues" startContent={<FontAwesome icon={faEdge} />}>
-        Issues
+      <ListboxItem key="profil" startContent={<FontAwesome icon={faUser} />}>
+        Mon profil
       </ListboxItem>
       <ListboxItem
-        key="pull_requests"
-        startContent={<FontAwesome icon={faEdge} />}
+        key="my-account"
+        showDivider
+        startContent={<FontAwesome icon={faAddressBook} />}
       >
-        Pull Requests
+        Mon compte
+      </ListboxItem>
+
+      <ListboxItem
+        key="my-activities"
+        startContent={<FontAwesome icon={faHeart} />}
+      >
+        Mes activités
+      </ListboxItem>
+
+      <ListboxItem
+        key="messages"
+        startContent={<FontAwesome icon={faMessage} />}
+        endContent={
+          <Chip size="sm" variant="flat" color="secondary">
+            6
+          </Chip>
+        }
+      >
+        Messages
       </ListboxItem>
       <ListboxItem
-        key="discussions"
-        startContent={<FontAwesome icon={faEdge} />}
+        key="notifications"
+        showDivider
+        startContent={<FontAwesome icon={faBell} />}
+        endContent={
+          <Chip size="sm" variant="flat" color="secondary">
+            12
+          </Chip>
+        }
       >
-        Discussions
+        Notifications
       </ListboxItem>
-      <ListboxItem key="actions" startContent={<FontAwesome icon={faEdge} />}>
-        Actions
-      </ListboxItem>
-      <ListboxItem key="projects" startContent={<FontAwesome icon={faEdge} />}>
-        Projects
+
+      <ListboxItem
+        key="logout"
+        className="text-danger"
+        color="danger"
+        startContent={<FontAwesome icon={faArrowRightFromBracket} />}
+      >
+        Me déconnecter
       </ListboxItem>
     </Listbox>
   )
