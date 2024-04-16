@@ -37,7 +37,7 @@ export default function ActivityCard({ activity }: ActivityProps) {
         router.push('/activity/1')
       }}
     >
-      <Card className="py-4 w-full md:w-[300px] cursor-pointer">
+      <Card className="py-4 cursor-pointer grow">
         <CardHeader className="flex-col items-start">
           <div className="flex w-full justify-between gap-2">
             <div className="flex gap-5">
@@ -68,12 +68,11 @@ export default function ActivityCard({ activity }: ActivityProps) {
         <CardBody className="overflow-visible py-2">
           <Image
             alt="Card background"
-            className="object-cover rounded-xl"
+            className="object-cover rounded-xl w-full sm:max-w-sm"
             src={'/placeholder/' + imageOptions[randomNumber]}
-            width={270}
           />
         </CardBody>
-        <CardFooter className="gap-3 flex justify-between gap-2">
+        <CardFooter className="flex justify-between gap-2">
           <div className="flex gap-1">
             <p className="font-semibold text-default-400 text-small">4/12</p>
             <p className=" text-default-400 text-small">Participant(s)</p>

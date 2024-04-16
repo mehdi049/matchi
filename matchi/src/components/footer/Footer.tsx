@@ -9,8 +9,8 @@ import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons'
 export default function Footer() {
   return (
     <footer className="bg-black py-8 mt-8">
-      <Container className="flex flex-wrap flex-col gap-8">
-        <div className="flex gap-4 justify-between">
+      <Container className="flex flex-wrap flex-col gap-4 sm:gap-8">
+        <div className="flex flex-wrap gap-4 justify-between">
           <div className="flex flex-col gap-3">
             <H3 className="text-white">Mon compte</H3>
             <Link className="text-gray-300 text-sm" href="#">
@@ -51,7 +51,7 @@ export default function Footer() {
           </div>
         </div>
         <Divider className="bg-gray-700" orientation="horizontal" />
-        <div className="flex gap-8">
+        <div className="flex flex-wrap gap-4 sm:gap-8">
           <p className="text-center text-gray-300">©2024 Matchi</p>
           <Link className="text-gray-300 text-sm" href="#">
             Politique de confidentialité

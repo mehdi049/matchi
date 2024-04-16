@@ -5,8 +5,13 @@ import FontAwesome from '../fontAwesome/FontAwesome'
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import InputPassword from '../input/InputPassword'
+import { useRouter } from 'next/navigation'
 
 export default function LoginForm() {
+  const router = useRouter()
+  const handleLogin = () => {
+    router.push('/member/complete')
+  }
   return (
     <>
       <form className="mb-4 flex flex-col gap-4">
@@ -20,7 +25,7 @@ export default function LoginForm() {
         <Link href="#" size="sm" color="danger">
           Mot de passe oublié ?
         </Link>
-        <Button color="primary" size="md">
+        <Button color="primary" size="md" onClick={() => handleLogin()}>
           Confirmer
         </Button>
       </form>

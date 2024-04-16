@@ -11,7 +11,7 @@ export default function ActivitySidebar() {
   }
   const randomNumber = getRandomInt(8)
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full md:max-w-sm">
       <CardBody>
         <H2>Activités similaires</H2>
         <div className="mt-4 divide-y">

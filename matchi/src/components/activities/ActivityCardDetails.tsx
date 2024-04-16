@@ -39,7 +39,7 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
                 src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
               }}
               className="cursor-pointer"
-              onClick={() => router.push('/member/1')}
+              onClick={() => router.push('/profile/1')}
             />
             <div className="pl-12">
               <Chip color="primary" size="sm" variant="flat">

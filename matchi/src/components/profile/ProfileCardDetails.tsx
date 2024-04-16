@@ -1,32 +1,20 @@
 'use client'
 
-import {
-  Image,
-  User,
-  CardBody,
-  Card,
-  Chip,
-  Avatar,
-  Divider,
-  Badge,
-} from '@nextui-org/react'
+import { Image, User, CardBody, Card, Chip, Divider } from '@nextui-org/react'
 import H2 from '../typography/H2'
 import H1 from '../typography/H1'
 import { useRouter } from 'next/navigation'
-import FontAwesome from '../fontAwesome/FontAwesome'
-import { faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons'
-import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons'
-import MemberRating from './Rating'
-import MemberFeedback from './MemberFeedback'
+import ProfileRating from './Rating'
+import ProfileFeedback from './ProfileFeedback'
 
-type MemberProps = {
-  member?: unknown
+type ProfileProps = {
+  profile?: unknown
 }
-export default function MemberCardDetails({ member }: MemberProps) {
+export default function ProfileCardDetails({ profile }: ProfileProps) {
   const router = useRouter()
   return (
-    <div className="flex gap-4">
-      <Card className="w-full max-w-xs">
+    <div className="flex flex-wrap md:flex-nowrap gap-4">
+      <Card className="w-full md:max-w-xs">
         <CardBody className="flex gap-4 flex-col">
           <Image
             src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -37,7 +25,7 @@ export default function MemberCardDetails({ member }: MemberProps) {
           <p>mehdi.marouani@gmail.com</p>
           <p>33 ans</p>
           <p>Tunis, Tunisie</p>
-          <MemberRating />
+          <ProfileRating />
           <Divider />
           <p className="text-xs">Participé à 30 évenement(s)</p>
           <p className="text-xs">A rejoint Matchi en Avril 2024</p>
@@ -61,13 +49,13 @@ export default function MemberCardDetails({ member }: MemberProps) {
             </div>
           </CardBody>
         </Card>
-        <MemberFeedback />
+        <ProfileFeedback />
       </div>
 
       <Card className="w-full">
         <CardBody>
           <H2>Evenements organisés</H2>
-          <div className="mt-4 divide-y max-w-sm">
+          <div className="mt-4 divide-y">
             {[...Array(4).keys()].map((x, key) => {
               return (
                 <div
@@ -83,6 +71,7 @@ export default function MemberCardDetails({ member }: MemberProps) {
                     avatarProps={{
                       src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
                     }}
+                    className="flex md:hidden lg:flex"
                   />
                   <div>
                     <p>

@@ -47,9 +47,13 @@ export default function Activities({ activityName, city }: ActivitiesProps) {
             <p>Pas d&apos;évenements trouvés en ce moment.</p>
           </InfoMessage>
         ) : (
-          <div className="flex flex-wrap gap-4 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
             {[...Array(randomNumber).keys()].map((x, key) => {
-              return <ActivityCard key={key} />
+              return (
+                <div key={key}>
+                  <ActivityCard />
+                </div>
+              )
             })}
           </div>
         )}

@@ -17,7 +17,7 @@ import SignInMenu from './SignInMenu'
 
 export default function NavbarTop() {
   return (
-    <Navbar maxWidth="full">
+    <Navbar maxWidth="full" className="bg-white">
       <NavbarContent>
         <NavbarBrand>
           <Link href="/" className="font-bold text-inherit">
@@ -28,7 +28,7 @@ export default function NavbarTop() {
 
       <NavbarContent
         as="div"
-        className="hidden sm:flex gap-0 w-full max-w-md"
+        className="hidden md:flex gap-0 w-full max-w-md"
         justify="center"
       >
         <Select

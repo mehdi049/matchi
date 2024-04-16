@@ -1,27 +1,11 @@
 'use client'
 
-import {
-  Image,
-  User,
-  CardBody,
-  Card,
-  Chip,
-  Avatar,
-  Divider,
-  Badge,
-} from '@nextui-org/react'
+import { CardBody, Card, Avatar } from '@nextui-org/react'
 import H2 from '../typography/H2'
-import H1 from '../typography/H1'
 import { useRouter } from 'next/navigation'
-import FontAwesome from '../fontAwesome/FontAwesome'
-import { faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons'
-import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons'
 import MemberRating from './Rating'
 
-type MemberProps = {
-  member?: unknown
-}
-export default function MemberFeedback({ member }: MemberProps) {
+export default function ProfileFeedback() {
   const router = useRouter()
   return (
     <Card className="w-full mt-4">
@@ -38,7 +22,7 @@ export default function MemberFeedback({ member }: MemberProps) {
                   <Avatar
                     name="Jane Doe"
                     src="https://i.pravatar.cc/150?u=a04258114e29026702d"
-                    onClick={() => router.push('/member/2')}
+                    onClick={() => router.push('/profile/2')}
                     className="cursor-pointer"
                   />
                 </div>

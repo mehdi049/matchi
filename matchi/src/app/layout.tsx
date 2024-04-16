@@ -23,7 +23,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <NavbarTop />
-          <Container className="mt-20">{children}</Container>
+          <Container className="mt-10">{children}</Container>
           <Footer />
         </Providers>
       </body>
