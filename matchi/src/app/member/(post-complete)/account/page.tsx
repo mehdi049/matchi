@@ -31,7 +31,7 @@ export default function Page() {
           href="/member/account/password"
           as={Link}
           color="secondary"
-          variant="flat"
+          variant="ghost"
           size="sm"
           className="max-w-min"
         >
