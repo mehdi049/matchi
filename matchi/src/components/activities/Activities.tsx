@@ -37,14 +37,14 @@ export default function Activities({ activityName, city }: ActivitiesProps) {
               underline="hover"
               color="primary"
             >
-              Afficher tous les évenements
+              Afficher tous les activités
             </Link>
           )}
         </div>
 
         {randomNumber === 0 ? (
           <InfoMessage>
-            <p>Pas d&apos;évenements trouvés en ce moment.</p>
+            <p>Pas d&apos;activités trouvés en ce moment.</p>
           </InfoMessage>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">

@@ -88,7 +88,6 @@ export default function Page() {
             label="Ville"
             placeholder="Selectionnez une ville"
             size="sm"
-            radius="none"
           >
             {cities.map((city) => (
               <SelectItem key={city.value} value={city.value}>

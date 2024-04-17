@@ -16,7 +16,7 @@ export default function MemberLayout({
   config.autoAddCss = false
   return (
     <div className="flex gap-24 relative">
-      <div className="sticky top-20 w-full max-w-xs">
+      <div className="hidden md:block w-full max-w-xs">
         <SidebarMember />
       </div>
       {children}

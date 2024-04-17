@@ -11,8 +11,8 @@ import {
   SelectItem,
   Textarea,
 } from '@nextui-org/react'
-import cities from '../../../../../data/cities.json'
-import acitivities from '../../../../../data/activities.json'
+import cities from '../../../../../../data/cities.json'
+import acitivities from '../../../../../../data/activities.json'
 import H3 from '@/components/typography/H3'
 import { ACTIVITY_TYPE_OPTIONS } from '@/const'
 
@@ -20,7 +20,7 @@ export default function Page() {
   return (
     <Card className="w-full">
       <CardBody className="flex gap-4 flex-col">
-        <H2>Créer une activité</H2>
+        <H2>Modifier </H2>
 
         <form className="mb-4 flex flex-col gap-4">
           <Select

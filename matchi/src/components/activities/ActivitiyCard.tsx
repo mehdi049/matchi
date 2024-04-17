@@ -13,12 +13,21 @@ import {
 import FontAwesome from '../fontAwesome/FontAwesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/navigation'
+import ActivitiyCardFooterAttending from './ActivitiyCardFooterAttending'
+import ActivitiyCardFooterHosting from './ActivitiyCardFooterHosting'
 
 type ActivityProps = {
   activity?: unknown
+  hosting?: boolean
+  attending?: boolean
 }
-export default function ActivityCard({ activity }: ActivityProps) {
+export default function ActivityCard({
+  activity,
+  hosting,
+  attending,
+}: ActivityProps) {
   const router = useRouter()
+
   const getRandomInt = (max: number) => {
     return Math.floor(Math.random() * max)
   }
@@ -87,6 +96,9 @@ export default function ActivityCard({ activity }: ActivityProps) {
             <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
           </AvatarGroup>
         </CardFooter>
+        {hosting && <ActivitiyCardFooterHosting />}
+
+        {attending && <ActivitiyCardFooterAttending />}
       </Card>
     </div>
   )

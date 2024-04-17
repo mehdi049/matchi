@@ -27,7 +27,7 @@ export default function SidebarMember() {
       onAction={(key) =>
         key === 'logout' ? router.push('/') : router.push('/member/' + key)
       }
-      className="bg-content1 max-w-[300px] overflow-visible shadow-small rounded-medium hidden md:block"
+      className="bg-content1 max-w-[300px] overflow-visible shadow-small rounded-medium"
       itemClasses={{
         base: 'px-3 rounded-none gap-3 h-12',
       }}
