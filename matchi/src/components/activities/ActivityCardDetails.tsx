@@ -107,6 +107,10 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
           including versions of Lorem Ipsum.
         </p>
 
+        <p className="text-xs mt-4 text-gray-600">
+          Publié le Mardi, 13 Avril 2024, 19:30h
+        </p>
+
         {/* 
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4223.56264409178!2d10.289723393950128!3d36.91933002635903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12e2b5c0ffffffff%3A0x875237c923c52ac5!2sLe%20Club%20de%20Gammarth!5e0!3m2!1sen!2stn!4v1713008819192!5m2!1sen!2stn"

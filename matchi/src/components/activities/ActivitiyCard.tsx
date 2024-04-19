@@ -20,11 +20,13 @@ type ActivityProps = {
   activity?: unknown
   hosting?: boolean
   attending?: boolean
+  status?: 'pending' | 'accepted' | 'rejected'
 }
 export default function ActivityCard({
   activity,
   hosting,
   attending,
+  status,
 }: ActivityProps) {
   const router = useRouter()
 
@@ -68,9 +70,26 @@ export default function ActivityCard({
                 </h5>
               </div>
             </div>
-            <Chip color="primary" size="sm" variant="flat">
-              Padel
-            </Chip>
+            <div className="flex flex-col gap-2">
+              <Chip color="primary" size="sm" variant="flat">
+                Padel
+              </Chip>
+              {status && (
+                <>
+                  {status === 'accepted' && (
+                    <Chip color="success" size="sm" variant="flat">
+                      Accepté
+                    </Chip>
+                  )}
+                  {status === 'rejected' && (
+                    <Chip color="danger" size="sm">
+                      Rejeté
+                    </Chip>
+                  )}
+                  {status === 'pending' && <Chip size="sm">En attente</Chip>}
+                </>
+              )}
+            </div>
           </div>
           <h4 className="font-bold text-large mt-4">Frontend Radio</h4>
         </CardHeader>
