@@ -2,7 +2,7 @@
 
 import MessageBox from '@/components/messageBox/MessageBox'
 import H2 from '@/components/typography/H2'
-import { Card, CardBody, Divider, Tab, Tabs } from '@nextui-org/react'
+import { Card, CardBody, Divider } from '@nextui-org/react'
 
 export default function Page() {
   return (

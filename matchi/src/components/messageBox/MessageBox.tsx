@@ -15,13 +15,22 @@ export default function MessageBox() {
         {[...Array(20).keys()].map((x, key) => {
           return (
             <div key={key} className="flex flex-col gap-1">
-              <div className="flex gap-3 items-end">
+              <div
+                className={
+                  'flex gap-3 items-end ' +
+                  (key % 2 === 0 ? 'place-self-start' : 'place-self-end')
+                }
+              >
                 <Avatar
                   className="w-6 h-6 text-tiny"
                   src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
                 />
                 <div className="max-w-md">
-                  <Tooltip size="sm" content="Jeudi, 14 Avril 2024, 13:14h">
+                  <Tooltip
+                    size="sm"
+                    placement={key % 2 === 0 ? 'right' : 'left'}
+                    content="Jeudi, 14 Avril 2024, 13:14h"
+                  >
                     <p className="text p-2 bg-gray-100 rounded-md">
                       Lorem Ipsum is simply dummy text of the printing and
                       typesetting industry. Lorem Ipsum has been the industry
@@ -42,7 +51,7 @@ export default function MessageBox() {
           )
         })}
       </div>
-      <Input radius="none" type="text" placeholder="Enter your email" />
+      <Input radius="none" type="text" placeholder="Tapez votre message..." />
     </div>
   )
 }
