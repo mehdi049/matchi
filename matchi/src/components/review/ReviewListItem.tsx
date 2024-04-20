@@ -2,7 +2,6 @@
 
 import { Avatar } from '@nextui-org/react'
 import Rating from '../rating/Rating'
-import H3 from '../typography/H3'
 
 export default function ReviewListItem() {
   return (

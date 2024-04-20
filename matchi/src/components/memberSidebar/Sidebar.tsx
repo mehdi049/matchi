@@ -1,14 +1,12 @@
 'use client'
 
 import React from 'react'
-import { Chip, Listbox, ListboxItem } from '@nextui-org/react'
+import { Listbox, ListboxItem } from '@nextui-org/react'
 import FontAwesome from '../fontAwesome/FontAwesome'
 import {
   faAddressBook,
-  faBell,
   faComments,
   faHeart,
-  faMessage,
   faPaperPlane,
   faUser,
 } from '@fortawesome/free-regular-svg-icons'
@@ -53,28 +51,6 @@ export default function SidebarMember() {
         startContent={<FontAwesome icon={faPaperPlane} />}
       >
         Mes demandes
-      </ListboxItem>
-      <ListboxItem
-        key="messages"
-        startContent={<FontAwesome icon={faMessage} />}
-        endContent={
-          <Chip size="sm" variant="flat" color="secondary">
-            6
-          </Chip>
-        }
-      >
-        Messages
-      </ListboxItem>
-      <ListboxItem
-        key="notifications"
-        startContent={<FontAwesome icon={faBell} />}
-        endContent={
-          <Chip size="sm" variant="flat" color="secondary">
-            12
-          </Chip>
-        }
-      >
-        Notifications
       </ListboxItem>
       <ListboxItem
         key="reviews"

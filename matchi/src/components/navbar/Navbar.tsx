@@ -14,8 +14,11 @@ import activities from '../../data/activities.json'
 import FontAwesome from '../fontAwesome/FontAwesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import SignInMenu from './SignInMenu'
+import { useState } from 'react'
+import SignedInMenu from './SignedInMenu'
 
 export default function NavbarTop() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
   return (
     <Navbar maxWidth="full" className="bg-white">
       <NavbarContent>
@@ -66,7 +69,7 @@ export default function NavbarTop() {
         </Button>
       </NavbarContent>
       <NavbarContent justify="end">
-        <SignInMenu />
+        {isLoggedIn ? <SignedInMenu /> : <SignInMenu />}
       </NavbarContent>
     </Navbar>
   )
