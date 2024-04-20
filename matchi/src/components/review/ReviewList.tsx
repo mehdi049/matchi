@@ -1,12 +1,12 @@
 'use client'
 
-import NotificationListItem from './NotificationListItem'
+import ReviewListItem from './ReviewListItem'
 
-export default function NotificationList() {
+export default function ReviewList() {
   return (
     <div className="flex flex-col divide-y divide-gray-100">
       {[...Array(20).keys()].map((x, key) => {
-        return <NotificationListItem key={key} />
+        return <ReviewListItem key={key} />
       })}
     </div>
   )

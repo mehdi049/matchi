@@ -3,7 +3,7 @@
 import { CardBody, Card, Avatar } from '@nextui-org/react'
 import H2 from '../typography/H2'
 import { useRouter } from 'next/navigation'
-import MemberRating from './Rating'
+import Rating from '../rating/Rating'
 
 export default function ProfileFeedback() {
   const router = useRouter()
@@ -12,7 +12,7 @@ export default function ProfileFeedback() {
       <CardBody>
         <div className="flex gap-2 items-end justify-between">
           <H2>Avis</H2>
-          <MemberRating />
+          <Rating />
         </div>
         <div className="divide-y my-4">
           {[...Array(4).keys()].map((x, key) => {
@@ -27,7 +27,7 @@ export default function ProfileFeedback() {
                   />
                 </div>
                 <div>
-                  <p className="font-bold text-xs">Mehdi Marouani</p>
+                  <p className="font-bold text-xs">Jane Doe</p>
                   <p className="text-xs mt-1">
                     Lorem Ipsum is simply dummy text of the printing and
                     typesetting industry. Lorem Ipsum has been the industry

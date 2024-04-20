@@ -4,7 +4,7 @@ import { Image, User, CardBody, Card, Chip, Divider } from '@nextui-org/react'
 import H2 from '../typography/H2'
 import H1 from '../typography/H1'
 import { useRouter } from 'next/navigation'
-import ProfileRating from './Rating'
+import ProfileRating from '../rating/Rating'
 import ProfileFeedback from './ProfileFeedback'
 
 type ProfileProps = {
