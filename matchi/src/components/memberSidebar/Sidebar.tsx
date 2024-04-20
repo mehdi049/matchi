@@ -21,11 +21,11 @@ export default function SidebarMember() {
   return (
     <Listbox
       variant="flat"
-      aria-label="User Menu"
+      aria-label="Member sidebar"
       onAction={(key) =>
         key === 'logout' ? router.push('/') : router.push('/member/' + key)
       }
-      className="bg-content1 max-w-[300px] overflow-visible shadow-small rounded-medium"
+      className="bg-content1 max-w-[300px] overflow-visible shadow-small md:rounded-medium"
       itemClasses={{
         base: 'px-3 rounded-none gap-3 h-12',
       }}

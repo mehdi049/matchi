@@ -15,7 +15,7 @@ export default function MessageLayout({
 }>) {
   config.autoAddCss = false
   return (
-    <div className="flex gap-24 relative">
+    <div className="flex gap-12 lg:gap-24 relative">
       <div className="hidden md:block w-full max-w-xs">
         <SidebarMemberMessage />
       </div>
