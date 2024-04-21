@@ -69,7 +69,7 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
             <Image
               alt="Padel"
               className="object-cover rounded-xl w-full max-w-xs"
-              src="/placeholder/padel.jpg"
+              src="/bg-activities/padel.jpg"
             />
           </div>
 
