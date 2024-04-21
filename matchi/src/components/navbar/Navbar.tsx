@@ -31,7 +31,8 @@ export default function NavbarTop() {
 
       <NavbarContent
         as="div"
-        className="hidden md:flex gap-0 w-full max-w-md"
+        //className="hidden md:flex gap-0 w-full max-w-md"
+        className="hidden"
         justify="center"
       >
         <Select

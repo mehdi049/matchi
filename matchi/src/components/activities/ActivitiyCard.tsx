@@ -97,7 +97,7 @@ export default function ActivityCard({
           <Image
             alt="Card background"
             className="object-cover rounded-xl w-full sm:max-w-sm"
-            src={'/placeholder/' + imageOptions[randomNumber]}
+            src={'/bg-activities/' + imageOptions[randomNumber]}
           />
         </CardBody>
         <CardFooter className="flex justify-between gap-2">

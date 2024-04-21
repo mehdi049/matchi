@@ -1,19 +1,16 @@
 'use client'
 
-import ProfileCard from '@/components/profile/ProfileCard'
 import { Button, Card, CardBody, Select, SelectItem } from '@nextui-org/react'
 import cities from '../../data/cities.json'
 import activities from '../../data/activities.json'
-import H3 from '@/components/typography/H3'
 
-export default function Page() {
-  const getRandomInt = (max: number) => {
-    return Math.floor(Math.random() * max)
-  }
-  const randomNumber = getRandomInt(8)
+export default function HeroSection() {
   return (
-    <div>
-      <Card className="flex w-full gap-2 mb-4 max-w-xl">
+    <div
+      style={{ backgroundImage: 'url(/bg-home/bg-home-4.jpg)' }}
+      className="h-screen bg-center bg-cover -mt-16 flex justify-center items-center"
+    >
+      <Card className="w-full flex mb-4 max-w-xl">
         <CardBody className="flex md:flex-row">
           <Select
             isRequired
@@ -44,19 +41,12 @@ export default function Page() {
             size="lg"
             variant="flat"
             radius="none"
-            className="bg-gray-300"
+            className="bg-gray-900 text-white"
           >
             Rechercher
           </Button>
         </CardBody>
       </Card>
-
-      <H3 className="mb-4">Padel / Tunis</H3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-        {[...Array(20).keys()].map((x, key) => {
-          return <ProfileCard key={key} />
-        })}
-      </div>
     </div>
   )
 }
