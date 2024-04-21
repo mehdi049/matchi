@@ -1,20 +1,13 @@
 'use client'
 
 import { Avatar, Badge, Link, NavbarItem } from '@nextui-org/react'
+import NotificationsBadge from './NotificationsBadge'
 
 export default function SignedInMenu() {
   return (
     <>
       <NavbarItem>
-        <Badge size="sm" content="+12" color="danger">
-          <Link
-            href="/member/notifications"
-            color="foreground"
-            className="cursor-pointer pt-2 sm:pt-1 text-xs sm:text-base"
-          >
-            Notifications
-          </Link>
-        </Badge>
+        <NotificationsBadge />
       </NavbarItem>
       <NavbarItem>
         <Badge size="sm" content="+5" color="danger">

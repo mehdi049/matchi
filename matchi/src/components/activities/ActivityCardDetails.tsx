@@ -31,7 +31,7 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
     <Card className="w-full">
       <CardBody>
         <div className="flex flex-wrap gap-4">
-          <div>
+          <div className="grow">
             <User
               name="Jane Doe"
               description="Organizateur"
@@ -47,9 +47,18 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
               </Chip>
             </div>
           </div>
-          <div className="grow flex justify-end">
+          <div className="flex gap-1 flex-col justify-end">
             <Button size="sm" color="primary">
               Rejoindre
+            </Button>
+            <Button
+              as={Link}
+              href="/profiles"
+              size="sm"
+              variant="flat"
+              color="primary"
+            >
+              Inviter des participants
             </Button>
           </div>
         </div>
