@@ -8,10 +8,22 @@ export default function HeroSection() {
   return (
     <div
       style={{ backgroundImage: 'url(/bg-home/bg-home-4.jpg)' }}
-      className="h-screen bg-center bg-cover -mt-16 flex justify-center items-center"
+      className="h-screen bg-center bg-cover -mt-16 flex justify-center items-center px-4"
     >
       <Card className="w-full flex mb-4 max-w-xl">
-        <CardBody className="flex md:flex-row">
+        <CardBody className="flex gap-2 sm:gap-0 md:flex-row">
+          <Select
+            label="Activité"
+            placeholder="Séléctionnez une activité"
+            size="sm"
+            radius="none"
+          >
+            {activities.map((activity) => (
+              <SelectItem key={activity.value} value={activity.value}>
+                {activity.label}
+              </SelectItem>
+            ))}
+          </Select>
           <Select
             isRequired
             label="Ville"
@@ -25,18 +37,7 @@ export default function HeroSection() {
               </SelectItem>
             ))}
           </Select>
-          <Select
-            label="Activité"
-            placeholder="Séléctionnez une activité"
-            size="sm"
-            radius="none"
-          >
-            {activities.map((activity) => (
-              <SelectItem key={activity.value} value={activity.value}>
-                {activity.label}
-              </SelectItem>
-            ))}
-          </Select>
+
           <Button
             size="lg"
             variant="flat"

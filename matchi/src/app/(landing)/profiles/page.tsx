@@ -16,6 +16,18 @@ export default function Page() {
       <Card className="flex w-full gap-2 mb-4 max-w-xl">
         <CardBody className="flex md:flex-row">
           <Select
+            label="Activité"
+            placeholder="Séléctionnez une activité"
+            size="sm"
+            radius="none"
+          >
+            {activities.map((activity) => (
+              <SelectItem key={activity.value} value={activity.value}>
+                {activity.label}
+              </SelectItem>
+            ))}
+          </Select>
+          <Select
             isRequired
             label="Ville"
             placeholder="Selectionnez une ville"
@@ -28,18 +40,7 @@ export default function Page() {
               </SelectItem>
             ))}
           </Select>
-          <Select
-            label="Activité"
-            placeholder="Séléctionnez une activité"
-            size="sm"
-            radius="none"
-          >
-            {activities.map((activity) => (
-              <SelectItem key={activity.value} value={activity.value}>
-                {activity.label}
-              </SelectItem>
-            ))}
-          </Select>
+
           <Button
             size="lg"
             variant="flat"
