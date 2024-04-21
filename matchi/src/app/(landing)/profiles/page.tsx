@@ -2,8 +2,8 @@
 
 import ProfileCard from '@/components/profile/ProfileCard'
 import { Button, Card, CardBody, Select, SelectItem } from '@nextui-org/react'
-import cities from '../../data/cities.json'
-import activities from '../../data/activities.json'
+import cities from '../../../data/cities.json'
+import activities from '../../../data/activities.json'
 import H3 from '@/components/typography/H3'
 
 export default function Page() {
