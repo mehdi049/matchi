@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'Matchi',
 }
 
-export default function MemberLayout({
+export default function MemberPostCompleteProfileLayout({
   children,
 }: Readonly<{
   children: React.ReactNode

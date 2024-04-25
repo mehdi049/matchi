@@ -7,8 +7,6 @@ import Container from '@/components/container/Container'
 import Footer from '@/components/footer/Footer'
 import { config } from '@fortawesome/fontawesome-svg-core'
 
-import HeroSection from '@/components/heroHome/HeroSection'
-
 export const metadata: Metadata = {
   title: 'Matchi',
   description: 'Matchi',
@@ -22,7 +20,7 @@ export default function RootLayout({
   config.autoAddCss = false
   return (
     <html lang="en">
-      <body>
+      <body className="bg-gray-50">
         <Providers>
           <NavbarTop />
           <Container className="mt-10">{children}</Container>

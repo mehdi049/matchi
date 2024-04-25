@@ -22,7 +22,7 @@ export default function RootLayout({
   config.autoAddCss = false
   return (
     <html lang="en">
-      <body>
+      <body className="bg-gray-50">
         <Providers>
           <NavbarTop />
           <HeroSection />

@@ -1,6 +1,6 @@
 'use client'
 
-import { Link } from '@nextui-org/react'
+import { Button, Link, Image } from '@nextui-org/react'
 import H1 from '../typography/H1'
 import ActivityCard from './ActivitiyCard'
 import InfoMessage from '../message/InfoMessage'
@@ -19,7 +19,7 @@ export default function Activities({ activityName, city }: ActivitiesProps) {
   return (
     <>
       <div>
-        <div className="flex justify-between gap-4 items-start">
+        <div className="flex justify-between gap-4 items-start mt-8">
           {activityName && city ? (
             <div className="flex items-end gap-2 mb-4">
               <H1>{city}</H1>
@@ -32,13 +32,14 @@ export default function Activities({ activityName, city }: ActivitiesProps) {
           )}
 
           {randomNumber > 0 && (
-            <Link
+            <Button
+              as={Link}
               href={'/activities/' + activityName?.toLowerCase() + '/tunis'}
-              underline="hover"
               color="primary"
+              variant="flat"
             >
               Afficher tous les activités
-            </Link>
+            </Button>
           )}
         </div>
 

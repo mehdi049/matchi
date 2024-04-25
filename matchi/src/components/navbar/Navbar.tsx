@@ -18,9 +18,9 @@ import { useState } from 'react'
 import SignedInMenu from './SignedInMenu'
 
 export default function NavbarTop() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   return (
-    <Navbar maxWidth="full" className="bg-white">
+    <Navbar maxWidth="full" className="bg-white shadow-md">
       <NavbarContent>
         <NavbarBrand>
           <Link href="/" className="font-bold text-inherit">

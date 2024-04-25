@@ -22,7 +22,7 @@ export default function ProfileFeedback() {
                   <Avatar
                     name="Jane Doe"
                     src="https://i.pravatar.cc/150?u=a04258114e29026702d"
-                    onClick={() => router.push('/profile/2')}
+                    onClick={() => router.push('/profiles/2')}
                     className="cursor-pointer"
                   />
                 </div>
