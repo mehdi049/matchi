@@ -10,13 +10,11 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ROUTES } from '@/routes'
+import { zodCheck } from '@/utils/common-zod-check'
 
 const FormInputs = z.object({
-  email: z
-    .string()
-    .min(1, { message: 'Champ obligatoir.' })
-    .email({ message: 'Email invalid.' }),
-  password: z.string().min(1, { message: 'Champ obligatoir.' }),
+  email: zodCheck(['required', 'email']),
+  password: zodCheck(['required']),
 })
 
 export default function LoginForm() {

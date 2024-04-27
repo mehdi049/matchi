@@ -39,8 +39,8 @@ export default function HeroSection() {
             radius="none"
           >
             {cities.map((city) => (
-              <SelectItem key={city.value} value={city.value}>
-                {city.label}
+              <SelectItem key={city.name} value={city.name}>
+                {city.name}
               </SelectItem>
             ))}
           </Select>

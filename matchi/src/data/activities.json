@@ -8,19 +8,31 @@
     "label": "Football"
   },
   {
-    "value": "Basket",
-    "label": "Basket"
+    "value": "Basketball",
+    "label": "Basketball"
   },
   {
     "value": "Tenis",
     "label": "Tenis"
   },
   {
-    "value": "vélo",
+    "value": "Volleyball",
+    "label": "Volleyball"
+  },
+  {
+    "value": "Handball",
+    "label": "Handball"
+  },
+  {
+    "value": "Beach Tennis",
+    "label": "Beach Tennis"
+  },
+  {
+    "value": "Bicycle",
     "label": "Sortie en vélo"
   },
   {
-    "value": "moto",
+    "value": "Moto",
     "label": "Sortie en moto"
   }
 ]

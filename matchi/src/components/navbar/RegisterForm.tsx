@@ -10,21 +10,15 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/routes'
+import { zodCheck } from '@/utils/common-zod-check'
 
 const FormInputs = z
   .object({
-    fName: z.string().min(1, { message: 'Champ obligatoir.' }),
-    lName: z.string().min(1, { message: 'Champ obligatoir.' }),
-    email: z
-      .string()
-      .min(1, { message: 'Champ obligatoir.' })
-      .email({ message: 'Email invalid.' }),
-    password: z
-      .string({ required_error: 'Champ obligatoir.' })
-      .min(1, { message: 'Champ obligatoir.' }),
-    confirm_password: z
-      .string({ required_error: 'Champ obligatoir.' })
-      .min(1, { message: 'Champ obligatoir.' }),
+    fName: zodCheck(['required']),
+    lName: zodCheck(['required']),
+    email: zodCheck(['required', 'email']),
+    password: zodCheck(['required']),
+    confirm_password: zodCheck(['required']),
   })
   .refine((data) => data.password === data.confirm_password, {
     message: 'Mot de passe non identique.',

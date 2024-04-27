@@ -6,37 +6,70 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import { Button, CardBody, Chip } from '@nextui-org/react'
 import { StepProps } from './basicInfoStep'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+
+import activities from '../../../../data/activities.json'
+import ErrorMessage from '@/components/message/ErrorMessage'
 
 export default function InterestStep({ setStep }: StepProps) {
   const router = useRouter()
+  const [selectedActivities, setSelectedActivities] = useState<string[]>([])
+  const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false)
+
+  const handleAddRemoveActivity = (activity: string) => {
+    if (activity) {
+      let _selectedActivities = [...selectedActivities]
+
+      //if selected
+      if (_selectedActivities.includes(activity))
+        _selectedActivities = _selectedActivities.filter((x) => x !== activity)
+      //if not selected
+      else _selectedActivities.push(activity)
+
+      setSelectedActivities(_selectedActivities)
+    }
+  }
+
+  const handleNextStep = () => {
+    setIsErrorVisible(false)
+    if (selectedActivities.length > 0) router.push('/member/profile')
+    else setIsErrorVisible(true)
+  }
+
   return (
     <CardBody className="flex gap-4 flex-col">
       <H2>Mes centres d&apos;intérét</H2>
-      <div className="flex gap-2 flex-wrap">
-        <Chip
-          startContent={<FontAwesome icon={faCircleCheck} />}
-          color="primary"
-          className="cursor-pointer"
-          size="lg"
-        >
-          Football
-        </Chip>
-        <Chip size="lg" className="cursor-pointer" variant="flat">
-          Tennis
-        </Chip>
-        <Chip size="lg" className="cursor-pointer" variant="flat">
-          Sortie en moto
-        </Chip>
-        <Chip size="lg" className="cursor-pointer" variant="flat">
-          Sortie en vélo
-        </Chip>
-        <Chip size="lg" className="cursor-pointer" variant="flat">
-          Padel
-        </Chip>
-        <Chip size="lg" className="cursor-pointer" variant="flat">
-          Basket
-        </Chip>
+      <p className="text-sm">
+        Sélectionnez <span className="underline">au moin une activité.</span>
+      </p>
+      <div className="flex gap-2 flex-wrap mt-4">
+        {activities.map((activity, key) => {
+          return (
+            <div
+              className="inline-block cursor-pointer"
+              key={key}
+              onClick={() => handleAddRemoveActivity(activity.value as string)}
+            >
+              {selectedActivities.includes(activity.value as string) ? (
+                <Chip
+                  startContent={<FontAwesome icon={faCircleCheck} />}
+                  color="primary"
+                  size="lg"
+                >
+                  {activity.label}
+                </Chip>
+              ) : (
+                <Chip size="lg" variant="flat">
+                  {activity.label}
+                </Chip>
+              )}
+            </div>
+          )
+        })}
       </div>
+      <ErrorMessage isVisible={isErrorVisible}>
+        Sélectionnez au moin une activité.
+      </ErrorMessage>
       <div className="flex gap-2 justify-end w-full mt-8">
         <Button variant="light" className="max-w-24" onClick={() => setStep(2)}>
           Retour
@@ -45,7 +78,7 @@ export default function InterestStep({ setStep }: StepProps) {
           variant="solid"
           color="primary"
           className="max-w-24"
-          onClick={() => router.push('/member/profile')}
+          onClick={() => handleNextStep()}
         >
           Continuer
         </Button>

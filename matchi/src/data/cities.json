@@ -1,10 +1,275 @@
 [
   {
-    "value": "Tunis",
-    "label": "Tunis"
+    "name": "Bizerte",
+    "counties": [
+      "Zarzouna",
+      "Utique",
+      "Tinja",
+      "Sejenane",
+      "Ras Jebel",
+      "Menzel Jemil",
+      "Menzel Bourguiba",
+      "Mateur",
+      "Ghezala",
+      "Ghar El Melh",
+      "El Alia",
+      "Djoumime",
+      "Bizerte Sud",
+      "Bizerte Nord",
+      "Autres Villes"
+    ]
   },
   {
-    "value": "Bizerte",
-    "label": "Bizerte"
+    "name": "Béja",
+    "counties": [
+      "Téboursouk",
+      "Thibar",
+      "Testour",
+      "Nefza",
+      "Medjez El Bab",
+      "Goubellat",
+      "El Ksar",
+      "Béja Sud",
+      "Béja Nord",
+      "Amdoun",
+      "Béja",
+      "Autres Villes"
+    ]
+  },
+  {
+    "name": "Gabès",
+    "counties": [
+      "Nouvelle Matmata",
+      "Métouia",
+      "Matmata",
+      "Mareth",
+      "Ghanouch",
+      "Gabès Sud",
+      "Gabès Ouest",
+      "Gabès Médina",
+      "El Hamma",
+      "Gabès",
+      "Autres Villes"
+    ]
+  },
+  {
+    "name": "Gafsa",
+    "counties": [
+      "Sidi Aïch",
+      "Sened",
+      "Redeyef",
+      "Oum El Araies",
+      "Métlaoui",
+      "Mdhila",
+      "Gafsa Sud",
+      "Gafsa Nord",
+      "Gafsa",
+      "El Ksar",
+      "El Guettar",
+      "Belkhir",
+      "Autres Villes"
+    ]
+  },
+  {
+    "name": "Grand Tunis",
+    "counties": [
+      "Ariana Ville",
+      "Ariana Soghra",
+      "Sidi Thabet",
+      "Riadh Andalous",
+      "Raoued",
+      "Nouvelle Ariana",
+      "Mnihla",
+      "Les Jardins El Menzah 1",
+      "Les Jardins El Menzah 2",
+      "La Soukra",
+      "Kalâat Andalous",
+      "Ghazela",
+      "Ettadhamen",
+      "Ennasr 1",
+      "Ennasr 2",
+      "El Menzah 1",
+      "El Menzah 2",
+      "El Menzah 3",
+      "El Menzah 4",
+      "El Menzah 5",
+      "El Menzah 6",
+      "El Menzah 7",
+      "El Menzah 8",
+      "El Menzah 9",
+      "El Menzah 9c",
+      "Dar Fadhal",
+      "Cité Hedi Nouira",
+      "Cite Ennkhilet",
+      "Chotrana 1",
+      "Chotrana 2",
+      "Chotrana 3",
+      "Borj Louzir",
+      "Sidi Rezig",
+      "Radès",
+      "Mégrine",
+      "Mornag",
+      "Mohamedia",
+      "Medina Jedida",
+      "Hammam Lif",
+      "Hammam Chott",
+      "Fouchana",
+      "Ezzahra",
+      "El Mourouj 6",
+      "El Mourouj 5",
+      "El Mourouj 4",
+      "El Mourouj 3",
+      "El Mourouj 2",
+      "El Mourouj 1",
+      "Boumhel",
+      "Borj Cedria",
+      "Ben Arous",
+      "Tebourba",
+      "Oued Ellil",
+      "Mornaguia",
+      "Menzel El Habib",
+      "Manouba Ville",
+      "El Battan",
+      "Douar Hicher",
+      "Djedeida",
+      "Denden",
+      "Borj El Amri",
+      "Tunis Belvedere",
+      "Séjoumi",
+      "Sidi Hassine",
+      "Sidi El Béchir",
+      "Sidi Daoud",
+      "Sidi Bou Said",
+      "Médina",
+      "Mutuelleville",
+      "Montplaisir",
+      "Monfleury",
+      "Manar 1",
+      "Manar 2",
+      "Le Kram",
+      "Le Bardo",
+      "Lac 1",
+      "Lac 2",
+      "La Marsa",
+      "La Goulette",
+      "L'Aouina",
+      "Ksar Said",
+      "Kheireddine Pacha",
+      "Khaznadar",
+      "Jardins De Carthage",
+      "Hraïria",
+      "Gammarth",
+      "Ezzouhour",
+      "Ettahrir",
+      "El Ouardia",
+      "El Omrane Supérieur",
+      "El Omrane",
+      "El Kabaria",
+      "Djebel Jelloud",
+      "Cité Olympique",
+      "Cité El Khadra",
+      "Centre Ville Lafayette",
+      "Centre Urbain Nord",
+      "Carthage",
+      "Bellevue",
+      "Bab Souika",
+      "Ain Zaghouen Sud",
+      "Ain Zaghouen Nord",
+      "Agba",
+      "Tunis Ville",
+      "Autre"
+    ]
+  },
+  {
+    "name": "Jendouba",
+    "counties": [
+      "Tabarka",
+      "Oued Meliz",
+      "Jendouba Nord",
+      "Jendouba",
+      "Ghardimaou",
+      "Fernana",
+      "Bou Salem",
+      "Balta Bou Aouane",
+      "Autres Villes"
+    ]
+  },
+  {
+    "name": "Kairouan",
+    "counties": [
+      "Sbikha",
+      "Nasrallah",
+      "Kairouan Sud",
+      "Kairouan Nord",
+      "Kairouan",
+      "Hajeb El Ayoun",
+      "Haffouz",
+      "El Ouslatia",
+      "El Alâa",
+      "Echrarda",
+      "Chebika",
+      "Bouhajla",
+      "Autres Villes"
+    ]
+  },
+  {
+    "name": "Kasserine",
+    "counties": []
+  },
+  {
+    "name": "Kébili",
+    "counties": []
+  },
+  {
+    "name": "La Manouba",
+    "counties": []
+  },
+  {
+    "name": "Le Kef",
+    "counties": []
+  },
+  {
+    "name": "Mahdia",
+    "counties": []
+  },
+  {
+    "name": "Monastir",
+    "counties": []
+  },
+  {
+    "name": "Médenine",
+    "counties": []
+  },
+  {
+    "name": "Nabeul",
+    "counties": []
+  },
+  {
+    "name": "Sfax",
+    "counties": []
+  },
+  {
+    "name": "Sidi Bouzid",
+    "counties": []
+  },
+  {
+    "name": "Siliana",
+    "counties": []
+  },
+  {
+    "name": "Sousse",
+    "counties": []
+  },
+  {
+    "name": "Tataouine",
+    "counties": []
+  },
+  {
+    "name": "Tozeur",
+    "counties": []
+  },
+  {
+    "name": "Zaghouan",
+    "counties": []
   }
 ]
