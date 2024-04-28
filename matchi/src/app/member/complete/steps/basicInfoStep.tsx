@@ -12,9 +12,10 @@ import {
   Radio,
   RadioGroup,
 } from '@nextui-org/react'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { ProgressContext } from '../context/progressContext'
 
 export type StepProps = {
   setStep: Dispatch<SetStateAction<number>>
@@ -35,8 +36,11 @@ export default function BasicInfoStep({ setStep }: StepProps) {
     resolver: zodResolver(FormInputs),
   })
 
+  const context = useContext(ProgressContext)
+
   const handleNextStep = handleSubmit((data) => {
     setStep(2)
+    context.setProgress(33)
   })
 
   return (
@@ -99,8 +103,8 @@ export default function BasicInfoStep({ setStep }: StepProps) {
             control={control}
             name="gender"
             defaultValue="M"
-            render={({ field: { onChange, value } }) => (
-              <RadioGroup label="Sexe" onChange={onChange} value={value}>
+            render={({ field }) => (
+              <RadioGroup label="Sexe" {...field}>
                 <Radio value="M">Homme</Radio>
                 <Radio value="F">Femme</Radio>
               </RadioGroup>

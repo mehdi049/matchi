@@ -36,11 +36,15 @@ export default function ActivityCard({
   const randomNumber = getRandomInt(4)
 
   const imageOptions = [
-    'basket.jpg',
+    'basketball.jpg',
+    'bicycle.jpg',
+    'bTennis.jpg',
     'football.jpg',
-    'tennis.jpg',
-    'padel.jpg',
+    'handball.jpg',
     'moto.jpg',
+    'padel.jpg',
+    'tennis.jpg',
+    'volleyball.jpg',
   ]
   return (
     <div

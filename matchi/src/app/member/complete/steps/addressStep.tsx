@@ -16,6 +16,8 @@ import { zodCheck } from '@/utils/common-zod-check'
 import { z } from 'zod'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useContext } from 'react'
+import { ProgressContext } from '../context/progressContext'
 
 const FormInputs = z.object({
   country: zodCheck(['string']),
@@ -33,9 +35,11 @@ export default function MyAddressStep({ setStep }: StepProps) {
   } = useForm({
     resolver: zodResolver(FormInputs),
   })
+  const context = useContext(ProgressContext)
 
   const handleNextStep = handleSubmit((data) => {
     setStep(3)
+    context.setProgress(66)
   })
 
   return (
@@ -78,7 +82,6 @@ export default function MyAddressStep({ setStep }: StepProps) {
             </Select>
           )}
         />
-        {watch('city')}
         <Controller
           control={control}
           name="county"
@@ -96,13 +99,13 @@ export default function MyAddressStep({ setStep }: StepProps) {
                   : false
               }
             >
-              {cities
-                .find((city) => (city.name as string) === watch('city'))
-                ?.counties.map((county) => (
-                  <SelectItem key={county} value={county}>
-                    {county}
-                  </SelectItem>
-                ))}
+              {(
+                cities.find((city) => city.name === watch('city')) as any
+              )?.counties.map((county: string) => (
+                <SelectItem key={county} value={county}>
+                  {county}
+                </SelectItem>
+              ))}
             </Select>
           )}
         />

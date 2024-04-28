@@ -2,9 +2,27 @@
 
 import H2 from '@/components/typography/H2'
 import H3 from '@/components/typography/H3'
+import { zodCheck } from '@/utils/common-zod-check'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Card, CardBody, Input, Link } from '@nextui-org/react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+const FormInputs = z.object({
+  email: zodCheck(['email', 'required']),
+})
 
 export default function Page() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(FormInputs),
+  })
+
+  const handleUpdateEmail = handleSubmit((data) => {})
+
   return (
     <Card className="w-full">
       <CardBody className="flex gap-4 flex-col">
@@ -12,11 +30,19 @@ export default function Page() {
 
         <form className="mb-4 flex flex-col gap-4">
           <Input
+            {...register('email')}
+            isRequired
             size="sm"
             variant="flat"
             type="email"
             label="Email"
-            value="mehdi.marouani@gmail.com"
+            defaultValue="mehdi.marouani@gmail.com"
+            errorMessage={errors.email?.message as string}
+            isInvalid={
+              errors.email?.message
+                ? (errors.email?.message as string).length > 0
+                : false
+            }
           />
         </form>
 
@@ -39,7 +65,12 @@ export default function Page() {
         </Button>
 
         <div className="flex justify-end w-full mt-8">
-          <Button variant="solid" color="primary" className="max-w-24">
+          <Button
+            variant="solid"
+            color="primary"
+            className="max-w-24"
+            onClick={handleUpdateEmail}
+          >
             Valider
           </Button>
         </div>

@@ -44,12 +44,12 @@ export default function RegisterForm() {
     <>
       <form className="mb-4 flex flex-col gap-4">
         <Input
+          {...register('lName')}
           isRequired
           size="sm"
           variant="flat"
           type="text"
           label="Nom"
-          {...register('lName')}
           errorMessage={errors.lName?.message as string}
           isInvalid={
             errors.lName?.message
@@ -58,12 +58,12 @@ export default function RegisterForm() {
           }
         />
         <Input
+          {...register('fName')}
           isRequired
           size="sm"
           variant="flat"
           type="text"
           label="Prénom"
-          {...register('fName')}
           errorMessage={errors.fName?.message as string}
           isInvalid={
             errors.fName?.message
@@ -72,12 +72,12 @@ export default function RegisterForm() {
           }
         />
         <Input
+          {...register('email')}
           isRequired
           size="sm"
           variant="flat"
           type="email"
           label="Email"
-          {...register('email')}
           errorMessage={errors.email?.message as string}
           isInvalid={
             errors.email?.message
@@ -86,17 +86,19 @@ export default function RegisterForm() {
           }
         />
         <InputPassword
+          register={register('password')}
+          isRequired
           size="sm"
           variant="flat"
           label="Mot de passe"
-          register={register('password')}
           errorMessage={errors.password?.message as string}
         />
         <InputPassword
+          register={register('confirm_password')}
+          isRequired
           size="sm"
           variant="flat"
           label="Confirmer mon mot de passe"
-          register={register('confirm_password')}
           errorMessage={errors.confirm?.message as string}
         />
 

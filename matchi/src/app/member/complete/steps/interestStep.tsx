@@ -6,17 +6,22 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import { Button, CardBody, Chip } from '@nextui-org/react'
 import { StepProps } from './basicInfoStep'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import activities from '../../../../data/activities.json'
 import ErrorMessage from '@/components/message/ErrorMessage'
+import { ProgressContext } from '../context/progressContext'
 
 export default function InterestStep({ setStep }: StepProps) {
   const router = useRouter()
+  const context = useContext(ProgressContext)
+
   const [selectedActivities, setSelectedActivities] = useState<string[]>([])
   const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false)
 
   const handleAddRemoveActivity = (activity: string) => {
+    setIsErrorVisible(false)
+
     if (activity) {
       let _selectedActivities = [...selectedActivities]
 
@@ -32,8 +37,13 @@ export default function InterestStep({ setStep }: StepProps) {
 
   const handleNextStep = () => {
     setIsErrorVisible(false)
-    if (selectedActivities.length > 0) router.push('/member/profile')
-    else setIsErrorVisible(true)
+    if (selectedActivities.length > 0) {
+      context.setProgress(100)
+
+      setTimeout(() => {
+        router.push('/member/profile')
+      }, 1000)
+    } else setIsErrorVisible(true)
   }
 
   return (

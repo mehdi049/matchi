@@ -1,38 +1,62 @@
 [
   {
     "value": "Padel",
+    "img": "padel.jpg",
     "label": "Padel"
   },
   {
     "value": "Football",
+    "img": "football.jpg",
     "label": "Football"
   },
   {
     "value": "Basketball",
+    "img": "basketball.jpg",
     "label": "Basketball"
   },
   {
-    "value": "Tenis",
-    "label": "Tenis"
+    "value": "Tennis",
+    "img": "tennis.jpg",
+    "label": "Tennis"
   },
   {
     "value": "Volleyball",
+    "img": "volleyball.jpg",
     "label": "Volleyball"
   },
   {
     "value": "Handball",
+    "img": "handball.jpg",
     "label": "Handball"
   },
   {
     "value": "Beach Tennis",
+    "img": "bTennis.jpg",
     "label": "Beach Tennis"
   },
   {
     "value": "Bicycle",
+    "img": "bicycle.jpg",
     "label": "Sortie en vélo"
   },
   {
     "value": "Moto",
+    "img": "moto.jpg",
     "label": "Sortie en moto"
+  },
+  {
+    "value": "Paintball",
+    "img": "paintball.jpg",
+    "label": "Paintball"
+  },
+  {
+    "value": "Footing",
+    "img": "footing.jpg",
+    "label": "La course à pied"
+  },
+  {
+    "value": "Walking",
+    "img": "walking.jpg",
+    "label": "La Marche"
   }
 ]

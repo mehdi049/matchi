@@ -1,10 +1,11 @@
 'use client'
 
+import { ProgressContext } from '@/app/member/complete/context/progressContext'
 import { Card, CardBody, Progress } from '@nextui-org/react'
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 
 export default function ProfileCompletionProgress() {
-  const [value, setValue] = useState(20)
+  const context = useContext(ProgressContext)
 
   /*useEffect(() => {
     const interval = setInterval(() => {
@@ -20,7 +21,7 @@ export default function ProfileCompletionProgress() {
         <Progress
           aria-label="Complete"
           size="sm"
-          value={value}
+          value={context.progress}
           color="primary"
           showValueLabel={true}
           label="Compléter mon profile"

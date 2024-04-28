@@ -7,6 +7,7 @@ import FontAwesome from '../fontAwesome/FontAwesome'
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons'
 
 export default function Footer() {
+  const currentDate = new Date()
   return (
     <footer className="bg-black py-8 mt-8">
       <Container className="flex flex-wrap flex-col gap-4 sm:gap-8">
@@ -52,7 +53,9 @@ export default function Footer() {
         </div>
         <Divider className="bg-gray-700" orientation="horizontal" />
         <div className="flex flex-wrap gap-4 sm:gap-8">
-          <p className="text-center text-gray-300">©2024 Matchi</p>
+          <p className="text-center text-gray-300">
+            ©{currentDate.getFullYear()} Matchi
+          </p>
           <Link className="text-gray-300 text-sm" href="#">
             Politique de confidentialité
           </Link>

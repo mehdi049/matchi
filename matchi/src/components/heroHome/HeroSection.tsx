@@ -10,8 +10,30 @@ import {
 } from '@nextui-org/react'
 import cities from '../../data/cities.json'
 import activities from '../../data/activities.json'
+import { z } from 'zod'
+import { zodCheck } from '@/utils/common-zod-check'
+import { Controller, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+const FormInputs = z.object({
+  activity: zodCheck(['string']),
+  city: zodCheck(['string']),
+  date: zodCheck(['string']),
+})
 
 export default function HeroSection() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(FormInputs),
+  })
+
+  const handleSearchActivity = handleSubmit((data) => {})
+
   return (
     <div
       style={{ backgroundImage: 'url(/bg-home/bg-home-4.jpg)' }}
@@ -19,32 +41,46 @@ export default function HeroSection() {
     >
       <Card className="w-full flex mb-4 max-w-2xl">
         <CardBody className="flex gap-2 sm:gap-0 md:flex-row">
-          <Select
-            label="Activité"
-            placeholder="Séléctionnez une activité"
-            size="sm"
-            radius="none"
-          >
-            {activities.map((activity) => (
-              <SelectItem key={activity.value} value={activity.value}>
-                {activity.label}
-              </SelectItem>
-            ))}
-          </Select>
-          <Select
-            isRequired
-            label="Ville"
-            placeholder="Selectionnez une ville"
-            size="sm"
-            radius="none"
-          >
-            {cities.map((city) => (
-              <SelectItem key={city.name} value={city.name}>
-                {city.name}
-              </SelectItem>
-            ))}
-          </Select>
+          <Controller
+            control={control}
+            name="activity"
+            render={({ field }) => (
+              <Select
+                {...field}
+                label="Activité"
+                placeholder="Séléctionnez une activité"
+                size="sm"
+                radius="none"
+              >
+                {activities.map((activity) => (
+                  <SelectItem key={activity.value} value={activity.value}>
+                    {activity.label}
+                  </SelectItem>
+                ))}
+              </Select>
+            )}
+          />
+          <Controller
+            control={control}
+            name="city"
+            render={({ field }) => (
+              <Select
+                {...field}
+                label="Ville"
+                placeholder="Selectionnez une ville"
+                size="sm"
+                radius="none"
+              >
+                {cities.map((city) => (
+                  <SelectItem key={city.name} value={city.name}>
+                    {city.name}
+                  </SelectItem>
+                ))}
+              </Select>
+            )}
+          />
           <Input
+            {...register('date')}
             size="sm"
             variant="flat"
             type="date"
@@ -56,6 +92,7 @@ export default function HeroSection() {
             variant="flat"
             radius="none"
             className="bg-gray-900 text-white"
+            onClick={handleSearchActivity}
           >
             Rechercher
           </Button>
