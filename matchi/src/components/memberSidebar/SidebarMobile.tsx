@@ -14,8 +14,13 @@ import {
   faArrowRightFromBracket,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons'
+import { signOut } from 'next-auth/react'
+import { ROUTES } from '@/routes'
 
 export default function SidebarMobileMember() {
+  const handleSignOut = () => {
+    signOut({ callbackUrl: ROUTES.HOME, redirect: true })
+  }
   return (
     <div className="flex w-full px-4 items-center justify-between bg-gray-100 border-t border-t-gray-300 divide-x divide-gray-200">
       <Link
@@ -63,7 +68,7 @@ export default function SidebarMobileMember() {
       </Link>
 
       <Link
-        href="/"
+        onClick={handleSignOut}
         className="text-danger flex gap-1 flex-col text-xs text-center grow py-2"
         color="danger"
       >

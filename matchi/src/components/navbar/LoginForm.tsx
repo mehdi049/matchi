@@ -3,7 +3,6 @@
 import { Button, Divider, Input, Link } from '@nextui-org/react'
 import FontAwesome from '../fontAwesome/FontAwesome'
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import InputPassword from '../input/InputPassword'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -11,6 +10,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ROUTES } from '@/routes'
 import { zodCheck } from '@/utils/common-zod-check'
+import { signIn } from 'next-auth/react'
 
 const FormInputs = z.object({
   email: zodCheck(['required', 'email']),
@@ -71,6 +71,7 @@ export default function LoginForm() {
           color="primary"
           size="md"
           startContent={<FontAwesome icon={faFacebook} />}
+          onClick={() => signIn('facebook')}
         >
           Me connecter avec Facebook
         </Button>
@@ -79,16 +80,13 @@ export default function LoginForm() {
           color="primary"
           size="md"
           startContent={<FontAwesome icon={faGoogle} />}
+          onClick={() =>
+            signIn('google', {
+              callbackUrl: 'http://localhost:3000/member/complete',
+            })
+          }
         >
           Me connecter avec Google
-        </Button>
-        <Button
-          variant="ghost"
-          color="primary"
-          size="md"
-          startContent={<FontAwesome icon={faEnvelope} />}
-        >
-          Me connecter avec Email
         </Button>
       </div>
     </>

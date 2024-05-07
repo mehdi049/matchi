@@ -15,15 +15,20 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/navigation'
+import { signOut } from 'next-auth/react'
+import { ROUTES } from '@/routes'
 
 export default function SidebarMember() {
   const router = useRouter()
+  const handleSignOut = () => {
+    signOut({ callbackUrl: ROUTES.HOME, redirect: true })
+  }
   return (
     <Listbox
       variant="flat"
       aria-label="Member sidebar"
       onAction={(key) =>
-        key === 'logout' ? router.push('/') : router.push('/member/' + key)
+        key === 'logout' ? handleSignOut() : router.push('/member/' + key)
       }
       className="bg-content1 max-w-[300px] overflow-visible shadow-small md:rounded-medium"
       itemClasses={{

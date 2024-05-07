@@ -2,8 +2,12 @@
 
 import { Avatar, Badge, Link, NavbarItem } from '@nextui-org/react'
 import NotificationsBadge from './NotificationsBadge'
+import { useSession } from 'next-auth/react'
+import { getInitials } from '../../utils/string'
 
 export default function SignedInMenu() {
+  const { data: session } = useSession()
+
   return (
     <>
       <NavbarItem>
@@ -27,9 +31,11 @@ export default function SignedInMenu() {
           className="cursor-pointer"
         >
           <Avatar
-            name="Jane Doe"
-            src="https://i.pravatar.cc/150?u=a04258114e29026702d"
+            showFallback
+            name={session?.user?.name ?? ''}
+            src={session?.user?.image ?? undefined}
             className="cursor-pointer"
+            getInitials={getInitials}
           />
         </Link>
       </NavbarItem>

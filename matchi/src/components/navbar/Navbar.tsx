@@ -14,11 +14,12 @@ import activities from '../../data/activities.json'
 import FontAwesome from '../fontAwesome/FontAwesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import SignInMenu from './SignInMenu'
-import { useState } from 'react'
 import SignedInMenu from './SignedInMenu'
+import { useSession } from 'next-auth/react'
 
 export default function NavbarTop() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { data: session } = useSession()
+
   return (
     <Navbar maxWidth="full" className="bg-white shadow-md">
       <NavbarContent>
@@ -70,7 +71,7 @@ export default function NavbarTop() {
         </Button>
       </NavbarContent>
       <NavbarContent justify="end">
-        {isLoggedIn ? <SignedInMenu /> : <SignInMenu />}
+        {session ? <SignedInMenu /> : <SignInMenu />}
       </NavbarContent>
     </Navbar>
   )
