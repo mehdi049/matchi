@@ -71,7 +71,11 @@ export default function LoginForm() {
           color="primary"
           size="md"
           startContent={<FontAwesome icon={faFacebook} />}
-          onClick={() => signIn('facebook')}
+          onClick={() =>
+            signIn('facebook', {
+              callbackUrl: ROUTES.MEMBER.COMPLETE_PROFILE,
+            })
+          }
         >
           Me connecter avec Facebook
         </Button>
@@ -82,7 +86,7 @@ export default function LoginForm() {
           startContent={<FontAwesome icon={faGoogle} />}
           onClick={() =>
             signIn('google', {
-              callbackUrl: 'http://localhost:3000/member/complete',
+              callbackUrl: ROUTES.MEMBER.COMPLETE_PROFILE,
             })
           }
         >
