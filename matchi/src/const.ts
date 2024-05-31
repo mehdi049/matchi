@@ -1,3 +1,5 @@
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL
+
 export const ACTIVITY_TYPE_OPTIONS = [
   {
     value: 'public',
@@ -8,3 +10,8 @@ export const ACTIVITY_TYPE_OPTIONS = [
     label: 'Privée (Seulement par invitation)',
   },
 ]
+
+export const API_ROUTES = {
+  REGISTER: APP_URL + '/api/register',
+  SIGNIN: APP_URL + '/api/signin',
+}

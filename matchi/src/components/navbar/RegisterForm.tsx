@@ -1,18 +1,34 @@
 'use client'
 
-import { Button, Divider, Input } from '@nextui-org/react'
-import FontAwesome from '../fontAwesome/FontAwesome'
+import { RegisterUser, RegisterUserProps } from '@/services/public'
+import { zodCheck } from '@/utils/common-zod-check'
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import InputPassword from '../input/InputPassword'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
+import {
+  Button,
+  Divider,
+  Input,
+  Link,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  useDisclosure,
+} from '@nextui-org/react'
+import { useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import FontAwesome from '../fontAwesome/FontAwesome'
+import InputPassword from '../input/InputPassword'
+import ErrorMessage from '../message/ErrorMessage'
+import SuccessMessage from '../message/SuccessMessage'
+import LoginForm from './LoginForm'
+import { signIn } from 'next-auth/react'
 import { ROUTES } from '@/routes'
-import { zodCheck } from '@/utils/common-zod-check'
 
-const FormInputs = z
+const formInputs = z
   .object({
     fName: zodCheck(['required']),
     lName: zodCheck(['required']),
@@ -26,19 +42,41 @@ const FormInputs = z
   })
 
 export default function RegisterForm() {
-  const router = useRouter()
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+
+  const [error, setError] = useState<string>('')
+
+  const { mutate, isPending, isError, isSuccess } = useMutation({
+    mutationFn: (data: RegisterUserProps) => {
+      return RegisterUser({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      })
+    },
+    onError: (error) => {
+      setError(error.message)
+    },
+  })
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(FormInputs),
+    resolver: zodResolver(formInputs),
   })
 
-  const handleRegister = handleSubmit((data) => {
-    router.push(ROUTES.MEMBER.COMPLETE_PROFILE)
-  })
+  const handleRegister = handleSubmit(
+    async (data: z.infer<typeof formInputs>) => {
+      setError('')
+      mutate({
+        name: `${data.fName} ${data.lName}`,
+        email: data.email,
+        password: data.password,
+      })
+    }
+  )
 
   return (
     <>
@@ -102,10 +140,28 @@ export default function RegisterForm() {
           errorMessage={errors.confirm?.message as string}
         />
 
-        <Button color="primary" size="md" onClick={handleRegister}>
+        <Button
+          color="primary"
+          size="md"
+          isLoading={isPending}
+          onClick={handleRegister}
+        >
           Confirmer
         </Button>
       </form>
+
+      <ErrorMessage isVisible={isError}>{error}</ErrorMessage>
+      <SuccessMessage isVisible={isSuccess}>
+        <p>Votre compte est créé avec succés.</p>{' '}
+        <Link
+          onPress={onOpen}
+          className="text-white cursor-pointer"
+          underline="always"
+          size="sm"
+        >
+          Me connecter?
+        </Link>
+      </SuccessMessage>
       <Divider orientation="horizontal" />
       <div className="mt-4 flex flex-col gap-2">
         <Button
@@ -113,6 +169,11 @@ export default function RegisterForm() {
           color="primary"
           size="md"
           startContent={<FontAwesome icon={faFacebook} />}
+          onClick={() =>
+            signIn('facebook', {
+              callbackUrl: ROUTES.MEMBER.PROFILE,
+            })
+          }
         >
           Continuer avec Facebook
         </Button>
@@ -121,18 +182,31 @@ export default function RegisterForm() {
           color="primary"
           size="md"
           startContent={<FontAwesome icon={faGoogle} />}
+          onClick={() =>
+            signIn('google', {
+              callbackUrl: ROUTES.MEMBER.PROFILE,
+            })
+          }
         >
           Continuer avec Google
         </Button>
-        <Button
-          variant="ghost"
-          color="primary"
-          size="md"
-          startContent={<FontAwesome icon={faEnvelope} />}
-        >
-          Continuer avec Email
-        </Button>
       </div>
+
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        isDismissable={false}
+        isKeyboardDismissDisabled={true}
+      >
+        <ModalContent>
+          <ModalHeader className="flex flex-col gap-1">
+            Me connecter
+          </ModalHeader>
+          <ModalBody>
+            <LoginForm />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   )
 }

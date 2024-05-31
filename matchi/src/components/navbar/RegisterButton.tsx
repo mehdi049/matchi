@@ -11,11 +11,7 @@ import {
 import RegisterForm from './RegisterForm'
 
 export default function RegisterButton() {
-  const {
-    isOpen: isOpen,
-    onOpen: onOpen,
-    onOpenChange: onOpenChange,
-  } = useDisclosure()
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   return (
     <>

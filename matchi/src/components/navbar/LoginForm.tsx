@@ -1,35 +1,45 @@
 'use client'
 
-import { Button, Divider, Input, Link } from '@nextui-org/react'
-import FontAwesome from '../fontAwesome/FontAwesome'
+import { ROUTES } from '@/routes'
+import { zodCheck } from '@/utils/common-zod-check'
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
-import InputPassword from '../input/InputPassword'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Button, Divider, Input, Link } from '@nextui-org/react'
+import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { ROUTES } from '@/routes'
-import { zodCheck } from '@/utils/common-zod-check'
-import { signIn } from 'next-auth/react'
+import FontAwesome from '../fontAwesome/FontAwesome'
+import InputPassword from '../input/InputPassword'
+import ErrorMessage from '../message/ErrorMessage'
+import { useState } from 'react'
 
-const FormInputs = z.object({
+const formInputs = z.object({
   email: zodCheck(['required', 'email']),
   password: zodCheck(['required']),
 })
 
 export default function LoginForm() {
   const router = useRouter()
+  const [error, setError] = useState<string>('')
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { isSubmitting, errors },
   } = useForm({
-    resolver: zodResolver(FormInputs),
+    resolver: zodResolver(formInputs),
   })
 
-  const handleLogin = handleSubmit((data) => {
-    router.push(ROUTES.MEMBER.PROFILE)
+  const handleLogin = handleSubmit(async (data: z.infer<typeof formInputs>) => {
+    setError('')
+    let result = await signIn('credentials', {
+      username: data.email,
+      password: data.password,
+      redirect: false,
+    })
+    if (result?.error) setError('Email ou mot de passe incorrect.')
+    else router.push(ROUTES.MEMBER.PROFILE)
   })
 
   return (
@@ -60,9 +70,16 @@ export default function LoginForm() {
         <Link href="#" size="sm" color="danger">
           Mot de passe oublié ?
         </Link>
-        <Button color="primary" size="md" onClick={handleLogin}>
+        <Button
+          color="primary"
+          isLoading={isSubmitting}
+          size="md"
+          onClick={handleLogin}
+        >
           Confirmer
         </Button>
+
+        <ErrorMessage isVisible={error.length > 0}>{error}</ErrorMessage>
       </form>
       <Divider orientation="horizontal" />
       <div className="mt-4 flex flex-col gap-2">
@@ -73,7 +90,7 @@ export default function LoginForm() {
           startContent={<FontAwesome icon={faFacebook} />}
           onClick={() =>
             signIn('facebook', {
-              callbackUrl: ROUTES.MEMBER.COMPLETE_PROFILE,
+              callbackUrl: ROUTES.MEMBER.PROFILE,
             })
           }
         >
@@ -86,7 +103,7 @@ export default function LoginForm() {
           startContent={<FontAwesome icon={faGoogle} />}
           onClick={() =>
             signIn('google', {
-              callbackUrl: ROUTES.MEMBER.COMPLETE_PROFILE,
+              callbackUrl: ROUTES.MEMBER.PROFILE,
             })
           }
         >
