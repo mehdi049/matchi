@@ -8,7 +8,7 @@ import { NextResponse } from 'next/server'
 export async function POST(req: Request) {
   const body = await req.json()
   try {
-    const { first_name, last_name, email, password } = body
+    const { name, email, password } = body
 
     const user = await prisma.user.findUnique({
       where: {
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     // add new user
     await prisma.user.create({
       data: {
-        name: `${first_name} ${last_name}`,
+        name: name,
         email: email,
         password: hashPassword(password),
       },

@@ -7,7 +7,7 @@ export type RegisterUserProps = {
   email: string
   password: string
 }
-export const RegisterUser = ({ name, email, password }: RegisterUserProps) => {
+export const registerUser = ({ name, email, password }: RegisterUserProps) => {
   return fetcher<string>({
     url: API_ROUTES.REGISTER,
     method: 'POST',
@@ -19,7 +19,7 @@ export type LoginUserProps = {
   email: string
   password: string
 }
-export const LoginUser = ({ email, password }: LoginUserProps) => {
+export const loginUser = ({ email, password }: LoginUserProps) => {
   return fetcher<User>({
     url: API_ROUTES.SIGNIN,
     method: 'POST',

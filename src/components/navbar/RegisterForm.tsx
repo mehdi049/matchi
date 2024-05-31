@@ -1,9 +1,8 @@
 'use client'
 
-import { RegisterUser, RegisterUserProps } from '@/services/public'
+import { registerUser, RegisterUserProps } from '@/services/public'
 import { zodCheck } from '@/utils/common-zod-check'
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Button,
@@ -38,7 +37,7 @@ const formInputs = z
   })
   .refine((data) => data.password === data.confirm_password, {
     message: 'Mot de passe non identique.',
-    path: ['confirm'], // path of error
+    path: ['confirm'],
   })
 
 export default function RegisterForm() {
@@ -48,7 +47,7 @@ export default function RegisterForm() {
 
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: (data: RegisterUserProps) => {
-      return RegisterUser({
+      return registerUser({
         name: data.name,
         email: data.email,
         password: data.password,

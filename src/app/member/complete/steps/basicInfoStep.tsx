@@ -67,7 +67,7 @@ export default function BasicInfoStep({ setStep }: StepProps) {
             variant="flat"
             type="text"
             label="Nom"
-            value="Marouani"
+            value={''}
           />
           <Input
             readOnly

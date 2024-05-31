@@ -73,8 +73,6 @@ export default function NavbarTop() {
       <NavbarContent justify="end">
         {session ? <SignedInMenu /> : <SignInMenu />}
       </NavbarContent>
-
-      {JSON.stringify(session?.user)}
     </Navbar>
   )
 }

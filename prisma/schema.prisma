@@ -11,27 +11,26 @@ generator client {
 }
 
 model User {
-    id             String          @id @default(cuid())
-    name           String?
-    email          String          @unique
-    password       String?
-    emailVerified  DateTime?
-    image          String?
-    birthDay       DateTime
-    bio            String?
-    gender         String?
-    country        String?
-    city           String?
-    municipality   String?
-    accounts       Account[]
-    sessions       Session[]
-    interest       Activity[]
-    addedActivites AddedActivity[]
-    // Optional for WebAuthn support
-    //Authenticator Authenticator[]
+    id            String     @id @default(cuid())
+    name          String?
+    email         String     @unique
+    password      String?
+    emailVerified DateTime?
+    image         String?
+    birthDay      DateTime?
+    bio           String?
+    gender        String?
+    country       String?
+    city          String?
+    municipality  String?
+    accounts      Account[]
+    sessions      Session[]
+    interest      Activity[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    AddedActivity AddedActivity[]
 }
 
 model Account {
@@ -82,21 +81,21 @@ model Activity {
 }
 
 model AddedActivity {
-    id              Int      @id @default(autoincrement())
-    description     String
-    country         String
-    city            String
-    municipality    String
-    place           String
-    googleMap       String?
-    date            DateTime
-    start           DateTime
-    end             DateTime
-    attendeesNumber Int?
-    price           Float?
-    currency        String
-    type            String
-    createdAt       DateTime @default(now())
+    id           Int      @id @default(autoincrement())
+    description  String
+    country      String
+    city         String
+    municipality String
+    place        String
+    googleMap    String?
+    date         DateTime
+    start        DateTime
+    end          DateTime
+    maxAttendees Int?
+    price        Float?
+    currency     String
+    type         String
+    createdAt    DateTime @default(now())
 
     userId    String
     createdBy User   @relation(fields: [userId], references: [id], onDelete: Cascade)

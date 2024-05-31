@@ -6,15 +6,6 @@ import { useContext } from 'react'
 
 export default function ProfileCompletionProgress() {
   const context = useContext(ProgressContext)
-
-  /*useEffect(() => {
-    const interval = setInterval(() => {
-      setValue((v) => (v >= 100 ? 0 : v + 10))
-    }, 500)
-
-    return () => clearInterval(interval)
-  }, [])*/
-
   return (
     <Card>
       <CardBody>
