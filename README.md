@@ -1,2 +1,15 @@
-# matchi
-Application d'aides de rejoint ou de création de groupes de jeux d'équipes
+# Matchi
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```

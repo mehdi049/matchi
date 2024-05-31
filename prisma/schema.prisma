@@ -17,6 +17,7 @@ model User {
     password       String?
     emailVerified  DateTime?
     image          String?
+    birthDay       DateTime
     bio            String?
     gender         String?
     country        String?
@@ -24,6 +25,7 @@ model User {
     municipality   String?
     accounts       Account[]
     sessions       Session[]
+    interest       Activity[]
     addedActivites AddedActivity[]
     // Optional for WebAuthn support
     //Authenticator Authenticator[]
@@ -72,9 +74,11 @@ model VerificationToken {
 }
 
 model Activity {
-    id    Int     @id @default(autoincrement())
-    name  String
-    image String?
+    id     Int     @id @default(autoincrement())
+    name   String
+    image  String?
+    User   User?   @relation(fields: [userId], references: [id])
+    userId String?
 }
 
 model AddedActivity {
