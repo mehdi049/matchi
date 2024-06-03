@@ -7,6 +7,7 @@ import Container from '@/components/container/Container'
 import Footer from '@/components/footer/Footer'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import { Providers } from '@/providers/providers'
+import { UserContextProvider } from './context/UserContext'
 
 export const metadata: Metadata = {
   title: 'Matchi',
@@ -23,9 +24,11 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-gray-50">
         <Providers>
-          <NavbarTop />
-          <Container className="mt-10">{children}</Container>
-          <Footer />
+          <UserContextProvider>
+            <NavbarTop />
+            <Container className="mt-10">{children}</Container>
+            <Footer />
+          </UserContextProvider>
         </Providers>
       </body>
     </html>

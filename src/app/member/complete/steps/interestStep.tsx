@@ -11,8 +11,11 @@ import { useContext, useState } from 'react'
 import activities from '../../../../data/activities.json'
 import ErrorMessage from '@/components/message/ErrorMessage'
 import { ProgressContext } from '../context/progressContext'
+import { UserContext } from '../../context/UserContext'
+import { UserResponse } from '@/types/User'
 
 export default function InterestStep({ setStep }: StepProps) {
+  const { user, setUser } = useContext(UserContext)
   const router = useRouter()
   const context = useContext(ProgressContext)
 
@@ -37,11 +40,16 @@ export default function InterestStep({ setStep }: StepProps) {
 
   const handleNextStep = () => {
     setIsErrorVisible(false)
+
     if (selectedActivities.length > 0) {
       context.setProgress(100)
 
       setTimeout(() => {
-        router.push('/member/profile')
+        setUser((prevState: UserResponse) => ({
+          ...prevState,
+          activities: selectedActivities,
+        }))
+        //router.push('/member/profile')
       }, 1000)
     } else setIsErrorVisible(true)
   }

@@ -16,6 +16,8 @@ import { Dispatch, SetStateAction, useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ProgressContext } from '../context/progressContext'
+import { UserContext } from '../../context/UserContext'
+import { UserResponse } from '@/types/User'
 
 export type StepProps = {
   setStep: Dispatch<SetStateAction<number>>
@@ -27,6 +29,7 @@ const FormInputs = z.object({
 })
 
 export default function BasicInfoStep({ setStep }: StepProps) {
+  const { user, setUser } = useContext(UserContext)
   const {
     register,
     handleSubmit,
@@ -40,6 +43,11 @@ export default function BasicInfoStep({ setStep }: StepProps) {
 
   const handleNextStep = handleSubmit((data) => {
     setStep(2)
+    setUser((prevState: UserResponse) => ({
+      ...prevState,
+      birthDay: data.birthday,
+      gender: data.gender,
+    }))
     context.setProgress(33)
   })
 
@@ -50,7 +58,7 @@ export default function BasicInfoStep({ setStep }: StepProps) {
 
         <div className="flex gap-2">
           <Avatar
-            src="https://i.pravatar.cc/150?u=a04258114e29026708c"
+            src={user.image} //"https://i.pravatar.cc/150?u=a04258114e29026708c"
             className="w-40 h-40"
           />
           <div className=" place-content-end">
@@ -66,16 +74,8 @@ export default function BasicInfoStep({ setStep }: StepProps) {
             size="sm"
             variant="flat"
             type="text"
-            label="Nom"
-            value={''}
-          />
-          <Input
-            readOnly
-            size="sm"
-            variant="flat"
-            type="text"
-            label="Prénom"
-            value="Mehdi"
+            label="Nom et prénom"
+            value={user.name}
           />
           <Input
             readOnly
@@ -83,7 +83,7 @@ export default function BasicInfoStep({ setStep }: StepProps) {
             variant="flat"
             type="email"
             label="Email"
-            value="mehdi.marouani@gmail.com"
+            value={user.email}
           />
           <Input
             {...register('birthday')}
@@ -98,11 +98,12 @@ export default function BasicInfoStep({ setStep }: StepProps) {
                 ? (errors.birthday?.message as string).length > 0
                 : false
             }
+            defaultValue={user.birthDay?.toString()}
           />
           <Controller
             control={control}
             name="gender"
-            defaultValue="M"
+            defaultValue={user.gender}
             render={({ field }) => (
               <RadioGroup label="Sexe" {...field}>
                 <Radio value="M">Homme</Radio>

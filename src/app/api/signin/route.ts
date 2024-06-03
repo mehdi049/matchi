@@ -4,7 +4,6 @@ import { hashPassword } from '@/utils/string'
 import { StatusCodes } from 'http-status-codes'
 
 import { NextResponse } from 'next/server'
-import { use } from 'react'
 
 export async function POST(req: Request) {
   const body = await req.json()
@@ -15,13 +14,6 @@ export async function POST(req: Request) {
       where: {
         email: email,
         password: hashPassword(password),
-      },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        image: true,
-        createdAt: true,
       },
     })
 

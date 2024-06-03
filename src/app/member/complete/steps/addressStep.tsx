@@ -18,14 +18,17 @@ import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useContext } from 'react'
 import { ProgressContext } from '../context/progressContext'
+import { UserContext } from '../../context/UserContext'
+import { UserResponse } from '@/types/User'
 
 const FormInputs = z.object({
   country: zodCheck(['string']),
   city: zodCheck(['required']),
-  county: zodCheck(['required']),
+  municipality: zodCheck(['required']),
 })
 
 export default function MyAddressStep({ setStep }: StepProps) {
+  const { user, setUser } = useContext(UserContext)
   const {
     register,
     handleSubmit,
@@ -39,6 +42,12 @@ export default function MyAddressStep({ setStep }: StepProps) {
 
   const handleNextStep = handleSubmit((data) => {
     setStep(3)
+    setUser((prevState: UserResponse) => ({
+      ...prevState,
+      country: 'Tunisia',
+      city: data.city,
+      municipality: data.municipality,
+    }))
     context.setProgress(66)
   })
 
@@ -73,6 +82,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
                   ? (errors.city?.message as string).length > 0
                   : false
               }
+              defaultSelectedKeys={user.city}
             >
               {cities.map((city) => (
                 <SelectItem key={city.name} value={city.name}>
@@ -84,7 +94,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
         />
         <Controller
           control={control}
-          name="county"
+          name="municipality"
           render={({ field }) => (
             <Select
               {...field}
@@ -92,18 +102,19 @@ export default function MyAddressStep({ setStep }: StepProps) {
               label="Municipalité"
               placeholder="Selectionnez une municipalité"
               size="sm"
-              errorMessage={errors.county?.message as string}
+              errorMessage={errors.municipality?.message as string}
               isInvalid={
-                errors.county?.message
-                  ? (errors.county?.message as string).length > 0
+                errors.municipality?.message
+                  ? (errors.municipality?.message as string).length > 0
                   : false
               }
+              defaultSelectedKeys={user.municipality}
             >
               {(
                 cities.find((city) => city.name === watch('city')) as any
-              )?.counties.map((county: string) => (
-                <SelectItem key={county} value={county}>
-                  {county}
+              )?.municipalities.map((municipality: string) => (
+                <SelectItem key={municipality} value={municipality}>
+                  {municipality}
                 </SelectItem>
               ))}
             </Select>

@@ -138,7 +138,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
             >
               {(
                 cities.find((city) => city.name === watch('city')) as any
-              )?.counties.map((county: string) => (
+              )?.municipalities.map((county: string) => (
                 <SelectItem key={county} value={county}>
                   {county}
                 </SelectItem>

@@ -17,7 +17,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async session({ session, token }) {
       if (token && session.user) session.user.id = token.id as string
-
       return session
     },
     async jwt({ token, account, profile }) {
@@ -39,6 +38,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: username as string,
             password: password as string,
           })
+
+          console.log(res.body)
           // user not found
           if (res.message) return null
 

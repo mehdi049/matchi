@@ -1,7 +1,7 @@
 [
   {
     "name": "Bizerte",
-    "counties": [
+    "municipalities": [
       "Zarzouna",
       "Utique",
       "Tinja",
@@ -21,7 +21,7 @@
   },
   {
     "name": "Béja",
-    "counties": [
+    "municipalities": [
       "Téboursouk",
       "Thibar",
       "Testour",
@@ -38,7 +38,7 @@
   },
   {
     "name": "Gabès",
-    "counties": [
+    "municipalities": [
       "Nouvelle Matmata",
       "Métouia",
       "Matmata",
@@ -54,7 +54,7 @@
   },
   {
     "name": "Gafsa",
-    "counties": [
+    "municipalities": [
       "Sidi Aïch",
       "Sened",
       "Redeyef",
@@ -72,7 +72,7 @@
   },
   {
     "name": "Grand Tunis",
-    "counties": [
+    "municipalities": [
       "Ariana Ville",
       "Ariana Soghra",
       "Sidi Thabet",
@@ -182,7 +182,7 @@
   },
   {
     "name": "Jendouba",
-    "counties": [
+    "municipalities": [
       "Tabarka",
       "Oued Meliz",
       "Jendouba Nord",
@@ -196,7 +196,7 @@
   },
   {
     "name": "Kairouan",
-    "counties": [
+    "municipalities": [
       "Sbikha",
       "Nasrallah",
       "Kairouan Sud",
@@ -214,62 +214,62 @@
   },
   {
     "name": "Kasserine",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Kébili",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "La Manouba",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Le Kef",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Mahdia",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Monastir",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Médenine",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Nabeul",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Sfax",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Sidi Bouzid",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Siliana",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Sousse",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Tataouine",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Tozeur",
-    "counties": []
+    "municipalities": []
   },
   {
     "name": "Zaghouan",
-    "counties": []
+    "municipalities": []
   }
 ]
