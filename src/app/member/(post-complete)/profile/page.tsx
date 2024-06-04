@@ -20,15 +20,17 @@ import {
 } from '@nextui-org/react'
 import activities from '../../../../data/activities.json'
 import ErrorMessage from '@/components/message/ErrorMessage'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { zodCheck } from '@/utils/common-zod-check'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
+import { UploadProfile } from '@/components/upload/UploadProfile'
+import { useSession } from 'next-auth/react'
+import { UserContext } from '../../context/UserContext'
 
 const FormInputs = z.object({
-  fName: zodCheck(['required']),
-  lName: zodCheck(['required']),
+  name: zodCheck(['required']),
   birthday: zodCheck(['required', 'date']),
   bio: zodCheck(['string']),
   gender: zodCheck(['gender']),
@@ -39,6 +41,7 @@ const FormInputs = z.object({
 })
 
 export default function Page() {
+  const { user } = useContext(UserContext)
   const {
     register,
     handleSubmit,
@@ -79,17 +82,7 @@ export default function Page() {
         <H2>Mon profil</H2>
 
         <H3>Information de base</H3>
-        <div className="flex gap-2">
-          <Avatar
-            src="https://i.pravatar.cc/150?u=a04258114e29026708c"
-            className="w-40 h-40"
-          />
-          <div className=" place-content-end">
-            <Button size="sm" variant="ghost" color="primary">
-              Modifier
-            </Button>
-          </div>
-        </div>
+        <UploadProfile currentImg={user.image} />
 
         <form className="mb-4 flex flex-col gap-4">
           <Input
@@ -98,27 +91,12 @@ export default function Page() {
             size="sm"
             variant="flat"
             type="text"
-            label="Nom"
-            value="Marouani"
-            errorMessage={errors.lName?.message as string}
+            label="Nom et prénom"
+            defaultValue={user.name}
+            errorMessage={errors.name?.message as string}
             isInvalid={
-              errors.lName?.message
-                ? (errors.lName?.message as string).length > 0
-                : false
-            }
-          />
-          <Input
-            {...register('fName')}
-            isRequired
-            size="sm"
-            variant="flat"
-            type="text"
-            label="Prénom"
-            value="Mehdi"
-            errorMessage={errors.fName?.message as string}
-            isInvalid={
-              errors.fName?.message
-                ? (errors.fName?.message as string).length > 0
+              errors.name?.message
+                ? (errors.name?.message as string).length > 0
                 : false
             }
           />
@@ -135,19 +113,21 @@ export default function Page() {
                 ? (errors.birthday?.message as string).length > 0
                 : false
             }
+            defaultValue={user.birthDay?.toString()}
           />
           <Textarea
             {...register('bio')}
             variant="flat"
             label="Bio"
             placeholder="Écrivez un peu sur vous"
+            defaultValue={user.bio}
           />
           <Controller
             control={control}
             name="gender"
             defaultValue="M"
             render={({ field }) => (
-              <RadioGroup label="Sexe" {...field}>
+              <RadioGroup label="Sexe" {...field} defaultValue={user.gender}>
                 <Radio value="M">Homme</Radio>
                 <Radio value="F">Femme</Radio>
               </RadioGroup>
@@ -184,6 +164,7 @@ export default function Page() {
                     ? (errors.city?.message as string).length > 0
                     : false
                 }
+                defaultSelectedKeys={user.city}
               >
                 {cities.map((city) => (
                   <SelectItem key={city.name} value={city.name}>
@@ -195,7 +176,7 @@ export default function Page() {
           />
           <Controller
             control={control}
-            name="county"
+            name="municipality"
             render={({ field }) => (
               <Select
                 {...field}
@@ -203,18 +184,19 @@ export default function Page() {
                 label="Municipalité"
                 placeholder="Selectionnez une municipalité"
                 size="sm"
-                errorMessage={errors.county?.message as string}
+                errorMessage={errors.municipality?.message as string}
                 isInvalid={
-                  errors.county?.message
-                    ? (errors.county?.message as string).length > 0
+                  errors.municipality?.message
+                    ? (errors.municipality?.message as string).length > 0
                     : false
                 }
+                defaultSelectedKeys={user.municipality}
               >
                 {(
                   cities.find((city) => city.name === watch('city')) as any
-                )?.municipalities.map((county: string) => (
-                  <SelectItem key={county} value={county}>
-                    {county}
+                )?.municipalities.map((municipality: string) => (
+                  <SelectItem key={municipality} value={municipality}>
+                    {municipality}
                   </SelectItem>
                 ))}
               </Select>

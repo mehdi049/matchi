@@ -4,7 +4,6 @@ import H2 from '@/components/typography/H2'
 import { zodCheck } from '@/utils/common-zod-check'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  Avatar,
   Button,
   Card,
   CardBody,
@@ -18,6 +17,7 @@ import { z } from 'zod'
 import { ProgressContext } from '../context/progressContext'
 import { UserContext } from '../../context/UserContext'
 import { UserResponse } from '@/types/User'
+import { UploadProfile } from '@/components/upload/UploadProfile'
 
 export type StepProps = {
   setStep: Dispatch<SetStateAction<number>>
@@ -30,6 +30,7 @@ const FormInputs = z.object({
 
 export default function BasicInfoStep({ setStep }: StepProps) {
   const { user, setUser } = useContext(UserContext)
+
   const {
     register,
     handleSubmit,
@@ -56,17 +57,7 @@ export default function BasicInfoStep({ setStep }: StepProps) {
       <CardBody className="flex gap-4 flex-col">
         <H2>Mes informations de base</H2>
 
-        <div className="flex gap-2">
-          <Avatar
-            src={user.image} //"https://i.pravatar.cc/150?u=a04258114e29026708c"
-            className="w-40 h-40"
-          />
-          <div className=" place-content-end">
-            <Button size="sm" variant="ghost" color="primary">
-              Modifier
-            </Button>
-          </div>
-        </div>
+        <UploadProfile currentImg={user.image} />
 
         <form className="mb-4 flex flex-col gap-4">
           <Input

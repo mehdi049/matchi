@@ -15,7 +15,7 @@ import { UserContext } from '../../context/UserContext'
 import { UserResponse } from '@/types/User'
 
 export default function InterestStep({ setStep }: StepProps) {
-  const { user, setUser } = useContext(UserContext)
+  const { setUser } = useContext(UserContext)
   const router = useRouter()
   const context = useContext(ProgressContext)
 

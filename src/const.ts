@@ -1,4 +1,6 @@
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL
+export const MAX_UPLOAD_SIZE_IMG = process.env
+  .NEXT_PUBLIC_MAX_UPLOAD_SIZE_IMG as string
 
 export const ACTIVITY_TYPE_OPTIONS = [
   {
@@ -12,6 +14,7 @@ export const ACTIVITY_TYPE_OPTIONS = [
 ]
 
 export const API_ROUTES = {
+  UPLOAD: APP_URL + '/api/upload',
   REGISTER: APP_URL + '/api/register',
   SIGNIN: APP_URL + '/api/signin',
   USER: {
