@@ -28,9 +28,11 @@ import { UserContext } from '../../context/UserContext'
 import { dateConverterInput } from '@/utils/date'
 import useGetInterests from '@/hooks/user/useGetInterests'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
-import { UserInterestResponse } from '@/types/User'
+import { UserInterestResponse, UserResponse } from '@/types/User'
+import useUpdateUser from '@/hooks/user/useUpdateUser'
+import SuccessMessage from '@/components/message/SuccessMessage'
 
-const FormInputs = z.object({
+const formInputs = z.object({
   name: zodCheck(['required']),
   birthday: zodCheck(['required', 'date']),
   bio: zodCheck(['string']),
@@ -38,20 +40,30 @@ const FormInputs = z.object({
 
   country: zodCheck(['string']),
   city: zodCheck(['required']),
-  county: zodCheck(['required']),
+  municipality: zodCheck(['required']),
 })
 
 export default function Page() {
   const { user } = useContext(UserContext)
+  const [selectedCity, setSelectedCity] = useState(user.city)
+  const {
+    mutate,
+    isPending,
+    isError,
+    error,
+    isSuccess,
+    data: dataUpdate,
+  } = useUpdateUser({})
   const { data, isLoading } = useGetInterests()
+
   const {
     register,
     handleSubmit,
     control,
-    watch,
+    //watch,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(FormInputs),
+    resolver: zodResolver(formInputs),
   })
 
   const [selectedActivities, setSelectedActivities] = useState<number[]>([])
@@ -86,7 +98,33 @@ export default function Page() {
   const handleSaveProfile = handleSubmit((data) => {
     setIsErrorVisible(false)
     if (selectedActivities.length > 0) {
-      // TODO
+      let userInterests: UserInterestResponse[] = []
+      selectedActivities.map((activity) => {
+        userInterests.push({
+          activityId: activity,
+        })
+      })
+
+      mutate({
+        id: user.id,
+        user: {
+          ...user,
+          name: data.name,
+          birthDay: new Date(data.birthday),
+          bio: data.bio,
+          gender: data.gender,
+          city: selectedCity,
+          municipality: data.municipality,
+        },
+      })
+      mutate({
+        id: user.id,
+        user: {
+          ...user,
+          interests: userInterests,
+        },
+        updateInterests: true,
+      })
     } else setIsErrorVisible(true)
   })
 
@@ -100,7 +138,7 @@ export default function Page() {
 
         <form className="mb-4 flex flex-col gap-4">
           <Input
-            {...register('lName')}
+            {...register('name')}
             isRequired
             size="sm"
             variant="flat"
@@ -139,7 +177,7 @@ export default function Page() {
           <Controller
             control={control}
             name="gender"
-            defaultValue="M"
+            defaultValue={user.gender ?? 'M'}
             render={({ field }) => (
               <RadioGroup label="Sexe" {...field} defaultValue={user.gender}>
                 <Radio value="M">Homme</Radio>
@@ -180,6 +218,9 @@ export default function Page() {
                     : false
                 }
                 defaultSelectedKeys={user.city ? [user.city] : []}
+                onChange={(event) => {
+                  setSelectedCity(event.target.value)
+                }}
               >
                 {cities.map((city) => (
                   <SelectItem key={city.name} value={city.name}>
@@ -211,7 +252,7 @@ export default function Page() {
                 }
               >
                 {(
-                  cities.find((city) => city.name === watch('city')) as any
+                  cities.find((city) => city.name === selectedCity) as any
                 )?.municipalities.map((municipality: string) => (
                   <SelectItem key={municipality} value={municipality}>
                     {municipality}
@@ -260,11 +301,17 @@ export default function Page() {
             variant="solid"
             color="primary"
             className="max-w-24"
-            onClick={() => handleSaveProfile()}
+            onClick={handleSaveProfile}
+            isLoading={isPending}
           >
             Valider
           </Button>
         </div>
+
+        <ErrorMessage isVisible={isError}>{error?.message}</ErrorMessage>
+        <SuccessMessage isVisible={isSuccess && !isPending} autoClose>
+          {dataUpdate?.message}
+        </SuccessMessage>
       </CardBody>
     </Card>
   )

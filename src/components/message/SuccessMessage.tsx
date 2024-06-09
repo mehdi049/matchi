@@ -17,7 +17,7 @@ export default function SuccessMessage({
     if (autoClose && isVisible)
       setTimeout(() => {
         setForceClose(true)
-      }, HIDE_DELAY * 5)
+      }, 1000 * HIDE_DELAY)
     else setForceClose(false)
   }, [autoClose, isVisible])
 

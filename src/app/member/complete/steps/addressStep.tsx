@@ -16,14 +16,14 @@ import { zodCheck } from '@/utils/common-zod-check'
 import { z } from 'zod'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { ProgressContext } from '../context/progressContext'
 import { UserContext } from '../../context/UserContext'
 import { UserResponse } from '@/types/User'
 import useUpdateUser from '@/hooks/user/useUpdateUser'
 import ErrorMessage from '@/components/message/ErrorMessage'
 
-const FormInputs = z.object({
+const formInputs = z.object({
   country: zodCheck(['string']),
   city: zodCheck(['required']),
   municipality: zodCheck(['required']),
@@ -31,6 +31,8 @@ const FormInputs = z.object({
 
 export default function MyAddressStep({ setStep }: StepProps) {
   const { user, setUser } = useContext(UserContext)
+  const [selectedCity, setSelectedCity] = useState(user.city)
+
   const { mutate, isPending, isError, error } = useUpdateUser({
     onSuccess: () => {
       setStep(3)
@@ -42,10 +44,10 @@ export default function MyAddressStep({ setStep }: StepProps) {
     register,
     handleSubmit,
     control,
-    watch,
+    //watch,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(FormInputs),
+    resolver: zodResolver(formInputs),
   })
   const context = useContext(ProgressContext)
 
@@ -53,7 +55,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
     setUser((prevState: UserResponse) => ({
       ...prevState,
       country: 'Tunisia',
-      city: data.city,
+      city: selectedCity,
       municipality: data.municipality,
     }))
     mutate({
@@ -61,7 +63,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
       user: {
         ...user,
         country: 'Tunisia',
-        city: data.city,
+        city: selectedCity,
         municipality: data.municipality,
       },
     })
@@ -72,7 +74,6 @@ export default function MyAddressStep({ setStep }: StepProps) {
       <H2>Mon adresse</H2>
 
       <form className="mb-4 flex flex-col gap-4">
-        {user.city}
         <Input
           {...register('country')}
           readOnly
@@ -101,6 +102,9 @@ export default function MyAddressStep({ setStep }: StepProps) {
                   : false
               }
               defaultSelectedKeys={user.city ? [user.city] : []}
+              onChange={(event) => {
+                setSelectedCity(event.target.value)
+              }}
             >
               {cities.map((city) => (
                 <SelectItem key={city.name} value={city.name}>
@@ -110,6 +114,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
             </Select>
           )}
         />
+
         <Controller
           control={control}
           name="municipality"
@@ -130,9 +135,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
               defaultSelectedKeys={user.municipality ? [user.municipality] : []}
             >
               {(
-                cities.find((city) =>
-                  city.name === user.city ? user.city : watch('city')
-                ) as any
+                cities.find((city) => city.name === selectedCity) as any
               )?.municipalities.map((municipality: string) => (
                 <SelectItem key={municipality} value={municipality}>
                   {municipality}
