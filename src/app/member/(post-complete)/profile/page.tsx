@@ -6,7 +6,6 @@ import H2 from '@/components/typography/H2'
 import H3 from '@/components/typography/H3'
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import {
-  Avatar,
   Button,
   Card,
   CardBody,
@@ -20,14 +19,16 @@ import {
 } from '@nextui-org/react'
 import activities from '../../../../data/activities.json'
 import ErrorMessage from '@/components/message/ErrorMessage'
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { zodCheck } from '@/utils/common-zod-check'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { UploadProfile } from '@/components/upload/UploadProfile'
-import { useSession } from 'next-auth/react'
 import { UserContext } from '../../context/UserContext'
+import { dateConverterInput } from '@/utils/date'
+import useGetInterests from '@/hooks/user/useGetInterests'
+import IsLoadingMessage from '@/components/message/IsLoadingMessage'
 
 const FormInputs = z.object({
   name: zodCheck(['required']),
@@ -42,6 +43,7 @@ const FormInputs = z.object({
 
 export default function Page() {
   const { user } = useContext(UserContext)
+  const { data, isLoading } = useGetInterests()
   const {
     register,
     handleSubmit,
@@ -52,18 +54,30 @@ export default function Page() {
     resolver: zodResolver(FormInputs),
   })
 
-  const [selectedActivities, setSelectedActivities] = useState<string[]>([])
+  const [selectedActivities, setSelectedActivities] = useState<number[]>([])
   const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false)
 
-  const handleAddRemoveActivity = (activity: string) => {
-    if (activity) {
+  useMemo(() => {
+    let _selectedActivities: number[] = []
+    user.interests?.map((activity) => {
+      _selectedActivities.push(activity.id)
+    })
+    setSelectedActivities(_selectedActivities)
+  }, [])
+
+  const handleAddRemoveActivity = (activityId: number) => {
+    setIsErrorVisible(false)
+
+    if (activityId) {
       let _selectedActivities = [...selectedActivities]
 
       //if selected
-      if (_selectedActivities.includes(activity))
-        _selectedActivities = _selectedActivities.filter((x) => x !== activity)
+      if (_selectedActivities.includes(activityId))
+        _selectedActivities = _selectedActivities.filter(
+          (x) => x !== activityId
+        )
       //if not selected
-      else _selectedActivities.push(activity)
+      else _selectedActivities.push(activityId)
 
       setSelectedActivities(_selectedActivities)
     }
@@ -113,7 +127,7 @@ export default function Page() {
                 ? (errors.birthday?.message as string).length > 0
                 : false
             }
-            defaultValue={user.birthDay?.toString()}
+            defaultValue={user.birthDay && dateConverterInput(user.birthDay)}
           />
           <Textarea
             {...register('bio')}
@@ -151,6 +165,7 @@ export default function Page() {
           <Controller
             control={control}
             name="city"
+            defaultValue={user.city}
             render={({ field }) => (
               <Select
                 {...field}
@@ -164,7 +179,7 @@ export default function Page() {
                     ? (errors.city?.message as string).length > 0
                     : false
                 }
-                defaultSelectedKeys={user.city}
+                defaultSelectedKeys={user.city ? [user.city] : []}
               >
                 {cities.map((city) => (
                   <SelectItem key={city.name} value={city.name}>
@@ -177,6 +192,7 @@ export default function Page() {
           <Controller
             control={control}
             name="municipality"
+            defaultValue={user.municipality}
             render={({ field }) => (
               <Select
                 {...field}
@@ -190,7 +206,9 @@ export default function Page() {
                     ? (errors.municipality?.message as string).length > 0
                     : false
                 }
-                defaultSelectedKeys={user.municipality}
+                defaultSelectedKeys={
+                  user.municipality ? [user.municipality] : []
+                }
               >
                 {(
                   cities.find((city) => city.name === watch('city')) as any
@@ -207,26 +225,25 @@ export default function Page() {
         <H3>Mes centres d&apos;intérêt</H3>
 
         <div className="flex gap-2 flex-wrap mt-4">
-          {activities.map((activity, key) => {
+          {isLoading && <IsLoadingMessage type="flat" />}
+          {data?.body?.map((activity, key) => {
             return (
               <div
                 className="inline-block cursor-pointer"
                 key={key}
-                onClick={() =>
-                  handleAddRemoveActivity(activity.value as string)
-                }
+                onClick={() => handleAddRemoveActivity(activity.id)}
               >
-                {selectedActivities.includes(activity.value as string) ? (
+                {selectedActivities.includes(activity.id) ? (
                   <Chip
                     startContent={<FontAwesome icon={faCircleCheck} />}
                     color="primary"
                     size="lg"
                   >
-                    {activity.label}
+                    {activity.name}
                   </Chip>
                 ) : (
                   <Chip size="lg" variant="flat">
-                    {activity.label}
+                    {activity.name}
                   </Chip>
                 )}
               </div>

@@ -1,15 +1,39 @@
 import { Avatar, Button } from '@nextui-org/react'
-import IsLoadingMessage from '../message/IsLoadingMessage'
 import ErrorMessage from '../message/ErrorMessage'
-import { useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import useUploadMediaImage from '@/hooks/media/useUploadMediaImage'
+import useUpdateUser from '@/hooks/user/useUpdateUser'
+import { UserContext } from '@/app/member/context/UserContext'
+import SuccessMessage from '../message/SuccessMessage'
 
 type UploadProfileProps = {
   currentImg: string
 }
 export const UploadProfile = ({ currentImg }: UploadProfileProps) => {
   const inputFileRef = useRef<HTMLInputElement>(null)
-  const { mutate, data, isError, isPending, error } = useUploadMediaImage({})
+  const { user } = useContext(UserContext)
+  const {
+    mutate: mutateUpdateUser,
+    isSuccess: isSuccessUpdateUser,
+    isPending: isPendingUpdateUser,
+  } = useUpdateUser({})
+
+  const { mutate, data, isError, isPending, error, isSuccess } =
+    useUploadMediaImage({})
+
+  // update user when image is uploaded
+  useEffect(() => {
+    if (isSuccess) {
+      mutateUpdateUser({
+        id: user.id,
+        user: {
+          ...user,
+          image: data?.url as string,
+        },
+      })
+    }
+  }, [isPending])
+
   const upload = async () => {
     if (inputFileRef.current?.files) {
       const file = inputFileRef.current.files[0]
@@ -42,11 +66,16 @@ export const UploadProfile = ({ currentImg }: UploadProfileProps) => {
           />
         </div>
       </div>
-      {isError && (
-        <ErrorMessage className="mt-2 max-w-max" isVisible>
-          {error.message}
-        </ErrorMessage>
-      )}
+      <ErrorMessage className="mt-2 max-w-max" isVisible={isError}>
+        {error?.message}
+      </ErrorMessage>
+      <SuccessMessage
+        isVisible={isSuccessUpdateUser && !isPendingUpdateUser}
+        autoClose={true}
+        className="mt-2 max-w-max"
+      >
+        Photo de profil mis à jour avec succés
+      </SuccessMessage>
     </div>
   )
 }

@@ -12,6 +12,6 @@ export const uploadMediaImage = async (file: File) => {
     })
     return response
   } catch (error) {
-    throw Error('Erreur est survenu, veuillez réessayer plus tard')
+    throw Error('Une erreur est survenu, veuillez réessayer plus tard')
   }
 }

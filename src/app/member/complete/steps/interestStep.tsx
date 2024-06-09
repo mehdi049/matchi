@@ -6,33 +6,64 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import { Button, CardBody, Chip } from '@nextui-org/react'
 import { StepProps } from './basicInfoStep'
 import { useRouter } from 'next/navigation'
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 
-import activities from '../../../../data/activities.json'
 import ErrorMessage from '@/components/message/ErrorMessage'
 import { ProgressContext } from '../context/progressContext'
 import { UserContext } from '../../context/UserContext'
 import { UserResponse } from '@/types/User'
+import useUpdateUser from '@/hooks/user/useUpdateUser'
+import useGetInterests from '@/hooks/user/useGetInterests'
+import IsLoadingMessage from '@/components/message/IsLoadingMessage'
+import { ROUTES } from '@/routes'
 
 export default function InterestStep({ setStep }: StepProps) {
-  const { setUser } = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext)
+
+  const { data, isLoading } = useGetInterests()
+
+  const { mutate, isPending, isError, error } = useUpdateUser({
+    onSuccess: () => {
+      context.setProgress(100)
+      setTimeout(() => {
+        setUser((prevState: UserResponse) => ({
+          ...prevState,
+          interests: data?.body?.filter((activity) =>
+            selectedActivities.includes(activity.id)
+          ),
+        }))
+        router.push(ROUTES.MEMBER.PROFILE)
+      }, 1000)
+    },
+  })
+
   const router = useRouter()
   const context = useContext(ProgressContext)
 
-  const [selectedActivities, setSelectedActivities] = useState<string[]>([])
+  const [selectedActivities, setSelectedActivities] = useState<number[]>([])
   const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false)
 
-  const handleAddRemoveActivity = (activity: string) => {
+  useMemo(() => {
+    let _selectedActivities: number[] = []
+    user.interests?.map((activity) => {
+      _selectedActivities.push(activity.id)
+    })
+    setSelectedActivities(_selectedActivities)
+  }, [])
+
+  const handleAddRemoveActivity = (activityId: number) => {
     setIsErrorVisible(false)
 
-    if (activity) {
+    if (activityId) {
       let _selectedActivities = [...selectedActivities]
 
       //if selected
-      if (_selectedActivities.includes(activity))
-        _selectedActivities = _selectedActivities.filter((x) => x !== activity)
+      if (_selectedActivities.includes(activityId))
+        _selectedActivities = _selectedActivities.filter(
+          (x) => x !== activityId
+        )
       //if not selected
-      else _selectedActivities.push(activity)
+      else _selectedActivities.push(activityId)
 
       setSelectedActivities(_selectedActivities)
     }
@@ -42,15 +73,16 @@ export default function InterestStep({ setStep }: StepProps) {
     setIsErrorVisible(false)
 
     if (selectedActivities.length > 0) {
-      context.setProgress(100)
-
-      setTimeout(() => {
-        setUser((prevState: UserResponse) => ({
-          ...prevState,
-          activities: selectedActivities,
-        }))
-        //router.push('/member/profile')
-      }, 1000)
+      mutate({
+        id: user.id,
+        user: {
+          ...user,
+          interests: data?.body?.filter((activity) =>
+            selectedActivities.includes(activity.id)
+          ),
+        },
+        updateInterests: true,
+      })
     } else setIsErrorVisible(true)
   }
 
@@ -61,24 +93,25 @@ export default function InterestStep({ setStep }: StepProps) {
         Sélectionnez <span className="underline">au moin une activité.</span>
       </p>
       <div className="flex gap-2 flex-wrap mt-4">
-        {activities.map((activity, key) => {
+        {isLoading && <IsLoadingMessage type="flat" />}
+        {data?.body?.map((activity, key) => {
           return (
             <div
               className="inline-block cursor-pointer"
               key={key}
-              onClick={() => handleAddRemoveActivity(activity.value as string)}
+              onClick={() => handleAddRemoveActivity(activity.id)}
             >
-              {selectedActivities.includes(activity.value as string) ? (
+              {selectedActivities.includes(activity.id) ? (
                 <Chip
                   startContent={<FontAwesome icon={faCircleCheck} />}
                   color="primary"
                   size="lg"
                 >
-                  {activity.label}
+                  {activity.name}
                 </Chip>
               ) : (
                 <Chip size="lg" variant="flat">
-                  {activity.label}
+                  {activity.name}
                 </Chip>
               )}
             </div>
@@ -97,10 +130,13 @@ export default function InterestStep({ setStep }: StepProps) {
           color="primary"
           className="max-w-24"
           onClick={() => handleNextStep()}
+          isLoading={isPending}
         >
           Continuer
         </Button>
       </div>
+
+      <ErrorMessage isVisible={isError}>{error?.message}</ErrorMessage>
     </CardBody>
   )
 }

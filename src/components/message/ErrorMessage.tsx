@@ -5,6 +5,7 @@ import { Card, CardBody } from '@nextui-org/react'
 export type MessageProps = {
   isVisible?: boolean
   className?: string
+  autoClose?: boolean
   children: React.ReactNode
 }
 export default function ErrorMessage({

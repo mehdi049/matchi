@@ -28,6 +28,8 @@ export async function GET(
       municipality: true,
       createdAt: true,
       updatedAt: true,
+      interests: true,
+      AddedActivities: true,
     },
   })
 

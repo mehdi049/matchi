@@ -21,6 +21,8 @@ const initUser: UserResponse = {
   municipality: '',
   createdAt: new Date(),
   updatedAt: new Date(),
+  addedActivities: [],
+  interests: [],
 }
 export const UserContext = createContext({
   user: initUser,
@@ -46,15 +48,15 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   }, [data])
 
   // unauthenticated
-  if (status === 'loading') return <IsLoadingMessage />
+  if (status === 'loading') return <IsLoadingMessage type="flat" />
   if (status === 'unauthenticated') router.push(ROUTES.HOME)
 
   // user not found
-  if (isLoading) return <IsLoadingMessage />
+  if (isLoading) return <IsLoadingMessage type="flat" />
   if (isError)
     return (
       <ErrorMessage isVisible>
-        Erreur est survenu, veuillez réessayer plus tard.
+        Une erreur est survenu, veuillez réessayer plus tard.
       </ErrorMessage>
     )
 

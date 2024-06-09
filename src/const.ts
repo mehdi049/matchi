@@ -4,11 +4,11 @@ export const MAX_UPLOAD_SIZE_IMG = process.env
 
 export const ACTIVITY_TYPE_OPTIONS = [
   {
-    value: 'public',
+    value: 'Public',
     label: 'Public (Ouvert à tout le monde)',
   },
   {
-    value: 'private',
+    value: 'Private',
     label: 'Privée (Seulement par invitation)',
   },
 ]
@@ -20,10 +20,13 @@ export const API_ROUTES = {
   USER: {
     GET_BY_ID: (id: string) => `/api/member/id/${id}`,
     GET_BY_EMAIL: (email: string) => `/api/member/email/${email}`,
+    UPDATE_USER_INTERESTS: (id: string) => `/api/member/interests/${id}`,
   },
+  INTERESTS: APP_URL + '/api/interests',
 }
 
 export const QUERY_KEYS = {
   USER_ID: 'USER_ID',
   USER_EMAIL: 'USER_EMAIL',
+  INTERESTS: 'INTERESTS',
 }

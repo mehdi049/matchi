@@ -1,49 +1,51 @@
 import prisma from '@/lib/prisma'
 import { ApiResponse } from '@/types/apiResponse'
-import { hashPassword } from '@/utils/string'
 import { StatusCodes } from 'http-status-codes'
-
 import { NextResponse } from 'next/server'
 
-export async function POST(req: Request) {
+// update User interest
+export async function PUT(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const id = params.id
   const body = await req.json()
-  try {
-    const { name, email, password } = body
 
-    const user = await prisma.user.findUnique({
+  try {
+    const { interests } = body
+
+    const updateUser = await prisma.user.update({
       where: {
-        email: email,
+        id: id,
+      },
+      data: {
+        interests: {
+          // clear interests
+          set: [],
+          // add selected interests
+          connect: interests,
+        },
       },
     })
 
-    // check if email already exist
-    if (user)
+    if (!updateUser)
       return NextResponse.json<ApiResponse<string>>(
         {
-          message:
-            'Email déja utilisé, veuillez utiliser une autre adresse email.',
+          message: 'Utilisateur introuvable',
         },
-        { status: StatusCodes.CONFLICT }
+        { status: StatusCodes.NOT_FOUND }
       )
-
-    // add new user
-    await prisma.user.create({
-      data: {
-        name: name,
-        email: email,
-        password: hashPassword(password),
-      },
-    })
 
     return NextResponse.json<ApiResponse<string>>(
       {
-        message: 'Compte créé avec succés',
+        message: 'Compte modifié avec succés',
       },
       {
         status: StatusCodes.OK,
       }
     )
   } catch (error) {
+    console.log(error)
     return NextResponse.json<ApiResponse<string>>(
       {
         message: 'Une erreur est survenu, veuillez réessayer plus tard',

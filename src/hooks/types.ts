@@ -1,0 +1,3 @@
+type useMutationProps = {
+  onSuccess?: () => void
+}

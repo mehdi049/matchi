@@ -4,6 +4,7 @@ import { ApiResponse } from '@/types/apiResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
 
+// get user by Id
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
@@ -26,6 +27,8 @@ export async function GET(
       country: true,
       city: true,
       municipality: true,
+      interests: true,
+      AddedActivities: true,
       createdAt: true,
       updatedAt: true,
     },
@@ -45,4 +48,59 @@ export async function GET(
     },
     { status: StatusCodes.NOT_FOUND }
   )
+}
+
+// update User
+export async function PUT(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const id = params.id
+  const body = await req.json()
+
+  try {
+    const { name, gender, birthDay, bio, country, city, municipality, image } =
+      body
+
+    const updateUser = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: name,
+        gender: gender,
+        birthDay: birthDay,
+        bio: bio,
+        image: image,
+        country: country,
+        city: city,
+        municipality: municipality,
+      },
+    })
+
+    if (!updateUser)
+      return NextResponse.json<ApiResponse<string>>(
+        {
+          message: 'Utilisateur introuvable',
+        },
+        { status: StatusCodes.NOT_FOUND }
+      )
+
+    return NextResponse.json<ApiResponse<string>>(
+      {
+        message: 'Compte modifié avec succés',
+      },
+      {
+        status: StatusCodes.OK,
+      }
+    )
+  } catch (error) {
+    console.log(error)
+    return NextResponse.json<ApiResponse<string>>(
+      {
+        message: 'Une erreur est survenu, veuillez réessayer plus tard',
+      },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    )
+  }
 }

@@ -1,17 +1,19 @@
 'use client'
 
+import { QUERY_KEYS } from '@/const'
+import { getQueryClient } from '@/lib/getQueryClient'
 import { uploadMediaImage } from '@/lib/vercel'
 import { useMutation } from '@tanstack/react-query'
 
-type useUploadMediaProps = {
-  onSuccess?: () => void
-}
-const useUploadMediaImage = ({ onSuccess }: useUploadMediaProps) => {
+const useUploadMediaImage = ({ onSuccess }: useMutationProps) => {
   return useMutation({
     mutationFn: (data: File) => {
       return uploadMediaImage(data)
     },
-    onSuccess: onSuccess ? onSuccess : () => {},
+    onSuccess: () => {
+      getQueryClient().invalidateQueries({ queryKey: [QUERY_KEYS.USER_ID] })
+      onSuccess ? onSuccess() : {}
+    },
   })
 }
 
