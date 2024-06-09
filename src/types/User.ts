@@ -13,7 +13,7 @@ export type UserResponse = {
   updatedAt: Date
 
   addedActivities?: AddedActivityResponse[]
-  interests?: ActivityResponse[]
+  interests?: UserInterestResponse[]
 }
 
 export type AddedActivityResponse = {
@@ -41,4 +41,10 @@ export type ActivityResponse = {
   id: number
   name: string
   image: string
+  status: 'Active' | 'Inactive'
+}
+
+export type UserInterestResponse = {
+  activityId: number
+  userId?: string
 }

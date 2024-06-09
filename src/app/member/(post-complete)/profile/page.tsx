@@ -17,7 +17,6 @@ import {
   SelectItem,
   Textarea,
 } from '@nextui-org/react'
-import activities from '../../../../data/activities.json'
 import ErrorMessage from '@/components/message/ErrorMessage'
 import { useContext, useMemo, useState } from 'react'
 import { zodCheck } from '@/utils/common-zod-check'
@@ -29,6 +28,7 @@ import { UserContext } from '../../context/UserContext'
 import { dateConverterInput } from '@/utils/date'
 import useGetInterests from '@/hooks/user/useGetInterests'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
+import { UserInterestResponse } from '@/types/User'
 
 const FormInputs = z.object({
   name: zodCheck(['required']),
@@ -59,8 +59,8 @@ export default function Page() {
 
   useMemo(() => {
     let _selectedActivities: number[] = []
-    user.interests?.map((activity) => {
-      _selectedActivities.push(activity.id)
+    user.interests?.map((interest) => {
+      _selectedActivities.push((interest as UserInterestResponse).activityId)
     })
     setSelectedActivities(_selectedActivities)
   }, [])

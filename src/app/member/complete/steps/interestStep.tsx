@@ -11,7 +11,7 @@ import { useContext, useMemo, useState } from 'react'
 import ErrorMessage from '@/components/message/ErrorMessage'
 import { ProgressContext } from '../context/progressContext'
 import { UserContext } from '../../context/UserContext'
-import { UserResponse } from '@/types/User'
+import { UserInterestResponse, UserResponse } from '@/types/User'
 import useUpdateUser from '@/hooks/user/useUpdateUser'
 import useGetInterests from '@/hooks/user/useGetInterests'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
@@ -25,12 +25,18 @@ export default function InterestStep({ setStep }: StepProps) {
   const { mutate, isPending, isError, error } = useUpdateUser({
     onSuccess: () => {
       context.setProgress(100)
+
+      let userInterests: UserInterestResponse[] = []
+      selectedActivities.map((activity) => {
+        userInterests.push({
+          activityId: activity,
+        })
+      })
+
       setTimeout(() => {
         setUser((prevState: UserResponse) => ({
           ...prevState,
-          interests: data?.body?.filter((activity) =>
-            selectedActivities.includes(activity.id)
-          ),
+          interests: userInterests,
         }))
         router.push(ROUTES.MEMBER.PROFILE)
       }, 1000)
@@ -45,8 +51,8 @@ export default function InterestStep({ setStep }: StepProps) {
 
   useMemo(() => {
     let _selectedActivities: number[] = []
-    user.interests?.map((activity) => {
-      _selectedActivities.push(activity.id)
+    user.interests?.map((interest) => {
+      _selectedActivities.push((interest as UserInterestResponse).activityId)
     })
     setSelectedActivities(_selectedActivities)
   }, [])
@@ -73,13 +79,18 @@ export default function InterestStep({ setStep }: StepProps) {
     setIsErrorVisible(false)
 
     if (selectedActivities.length > 0) {
+      let userInterests: UserInterestResponse[] = []
+      selectedActivities.map((activity) => {
+        userInterests.push({
+          activityId: activity,
+        })
+      })
+
       mutate({
         id: user.id,
         user: {
           ...user,
-          interests: data?.body?.filter((activity) =>
-            selectedActivities.includes(activity.id)
-          ),
+          interests: userInterests,
         },
         updateInterests: true,
       })

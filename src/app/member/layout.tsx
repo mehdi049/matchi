@@ -22,7 +22,7 @@ export default function RootLayout({
   config.autoAddCss = false
   return (
     <html lang="en">
-      <body className="bg-gray-50">
+      <body className="bg-gray-50 min-h-screen">
         <Providers>
           <UserContextProvider>
             <NavbarTop />

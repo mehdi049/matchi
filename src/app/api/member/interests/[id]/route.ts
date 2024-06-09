@@ -3,7 +3,7 @@ import { ApiResponse } from '@/types/apiResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
 
-// update User interest
+// update User
 export async function PUT(
   req: Request,
   { params }: { params: { id: string } }
@@ -14,16 +14,21 @@ export async function PUT(
   try {
     const { interests } = body
 
+    // delete all associations
+    await prisma.userInterest.deleteMany({
+      where: {
+        userId: id,
+      },
+    })
+
+    // update  associations
     const updateUser = await prisma.user.update({
       where: {
         id: id,
       },
       data: {
         interests: {
-          // clear interests
-          set: [],
-          // add selected interests
-          connect: interests,
+          create: interests,
         },
       },
     })
@@ -48,7 +53,7 @@ export async function PUT(
     console.log(error)
     return NextResponse.json<ApiResponse<string>>(
       {
-        message: 'Une erreur est survenu, veuillez réessayer plus tard',
+        message: 'Erreur est survenu, veuillez réessayer plus tard',
       },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     )
