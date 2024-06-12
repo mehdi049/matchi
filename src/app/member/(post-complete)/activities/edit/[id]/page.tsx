@@ -10,7 +10,7 @@ export default function Page() {
       <CardBody className="flex gap-4 flex-col">
         <H2>Modifier </H2>
 
-        <ActivityForm activity={{}} />
+        <ActivityForm />
       </CardBody>
     </Card>
   )
