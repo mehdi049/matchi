@@ -5,6 +5,7 @@ type ZodCheckTypes =
   | 'url'
   | 'number'
   | 'date'
+  | 'date-future'
   | 'datetime'
   | 'required'
   | 'email'
@@ -21,6 +22,19 @@ export const zodCheck = (checks: ZodCheckTypes[]) => {
     zodCheck = zodCheck.min(1, { message: 'Champ obligatoir.' })
 
   if (checks.includes('date')) zodCheck = zodCheck.date('Date invalide.')
+  if (checks.includes('date-future'))
+    zodCheck = zodCheck.date('Date invalide.').refine(
+      (date: string) => {
+        const currentDate = new Date()
+        currentDate.setHours(0)
+        currentDate.setMinutes(0)
+        currentDate.setSeconds(0)
+        return new Date(date) >= currentDate
+      },
+      {
+        message: 'La date de début doit être postérieure.',
+      }
+    )
   if (checks.includes('datetime'))
     zodCheck = zodCheck.datetime('Heure invalide.')
   if (checks.includes('email'))

@@ -9,7 +9,7 @@ import { Button, Card, CardBody, Input, Link } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const FormInputs = z
+const formInputs = z
   .object({
     old_password: zodCheck(['required']),
     new_password: zodCheck(['required']),
@@ -27,7 +27,7 @@ export default function Page() {
     watch,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(FormInputs),
+    resolver: zodResolver(formInputs),
   })
 
   const handleUpdatePassword = handleSubmit((data) => {})

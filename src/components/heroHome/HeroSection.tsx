@@ -15,7 +15,7 @@ import { zodCheck } from '@/utils/common-zod-check'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-const FormInputs = z.object({
+const formInputs = z.object({
   activity: zodCheck(['string']),
   city: zodCheck(['string']),
   date: zodCheck(['string']),
@@ -29,7 +29,7 @@ export default function HeroSection() {
     control,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(FormInputs),
+    resolver: zodResolver(formInputs),
   })
 
   const handleSearchActivity = handleSubmit((data) => {})

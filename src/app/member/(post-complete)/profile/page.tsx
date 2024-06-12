@@ -28,7 +28,7 @@ import { UserContext } from '../../context/UserContext'
 import { dateConverterInput } from '@/utils/date'
 import useGetInterests from '@/hooks/user/useGetInterests'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
-import { UserInterestResponse, UserResponse } from '@/types/User'
+import { UserInterestResponse } from '@/types/User'
 import useUpdateUser from '@/hooks/user/useUpdateUser'
 import SuccessMessage from '@/components/message/SuccessMessage'
 

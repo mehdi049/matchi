@@ -19,7 +19,7 @@ export type StepProps = {
   setStep: Dispatch<SetStateAction<number>>
 }
 
-const FormInputs = z.object({
+const formInputs = z.object({
   birthday: zodCheck(['required', 'date']),
   gender: zodCheck(['gender']),
 })
@@ -39,7 +39,7 @@ export default function BasicInfoStep({ setStep }: StepProps) {
     control,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(FormInputs),
+    resolver: zodResolver(formInputs),
   })
 
   const context = useContext(ProgressContext)

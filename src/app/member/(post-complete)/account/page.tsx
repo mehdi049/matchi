@@ -8,7 +8,7 @@ import { Button, Card, CardBody, Input, Link } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const FormInputs = z.object({
+const formInputs = z.object({
   email: zodCheck(['email', 'required']),
 })
 
@@ -18,7 +18,7 @@ export default function Page() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(FormInputs),
+    resolver: zodResolver(formInputs),
   })
 
   const handleUpdateEmail = handleSubmit((data) => {})
