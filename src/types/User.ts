@@ -12,7 +12,7 @@ export type UserResponse = {
   createdAt: Date
   updatedAt: Date
 
-  addedActivities?: AddedActivityResponse[]
+  addedActivities?: AddedActivityResponseSm[]
   interests?: UserInterestResponse[]
 }
 
@@ -24,6 +24,7 @@ export type UserResponseSm = {
 
 export type AddedActivityResponse = {
   id?: number
+  title: string
   description: string
   country: string
   city: string
@@ -37,6 +38,7 @@ export type AddedActivityResponse = {
   price?: number
   currency: string
   type: 'Private' | 'Public'
+  status: 'Active' | 'Cancelled'
   createdAt?: Date
 
   activity?: ActivityResponse
@@ -46,6 +48,20 @@ export type AddedActivityResponse = {
 
   createdBy?: UserResponseSm
   userId?: string
+}
+
+export type AddedActivityResponseSm = {
+  id?: number
+  title: string
+  place: string
+  date: Date
+  start: Date
+  end: Date
+  activity?: ActivityResponse
+  activityId?: number
+  attendees?: UserResponseSm[]
+  status: 'Active' | 'Cancelled'
+  createdAt?: Date
 }
 
 export type ActivityResponse = {

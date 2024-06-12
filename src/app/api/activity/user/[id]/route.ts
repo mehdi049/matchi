@@ -1,19 +1,19 @@
 import prisma from '@/lib/prisma'
-import { AddedActivityResponse, UserResponse } from '@/types/User'
+import { AddedActivityResponse } from '@/types/User'
 import { ApiResponse } from '@/types/apiResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
 
-// get activity by Id
+// get activity by User Id
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
 ) {
   const id = params.id
 
-  const addedActivity = await prisma.addedActivity.findUnique({
+  const addedActivities = await prisma.addedActivity.findMany({
     where: {
-      id: parseInt(id),
+      userId: id,
     },
     select: {
       id: true,
@@ -61,18 +61,10 @@ export async function GET(
     },
   })
 
-  if (addedActivity)
-    return NextResponse.json<ApiResponse<AddedActivityResponse>>(
-      {
-        body: addedActivity as unknown as AddedActivityResponse,
-      },
-      { status: StatusCodes.OK }
-    )
-
-  return NextResponse.json<ApiResponse<string>>(
+  return NextResponse.json<ApiResponse<AddedActivityResponse[]>>(
     {
-      message: `Activité introuvable ${id}`,
+      body: addedActivities as unknown as AddedActivityResponse[],
     },
-    { status: StatusCodes.NOT_FOUND }
+    { status: StatusCodes.OK }
   )
 }

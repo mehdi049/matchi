@@ -28,7 +28,27 @@ export async function GET(
       city: true,
       municipality: true,
       interests: true,
-      AddedActivities: true,
+      AddedActivities: {
+        select: {
+          id: true,
+          title: true,
+          date: true,
+          start: true,
+          end: true,
+          attendees: {
+            select: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  image: true,
+                },
+              },
+            },
+          },
+          createdAt: true,
+        },
+      },
       createdAt: true,
       updatedAt: true,
     },

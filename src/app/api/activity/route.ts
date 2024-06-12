@@ -10,6 +10,7 @@ export async function POST(req: Request) {
     const {
       activityId,
       userId,
+      title,
       description,
       country,
       city,
@@ -28,6 +29,7 @@ export async function POST(req: Request) {
     await prisma.addedActivity.create({
       data: {
         description: description,
+        title: title,
         country: country,
         city: city,
         municipality: municipality,

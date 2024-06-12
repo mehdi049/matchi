@@ -15,3 +15,9 @@ export const getActivityById = (id: number) => {
     url: API_ROUTES.ACTIVITY.GET_BY_ID(id),
   })
 }
+
+export const getActivitiesByUserId = (id: string) => {
+  return fetcherGet<AddedActivityResponse[]>({
+    url: API_ROUTES.ACTIVITY.GET_BY_USER_ID(id),
+  })
+}

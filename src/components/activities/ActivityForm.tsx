@@ -4,6 +4,7 @@ import {
   Button,
   Checkbox,
   Input,
+  Link,
   Select,
   SelectItem,
   Textarea,
@@ -24,11 +25,13 @@ import SuccessMessage from '../message/SuccessMessage'
 import useGetInterests from '@/hooks/user/useGetInterests'
 import IsLoadingMessage from '../message/IsLoadingMessage'
 import { timeStringToDatetime } from '@/utils/date'
-import { getLocalTimeZone, today } from '@internationalized/date'
+import { ROUTES } from '@/routes'
+import { useRouter } from 'next/navigation'
 
 const formInputs = z
   .object({
     activity: zodCheck(['required']),
+    title: zodCheck(['required']),
     description: zodCheck(['string']),
     city: zodCheck(['required']),
     municipality: zodCheck(['required']),
@@ -57,6 +60,7 @@ type ActivityFormProps = {
   activity?: AddedActivityResponse
 }
 export default function ActivityForm({ activity }: ActivityFormProps) {
+  const router = useRouter()
   const { user } = useContext(UserContext)
 
   const { mutate, isPending, isError, error, isSuccess } = useAddActivity({})
@@ -74,35 +78,34 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
 
   const handleAddActivity = handleSubmit((data) => {
     const selectedDate = new Date(data.date)
-    if (selectedDate < new Date())
-      mutate({
-        activity: {
-          description: data.description,
+    mutate({
+      activity: {
+        title: data.title,
+        description: data.description,
 
-          country: 'Tunisia',
-          city: data.city,
-          municipality: data.municipality,
+        country: 'Tunisia',
+        city: data.city,
+        municipality: data.municipality,
 
-          place: data.place,
-          googleMap: data.googleMap,
+        place: data.place,
+        googleMap: data.googleMap,
 
-          date: selectedDate,
-          start: new Date(
-            timeStringToDatetime(selectedDate, data.start) as any
-          ),
-          end: new Date(timeStringToDatetime(selectedDate, data.end) as any),
+        date: selectedDate,
+        start: new Date(timeStringToDatetime(selectedDate, data.start) as any),
+        end: new Date(timeStringToDatetime(selectedDate, data.end) as any),
 
-          maxAttendees: data.maxAttendees,
+        maxAttendees: data.maxAttendees,
 
-          price: data.price,
-          currency: 'TND',
+        price: data.price,
+        currency: 'TND',
 
-          type: data.type,
+        type: data.type,
 
-          activityId: parseInt(data.activity),
-          userId: user.id,
-        },
-      })
+        activityId: parseInt(data.activity),
+        userId: user.id,
+        status: 'Active',
+      },
+    })
   })
 
   const handleUpdateActivity = handleSubmit((data) => {})
@@ -140,6 +143,22 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
             )}
           />
         )}
+        <Input
+          {...register('title')}
+          name="title"
+          type="text"
+          size="sm"
+          isRequired
+          variant="flat"
+          label="Titre"
+          placeholder="Titre de l'activité"
+          errorMessage={errors.title?.message as string}
+          isInvalid={
+            errors.title?.message
+              ? (errors.title?.message as string).length > 0
+              : false
+          }
+        />
         <Textarea
           {...register('description')}
           variant="flat"
@@ -367,8 +386,18 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         {error?.message}
       </ErrorMessage>
 
-      <SuccessMessage isVisible={isSuccess && !isPending} autoClose>
-        Activité créé avec succés
+      <SuccessMessage isVisible={isSuccess && !isPending}>
+        Votre activité est créé avec succés!
+        <Link
+          onClick={() => {
+            router.push(ROUTES.MEMBER.MY_ACTIVITIES)
+          }}
+          underline="always"
+          className="text-white font-medium block mt-2 cursor-pointer"
+          size="sm"
+        >
+          Voir mes activités
+        </Link>
       </SuccessMessage>
     </>
   )

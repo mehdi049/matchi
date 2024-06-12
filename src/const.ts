@@ -24,7 +24,8 @@ export const API_ROUTES = {
   },
   INTERESTS: APP_URL + '/api/interests',
   ACTIVITY: {
-    GET_BY_ID: (id: number) => `/api/activity/id/${id}`,
+    GET_BY_ID: (id: number) => `/api/activity/${id}`,
+    GET_BY_USER_ID: (id: string) => `/api/activity/user/${id}`,
     UPSERT_ACTIVITY: APP_URL + '/api/activity',
   },
 }
@@ -32,6 +33,9 @@ export const API_ROUTES = {
 export const QUERY_KEYS = {
   USER_ID: 'USER_ID',
   USER_EMAIL: 'USER_EMAIL',
+
   INTERESTS: 'INTERESTS',
+
   ACTIVITIES: 'ACTIVITIES',
+  ACTIVITY_ID: 'ACTIVITY_ID',
 }

@@ -29,7 +29,27 @@ export async function GET(
       createdAt: true,
       updatedAt: true,
       interests: true,
-      AddedActivities: true,
+      AddedActivities: {
+        select: {
+          id: true,
+          title: true,
+          date: true,
+          start: true,
+          end: true,
+          attendees: {
+            select: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  image: true,
+                },
+              },
+            },
+          },
+          createdAt: true,
+        },
+      },
     },
   })
 
