@@ -9,40 +9,59 @@ import {
   Textarea,
 } from '@nextui-org/react'
 import cities from '../../data/cities.json'
-import acitivities from '../../data/activities.json'
 import H3 from '@/components/typography/H3'
 import { ACTIVITY_TYPE_OPTIONS } from '@/const'
 import { literal, string, union, z } from 'zod'
 import { zodCheck } from '@/utils/common-zod-check'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import useAddActivity from '@/hooks/activity/useAddActivity'
+import { ActivityResponse, AddedActivityResponse } from '@/types/User'
+import { UserContext } from '@/app/member/context/UserContext'
+import { useContext } from 'react'
+import ErrorMessage from '../message/ErrorMessage'
+import SuccessMessage from '../message/SuccessMessage'
+import useGetInterests from '@/hooks/user/useGetInterests'
+import IsLoadingMessage from '../message/IsLoadingMessage'
+import { timeStringToDatetime } from '@/utils/date'
+import { getLocalTimeZone, today } from '@internationalized/date'
 
-const FormInputs = z.object({
-  activity: zodCheck(['required']),
-  description: zodCheck(['string']),
-  city: zodCheck(['required']),
-  county: zodCheck(['required']),
-  place: zodCheck(['required']),
-  gmap: union([
-    string().startsWith('https://maps.app.goo.gl/', {
-      message: 'Lien vers Google Maps invalid',
-    }),
-    literal(''),
-  ])
-    .nullable()
-    .optional(),
-  date: zodCheck(['date', 'required']),
-  start: zodCheck(['required']),
-  end: zodCheck(['required']),
-  participantsNum: zodCheck(['number']),
-  price: zodCheck(['number']),
-  type: zodCheck(['required']),
-})
+const formInputs = z
+  .object({
+    activity: zodCheck(['required']),
+    description: zodCheck(['string']),
+    city: zodCheck(['required']),
+    municipality: zodCheck(['required']),
+    place: zodCheck(['required']),
+    gmap: union([
+      string().startsWith('https://maps.app.goo.gl/', {
+        message: 'Lien vers Google Maps est invalid',
+      }),
+      literal(''),
+    ])
+      .nullable()
+      .optional(),
+    date: zodCheck(['date-future', 'required']),
+    start: zodCheck(['required']),
+    end: zodCheck(['required']),
+    maxAttendees: zodCheck(['number']),
+    price: zodCheck(['number']),
+    type: zodCheck(['required']),
+  })
+  .refine((data) => data.start < data.end, {
+    message: 'Date de fin invalid.',
+    path: ['start_end'],
+  })
 
 type ActivityFormProps = {
-  activity?: unknown
+  activity?: AddedActivityResponse
 }
 export default function ActivityForm({ activity }: ActivityFormProps) {
+  const { user } = useContext(UserContext)
+
+  const { mutate, isPending, isError, error, isSuccess } = useAddActivity({})
+  const { data, isLoading } = useGetInterests()
+
   const {
     register,
     handleSubmit,
@@ -50,41 +69,77 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
     watch,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(FormInputs),
+    resolver: zodResolver(formInputs),
   })
 
-  const handleAddActivity = handleSubmit((data) => {})
+  const handleAddActivity = handleSubmit((data) => {
+    const selectedDate = new Date(data.date)
+    if (selectedDate < new Date())
+      mutate({
+        activity: {
+          description: data.description,
+
+          country: 'Tunisia',
+          city: data.city,
+          municipality: data.municipality,
+
+          place: data.place,
+          googleMap: data.googleMap,
+
+          date: selectedDate,
+          start: new Date(
+            timeStringToDatetime(selectedDate, data.start) as any
+          ),
+          end: new Date(timeStringToDatetime(selectedDate, data.end) as any),
+
+          maxAttendees: data.maxAttendees,
+
+          price: data.price,
+          currency: 'TND',
+
+          type: data.type,
+
+          activityId: parseInt(data.activity),
+          userId: user.id,
+        },
+      })
+  })
 
   const handleUpdateActivity = handleSubmit((data) => {})
 
   return (
     <>
       <form className="mb-4 flex flex-col gap-4">
-        <Controller
-          control={control}
-          name="activity"
-          render={({ field }) => (
-            <Select
-              {...field}
-              isRequired
-              label="Activité"
-              placeholder="Selectionnez une activité"
-              size="sm"
-              errorMessage={errors.activity?.message as string}
-              isInvalid={
-                errors.activity?.message
-                  ? (errors.activity?.message as string).length > 0
-                  : false
-              }
-            >
-              {acitivities.map((activity) => (
-                <SelectItem key={activity.value} value={activity.value}>
-                  {activity.label}
-                </SelectItem>
-              ))}
-            </Select>
-          )}
-        />
+        {isLoading && <IsLoadingMessage type="flat" />}
+        {data?.body && (
+          <Controller
+            control={control}
+            name="activity"
+            render={({ field }) => (
+              <Select
+                {...field}
+                isRequired
+                label="Activité"
+                placeholder="Selectionnez une activité"
+                size="sm"
+                errorMessage={errors.activity?.message as string}
+                isInvalid={
+                  errors.activity?.message
+                    ? (errors.activity?.message as string).length > 0
+                    : false
+                }
+              >
+                {(data?.body as ActivityResponse[]).map((activity) => {
+                  return (
+                    <SelectItem key={activity.id} value={activity.name}>
+                      {activity.name}
+                    </SelectItem>
+                  )
+                })}
+              </Select>
+            )}
+          />
+        )}
         <Textarea
           {...register('description')}
           variant="flat"
@@ -121,7 +176,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         />
         <Controller
           control={control}
-          name="county"
+          name="municipality"
           render={({ field }) => (
             <Select
               {...field}
@@ -129,18 +184,18 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
               label="Municipalité"
               placeholder="Selectionnez une municipalité"
               size="sm"
-              errorMessage={errors.county?.message as string}
+              errorMessage={errors.municipality?.message as string}
               isInvalid={
-                errors.county?.message
-                  ? (errors.county?.message as string).length > 0
+                errors.municipality?.message
+                  ? (errors.municipality?.message as string).length > 0
                   : false
               }
             >
               {(
                 cities.find((city) => city.name === watch('city')) as any
-              )?.municipalities.map((county: string) => (
-                <SelectItem key={county} value={county}>
-                  {county}
+              )?.municipalities.map((municipality: string) => (
+                <SelectItem key={municipality} value={municipality}>
+                  {municipality}
                 </SelectItem>
               ))}
             </Select>
@@ -210,10 +265,15 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
             variant="flat"
             type="time"
             label="Se termine à"
-            errorMessage={errors.end?.message as string}
+            errorMessage={
+              (errors.end?.message as string) ||
+              (errors.start_end?.message as string)
+            }
             isInvalid={
               errors.end?.message
                 ? (errors.end?.message as string).length > 0
+                : errors.start_end?.message
+                ? (errors.start_end?.message as string).length > 0
                 : false
             }
           />
@@ -222,15 +282,15 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         <H3>Participants</H3>
         <div className="flex flex-col gap-2">
           <Input
-            {...register('participantsNum')}
+            {...register('maxAttendees')}
             size="sm"
             variant="flat"
             type="number"
             label="Nombre de participants"
-            errorMessage={errors.participantsNum?.message as string}
+            errorMessage={errors.maxAttendees?.message as string}
             isInvalid={
-              errors.participantsNum?.message
-                ? (errors.participantsNum?.message as string).length > 0
+              errors.maxAttendees?.message
+                ? (errors.maxAttendees?.message as string).length > 0
                 : false
             }
           />
@@ -259,6 +319,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         <Controller
           control={control}
           name="type"
+          defaultValue={'Public'}
           render={({ field }) => (
             <Select
               {...field}
@@ -266,7 +327,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
               label="Type"
               placeholder="Type de l'activité"
               size="sm"
-              defaultSelectedKeys={['public']}
+              defaultSelectedKeys={['Public']}
               description={
                 <>
                   <p className="text-gray-900">
@@ -296,10 +357,19 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
           color="primary"
           className="max-w-24"
           onClick={activity ? handleUpdateActivity : handleAddActivity}
+          isLoading={isPending}
         >
           Valider
         </Button>
       </div>
+
+      <ErrorMessage isVisible={isError && !isPending}>
+        {error?.message}
+      </ErrorMessage>
+
+      <SuccessMessage isVisible={isSuccess && !isPending} autoClose>
+        Activité créé avec succés
+      </SuccessMessage>
     </>
   )
 }
