@@ -94,6 +94,7 @@ model UserInterest {
 
 model AddedActivity {
     id           Int      @id @default(autoincrement())
+    title        String
     description  String
     country      String
     city         String
