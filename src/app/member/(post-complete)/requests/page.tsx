@@ -28,7 +28,7 @@ export default function Page() {
                   {[...Array(randomNumber).keys()].map((x, key) => {
                     return (
                       <div key={key}>
-                        <ActivityCard status="accepted" />
+                        <ActivityCard status="Accepted" />
                       </div>
                     )
                   })}
@@ -45,7 +45,7 @@ export default function Page() {
                   {[...Array(randomNumber).keys()].map((x, key) => {
                     return (
                       <div key={key}>
-                        <ActivityCard status="accepted" />
+                        <ActivityCard status="Accepted" />
                       </div>
                     )
                   })}

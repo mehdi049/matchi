@@ -17,11 +17,10 @@ import ActivitiyCardFooterAttending from './ActivitiyCardFooterAttending'
 import ActivitiyCardFooterHosting from './ActivitiyCardFooterHosting'
 import { AddedActivityResponseSm } from '@/types/User'
 import { ROUTES } from '@/routes'
-import dayjs from 'dayjs'
 import { fullDate } from '@/utils/date'
 
 type ActivityProps = {
-  activity: AddedActivityResponseSm
+  activity?: AddedActivityResponseSm
   hosting?: boolean
   attending?: boolean
   status?: 'Pending' | 'Accepted' | 'Rejected'
