@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma'
-import { AddedActivityResponse, UserResponse } from '@/types/User'
+import { AddedActivityResponse } from '@/types/User'
 import { ApiResponse } from '@/types/apiResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
@@ -75,4 +75,50 @@ export async function GET(
     },
     { status: StatusCodes.NOT_FOUND }
   )
+}
+
+// delete activity
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const id = params.id
+
+  const activity = await prisma.addedActivity.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  })
+
+  if (!activity)
+    return NextResponse.json<ApiResponse<string>>(
+      {
+        message: `Activité introuvable ${id}`,
+      },
+      { status: StatusCodes.NOT_FOUND }
+    )
+
+  try {
+    const deleteActivity = await prisma.addedActivity.delete({
+      where: {
+        id: parseInt(id),
+      },
+    })
+
+    if (deleteActivity)
+      return NextResponse.json<ApiResponse<string>>(
+        {
+          message: `Activité supprimé avec succés ${id}`,
+        },
+        { status: StatusCodes.OK }
+      )
+  } catch (error) {
+    console.log(error)
+    return NextResponse.json<ApiResponse<string>>(
+      {
+        message: `Une erreur est survenu, veuillez réessayer plus tard ${id}`,
+      },
+      { status: StatusCodes.NOT_FOUND }
+    )
+  }
 }

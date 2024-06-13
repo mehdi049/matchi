@@ -27,6 +27,7 @@ const initUser: UserResponse = {
 export const UserContext = createContext({
   user: initUser,
   setUser: (payload: any) => {},
+  refetchUser: () => {},
 })
 
 type UserContextProviderProps = {
@@ -36,12 +37,16 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const router = useRouter()
 
   const { data: session } = useSession()
-  const { data, isError, isLoading } = useGetUserByEmail(
+  const { data, isError, isLoading, refetch } = useGetUserByEmail(
     session?.user?.email as string
   )
   const [user, setUser] = useState<UserResponse>(initUser)
 
   const { status } = useSession()
+
+  const refetchUser = () => {
+    refetch()
+  }
 
   useMemo(() => {
     if (data) setUser(data?.body as UserResponse)
@@ -65,6 +70,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
       value={{
         user,
         setUser,
+        refetchUser,
       }}
     >
       {children}

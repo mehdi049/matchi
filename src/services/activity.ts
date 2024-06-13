@@ -10,6 +10,13 @@ export const addActivity = (activity: AddedActivityResponse) => {
   })
 }
 
+export const deleteActivity = (id: number) => {
+  return fetcher<string>({
+    url: API_ROUTES.ACTIVITY.GET_BY_ID(id),
+    method: 'DELETE',
+  })
+}
+
 export const getActivityById = (id: number) => {
   return fetcherGet<AddedActivityResponse>({
     url: API_ROUTES.ACTIVITY.GET_BY_ID(id),

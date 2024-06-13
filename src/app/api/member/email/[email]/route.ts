@@ -29,13 +29,15 @@ export async function GET(
       createdAt: true,
       updatedAt: true,
       interests: true,
-      AddedActivities: {
+      addedActivities: {
         select: {
           id: true,
           title: true,
+          place: true,
           date: true,
           start: true,
           end: true,
+          maxAttendees: true,
           attendees: {
             select: {
               user: {
@@ -47,6 +49,15 @@ export async function GET(
               },
             },
           },
+          status: true,
+          activity: true,
+          createdBy: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+            },
+          },
           createdAt: true,
         },
       },
@@ -56,7 +67,7 @@ export async function GET(
   if (user)
     return NextResponse.json<ApiResponse<UserResponse>>(
       {
-        body: user as UserResponse,
+        body: user as unknown as UserResponse,
       },
       { status: StatusCodes.OK }
     )

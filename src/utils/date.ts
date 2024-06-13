@@ -4,6 +4,11 @@ import {
   parseDate,
 } from '@internationalized/date'
 
+import dayjs from 'dayjs'
+import 'dayjs/locale/fr'
+
+dayjs.locale('fr')
+
 export const dateConverterInput = (date: Date) => {
   try {
     date = new Date(date)
@@ -37,5 +42,14 @@ export const timeStringToDatetime = (selectedDate: Date, time: string) => {
   } catch (error) {
     console.log(error, selectedDate + ' ' + time)
     return undefined
+  }
+}
+
+export const fullDate = (date: Date, locale = 'fr') => {
+  try {
+    return dayjs(date).format('dddd D MMM YYYY')
+  } catch (error) {
+    console.log(error)
+    return ''
   }
 }

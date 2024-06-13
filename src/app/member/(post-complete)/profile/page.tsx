@@ -44,7 +44,7 @@ const formInputs = z.object({
 })
 
 export default function Page() {
-  const { user } = useContext(UserContext)
+  const { user, refetchUser } = useContext(UserContext)
   const [selectedCity, setSelectedCity] = useState(user.city)
   const {
     mutate,
@@ -53,7 +53,11 @@ export default function Page() {
     error,
     isSuccess,
     data: dataUpdate,
-  } = useUpdateUser({})
+  } = useUpdateUser({
+    onSuccess: () => {
+      refetchUser()
+    },
+  })
   const { data, isLoading } = useGetInterests()
 
   const {

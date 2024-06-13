@@ -19,7 +19,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import useAddActivity from '@/hooks/activity/useAddActivity'
 import { ActivityResponse, AddedActivityResponse } from '@/types/User'
 import { UserContext } from '@/app/member/context/UserContext'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import ErrorMessage from '../message/ErrorMessage'
 import SuccessMessage from '../message/SuccessMessage'
 import useGetInterests from '@/hooks/user/useGetInterests'
@@ -61,9 +61,11 @@ type ActivityFormProps = {
 }
 export default function ActivityForm({ activity }: ActivityFormProps) {
   const router = useRouter()
-  const { user } = useContext(UserContext)
+  const { user, refetchUser } = useContext(UserContext)
 
-  const { mutate, isPending, isError, error, isSuccess } = useAddActivity({})
+  const { mutate, isPending, isError, error, isSuccess } = useAddActivity({
+    onSuccess: () => refetchUser(),
+  })
   const { data, isLoading } = useGetInterests()
 
   const {
@@ -75,6 +77,9 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
   } = useForm({
     resolver: zodResolver(formInputs),
   })
+
+  const [isMaxAttendeesDisabled, setIsMaxAttendeesDisabled] = useState(false)
+  const [isFree, setIsFree] = useState(false)
 
   const handleAddActivity = handleSubmit((data) => {
     const selectedDate = new Date(data.date)
@@ -94,9 +99,9 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         start: new Date(timeStringToDatetime(selectedDate, data.start) as any),
         end: new Date(timeStringToDatetime(selectedDate, data.end) as any),
 
-        maxAttendees: data.maxAttendees,
+        maxAttendees: isMaxAttendeesDisabled ? undefined : data.maxAttendees,
 
-        price: data.price,
+        price: isFree || data.price === 0 ? undefined : data.price,
         currency: 'TND',
 
         type: data.type,
@@ -305,15 +310,24 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
             size="sm"
             variant="flat"
             type="number"
-            label="Nombre de participants"
+            label="Nombre maximum de participants"
             errorMessage={errors.maxAttendees?.message as string}
             isInvalid={
               errors.maxAttendees?.message
                 ? (errors.maxAttendees?.message as string).length > 0
                 : false
             }
+            min={2}
+            isDisabled={isMaxAttendeesDisabled}
           />
-          <Checkbox size="sm">Illimité</Checkbox>
+          <Checkbox
+            size="sm"
+            onValueChange={(isSelected) => {
+              setIsMaxAttendeesDisabled(isSelected)
+            }}
+          >
+            Illimité
+          </Checkbox>
         </div>
         <H3>Prix</H3>
         <div className="flex flex-col gap-2">
@@ -330,8 +344,17 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
                 ? (errors.price?.message as string).length > 0
                 : false
             }
+            min={0}
+            isDisabled={isFree}
           />
-          <Checkbox size="sm">Gratuit</Checkbox>
+          <Checkbox
+            size="sm"
+            onValueChange={(isSelected) => {
+              setIsFree(isSelected)
+            }}
+          >
+            Gratuit
+          </Checkbox>
         </div>
 
         <H3>Type de l&apos;activité</H3>

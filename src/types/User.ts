@@ -59,9 +59,11 @@ export type AddedActivityResponseSm = {
   end: Date
   activity?: ActivityResponse
   activityId?: number
+  maxAttendees?: number
   attendees?: UserResponseSm[]
   status: 'Active' | 'Cancelled'
   createdAt?: Date
+  createdBy?: UserResponseSm
 }
 
 export type ActivityResponse = {

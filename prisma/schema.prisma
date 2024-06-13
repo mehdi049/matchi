@@ -65,8 +65,8 @@ model User {
     accounts        Account[]
     sessions        Session[]
     interests       UserInterest[]
-    AddedActivities AddedActivity[]
-    UserAttendance  UserAttendance[]
+    addedActivities AddedActivity[]
+    userAttendance  UserAttendance[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -79,7 +79,7 @@ model Activity {
     status String? @default("Active")
 
     userInterests UserInterest[]
-    AddedActivity AddedActivity[]
+    addedActivity AddedActivity[]
 }
 
 model UserInterest {

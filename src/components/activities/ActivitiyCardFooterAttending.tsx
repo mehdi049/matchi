@@ -12,10 +12,10 @@ import {
 } from '@nextui-org/react'
 
 export type ActivitiyCardFooterProps = {
-  activity?: unknown
+  activityId: number
 }
 export default function ActivitiyCardFooterAttending({
-  activity,
+  activityId,
 }: ActivitiyCardFooterProps) {
   const {
     isOpen: isOpenCancelAttendance,

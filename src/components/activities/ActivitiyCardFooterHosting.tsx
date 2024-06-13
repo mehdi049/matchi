@@ -11,13 +11,32 @@ import {
   ModalFooter,
   ModalHeader,
 } from '@nextui-org/react'
-import { useRouter } from 'next/navigation'
 import { ActivitiyCardFooterProps } from './ActivitiyCardFooterAttending'
+import useDeleteActivity from '@/hooks/activity/useDeleteActivity'
+import SuccessMessage from '../message/SuccessMessage'
+import ErrorMessage from '../message/ErrorMessage'
+import { useContext } from 'react'
+import { UserContext } from '@/app/member/context/UserContext'
 
 export default function ActivitiyCardFooterHosting({
-  activity,
+  activityId,
 }: ActivitiyCardFooterProps) {
-  const router = useRouter()
+  const { refetchUser } = useContext(UserContext)
+
+  const {
+    mutate: mutateDelete,
+    isPending: isPendingDelete,
+    isSuccess: isSuccessDelete,
+    isError: isErrorDelete,
+  } = useDeleteActivity({
+    onSuccess: () => {
+      setTimeout(() => {
+        refetchUser()
+        onOpenChangeDelete()
+      }, 3000)
+    },
+  })
+
   const {
     isOpen: isOpenCancel,
     onOpen: onOpenCancel,
@@ -28,6 +47,10 @@ export default function ActivitiyCardFooterHosting({
     onOpen: onOpenDelete,
     onOpenChange: onOpenChangeDelete,
   } = useDisclosure()
+
+  const onDelete = () => {
+    mutateDelete({ id: activityId })
+  }
 
   return (
     <CardFooter className="block">
@@ -63,7 +86,7 @@ export default function ActivitiyCardFooterHosting({
                   <Button variant="light" onPress={onClose}>
                     Fermer
                   </Button>
-                  <Button color="danger" onPress={onClose}>
+                  <Button color="danger" onClick={onClose}>
                     Annuler
                   </Button>
                 </ModalFooter>
@@ -99,12 +122,28 @@ export default function ActivitiyCardFooterHosting({
                     le site.
                   </p>
                   <p>Tous les participants seront notifié par email.</p>
+                  <SuccessMessage
+                    isVisible={isSuccessDelete && !isPendingDelete}
+                    className="mt-2"
+                  >
+                    Activité supprimé avec succés
+                  </SuccessMessage>
+                  <ErrorMessage
+                    isVisible={isErrorDelete && !isPendingDelete}
+                    className="mt-2"
+                  >
+                    Une erreur est survenu, veuillez réessayer plus tard.
+                  </ErrorMessage>
                 </ModalBody>
                 <ModalFooter>
                   <Button variant="light" onPress={onClose}>
                     Fermer
                   </Button>
-                  <Button color="danger" onPress={onClose}>
+                  <Button
+                    color="danger"
+                    onPress={onDelete}
+                    isLoading={isPendingDelete}
+                  >
                     Supprimer
                   </Button>
                 </ModalFooter>

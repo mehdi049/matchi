@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     console.log(error)
     return NextResponse.json<ApiResponse<string>>(
       {
-        message: 'Erreur est survenu, veuillez réessayer plus tard',
+        message: 'Une erreur est survenu, veuillez réessayer plus tard',
       },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     )
