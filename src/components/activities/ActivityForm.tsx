@@ -19,14 +19,20 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import useAddActivity from '@/hooks/activity/useAddActivity'
 import { ActivityResponse, AddedActivityResponse } from '@/types/User'
 import { UserContext } from '@/app/member/context/UserContext'
-import { useContext, useState } from 'react'
+import { act, useContext, useState } from 'react'
 import ErrorMessage from '../message/ErrorMessage'
 import SuccessMessage from '../message/SuccessMessage'
 import useGetInterests from '@/hooks/user/useGetInterests'
 import IsLoadingMessage from '../message/IsLoadingMessage'
-import { timeStringToDatetime } from '@/utils/date'
+import {
+  dateConverterInput,
+  extractHourFromDate,
+  extractMinuteFromDate,
+  timeStringToDatetime,
+} from '@/utils/date'
 import { ROUTES } from '@/routes'
 import { useRouter } from 'next/navigation'
+import useUpdateActivity from '@/hooks/activity/useUpdateActivity'
 
 const formInputs = z
   .object({
@@ -62,10 +68,30 @@ type ActivityFormProps = {
 export default function ActivityForm({ activity }: ActivityFormProps) {
   const router = useRouter()
   const { user, refetchUser } = useContext(UserContext)
+  const [selectedCity, setSelectedCity] = useState(
+    activity ? activity.city : ''
+  )
 
-  const { mutate, isPending, isError, error, isSuccess } = useAddActivity({
+  const {
+    mutate: mutateAdd,
+    isPending: isPendingAdd,
+    isError: isErrorAdd,
+    error: errorAdd,
+    isSuccess: isSuccessAdd,
+  } = useAddActivity({
     onSuccess: () => refetchUser(),
   })
+
+  const {
+    mutate: mutateUpdate,
+    isPending: isPendingUpdate,
+    isError: isErrorUpdate,
+    error: errorUpdate,
+    isSuccess: isSuccessUpdate,
+  } = useUpdateActivity({
+    onSuccess: () => refetchUser(),
+  })
+
   const { data, isLoading } = useGetInterests()
 
   const {
@@ -83,7 +109,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
 
   const handleAddActivity = handleSubmit((data) => {
     const selectedDate = new Date(data.date)
-    mutate({
+    mutateAdd({
       activity: {
         title: data.title,
         description: data.description,
@@ -99,9 +125,9 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         start: new Date(timeStringToDatetime(selectedDate, data.start) as any),
         end: new Date(timeStringToDatetime(selectedDate, data.end) as any),
 
-        maxAttendees: isMaxAttendeesDisabled ? undefined : data.maxAttendees,
+        maxAttendees: isMaxAttendeesDisabled ? null : data.maxAttendees,
 
-        price: isFree || data.price === 0 ? undefined : data.price,
+        price: isFree || data.price === 0 ? null : data.price,
         currency: 'TND',
 
         type: data.type,
@@ -113,7 +139,38 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
     })
   })
 
-  const handleUpdateActivity = handleSubmit((data) => {})
+  const handleUpdateActivity = handleSubmit((data) => {
+    const selectedDate = new Date(data.date)
+    mutateUpdate({
+      id: activity?.id as number,
+      activity: {
+        title: data.title,
+        description: data.description,
+
+        country: 'Tunisia',
+        city: data.city,
+        municipality: data.municipality,
+
+        place: data.place,
+        googleMap: data.googleMap,
+
+        date: selectedDate,
+        start: new Date(timeStringToDatetime(selectedDate, data.start) as any),
+        end: new Date(timeStringToDatetime(selectedDate, data.end) as any),
+
+        maxAttendees: isMaxAttendeesDisabled ? null : data.maxAttendees,
+
+        price: isFree || data.price === 0 ? null : data.price,
+        currency: 'TND',
+
+        type: data.type,
+
+        activityId: parseInt(data.activity),
+        userId: user.id,
+        status: 'Active',
+      },
+    })
+  })
 
   return (
     <>
@@ -123,6 +180,11 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
           <Controller
             control={control}
             name="activity"
+            defaultValue={
+              activity && activity.activity
+                ? activity.activity.id.toString()
+                : ''
+            }
             render={({ field }) => (
               <Select
                 {...field}
@@ -131,6 +193,11 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
                 placeholder="Selectionnez une activité"
                 size="sm"
                 errorMessage={errors.activity?.message as string}
+                defaultSelectedKeys={
+                  activity && activity.activity
+                    ? [activity.activity.id.toString()]
+                    : []
+                }
                 isInvalid={
                   errors.activity?.message
                     ? (errors.activity?.message as string).length > 0
@@ -163,12 +230,14 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
               ? (errors.title?.message as string).length > 0
               : false
           }
+          defaultValue={activity ? activity.title : ''}
         />
         <Textarea
           {...register('description')}
           variant="flat"
           label="Description"
           placeholder="Description de l'activité"
+          defaultValue={activity ? activity.description : ''}
         />
 
         <H3>Adresse</H3>
@@ -176,6 +245,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         <Controller
           control={control}
           name="city"
+          defaultValue={activity ? activity.city : ''}
           render={({ field }) => (
             <Select
               {...field}
@@ -189,6 +259,10 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
                   ? (errors.city?.message as string).length > 0
                   : false
               }
+              defaultSelectedKeys={activity ? [activity.city] : []}
+              onChange={(event) => {
+                setSelectedCity(event.target.value)
+              }}
             >
               {cities.map((city) => (
                 <SelectItem key={city.name} value={city.name}>
@@ -201,6 +275,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         <Controller
           control={control}
           name="municipality"
+          defaultValue={activity ? activity.municipality : ''}
           render={({ field }) => (
             <Select
               {...field}
@@ -214,9 +289,13 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
                   ? (errors.municipality?.message as string).length > 0
                   : false
               }
+              defaultSelectedKeys={activity ? [activity.municipality] : []}
             >
               {(
-                cities.find((city) => city.name === watch('city')) as any
+                cities.find(
+                  (city) =>
+                    city.name === (selectedCity ? selectedCity : watch('city'))
+                ) as any
               )?.municipalities.map((municipality: string) => (
                 <SelectItem key={municipality} value={municipality}>
                   {municipality}
@@ -239,6 +318,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
               ? (errors.place?.message as string).length > 0
               : false
           }
+          defaultValue={activity ? activity.place : ''}
         />
         <Input
           {...register('gmap')}
@@ -253,6 +333,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
               ? (errors.gmap?.message as string).length > 0
               : false
           }
+          defaultValue={activity ? activity.googleMap : ''}
         />
 
         <H3>Date</H3>
@@ -268,6 +349,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
               ? (errors.date?.message as string).length > 0
               : false
           }
+          defaultValue={activity && dateConverterInput(activity.date)}
         />
         <div className="flex gap-2">
           <Input
@@ -281,6 +363,13 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
               errors.start?.message
                 ? (errors.start?.message as string).length > 0
                 : false
+            }
+            defaultValue={
+              activity
+                ? `${extractHourFromDate(
+                    activity.start
+                  )}:${extractMinuteFromDate(activity.start)}`
+                : ''
             }
           />
           <Input
@@ -299,6 +388,13 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
                 : errors.start_end?.message
                 ? (errors.start_end?.message as string).length > 0
                 : false
+            }
+            defaultValue={
+              activity
+                ? `${extractHourFromDate(activity.end)}:${extractMinuteFromDate(
+                    activity.end
+                  )}`
+                : ''
             }
           />
         </div>
@@ -319,12 +415,21 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
             }
             min={2}
             isDisabled={isMaxAttendeesDisabled}
+            defaultValue={
+              activity && activity.maxAttendees
+                ? activity.maxAttendees.toString()
+                : ''
+            }
           />
           <Checkbox
             size="sm"
             onValueChange={(isSelected) => {
               setIsMaxAttendeesDisabled(isSelected)
             }}
+            defaultSelected={
+              activity &&
+              (!activity.maxAttendees || activity.maxAttendees === 0)
+            }
           >
             Illimité
           </Checkbox>
@@ -346,12 +451,18 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
             }
             min={0}
             isDisabled={isFree}
+            defaultValue={
+              activity && activity.price ? activity.price.toString() : ''
+            }
           />
           <Checkbox
             size="sm"
             onValueChange={(isSelected) => {
               setIsFree(isSelected)
             }}
+            defaultSelected={
+              activity && (!activity.price || activity.price === 0)
+            }
           >
             Gratuit
           </Checkbox>
@@ -361,7 +472,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         <Controller
           control={control}
           name="type"
-          defaultValue={'Public'}
+          defaultValue={activity ? activity.type : 'Public'}
           render={({ field }) => (
             <Select
               {...field}
@@ -399,18 +510,36 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
           color="primary"
           className="max-w-24"
           onClick={activity ? handleUpdateActivity : handleAddActivity}
-          isLoading={isPending}
+          isLoading={isPendingAdd || isPendingUpdate}
         >
           Valider
         </Button>
       </div>
 
-      <ErrorMessage isVisible={isError && !isPending}>
-        {error?.message}
+      <ErrorMessage isVisible={isErrorAdd && !isPendingAdd}>
+        {errorAdd?.message}
       </ErrorMessage>
 
-      <SuccessMessage isVisible={isSuccess && !isPending}>
+      <ErrorMessage isVisible={isErrorUpdate && !isPendingUpdate}>
+        {errorUpdate?.message}
+      </ErrorMessage>
+
+      <SuccessMessage isVisible={isSuccessAdd && !isPendingAdd}>
         Votre activité est créé avec succés!
+        <Link
+          onClick={() => {
+            router.push(ROUTES.MEMBER.MY_ACTIVITIES)
+          }}
+          underline="always"
+          className="text-white font-medium block mt-2 cursor-pointer"
+          size="sm"
+        >
+          Voir mes activités
+        </Link>
+      </SuccessMessage>
+
+      <SuccessMessage isVisible={isSuccessUpdate && !isPendingUpdate}>
+        Votre activité est modifié avec succés!
         <Link
           onClick={() => {
             router.push(ROUTES.MEMBER.MY_ACTIVITIES)

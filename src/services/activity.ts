@@ -4,8 +4,16 @@ import { AddedActivityResponse } from '@/types/User'
 
 export const addActivity = (activity: AddedActivityResponse) => {
   return fetcher<string>({
-    url: API_ROUTES.ACTIVITY.UPSERT_ACTIVITY,
+    url: API_ROUTES.ACTIVITY.ADD_ACTIVITY,
     method: 'POST',
+    body: activity as unknown as BodyInit,
+  })
+}
+
+export const updateActivity = (id: number, activity: AddedActivityResponse) => {
+  return fetcher<string>({
+    url: API_ROUTES.ACTIVITY.GET_BY_ID(id),
+    method: 'PUT',
     body: activity as unknown as BodyInit,
   })
 }

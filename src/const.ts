@@ -26,7 +26,7 @@ export const API_ROUTES = {
   ACTIVITY: {
     GET_BY_ID: (id: number) => `/api/activity/${id}`,
     GET_BY_USER_ID: (id: string) => `/api/activity/user/${id}`,
-    UPSERT_ACTIVITY: APP_URL + '/api/activity',
+    ADD_ACTIVITY: APP_URL + '/api/activity',
   },
 }
 

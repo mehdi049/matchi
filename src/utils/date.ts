@@ -13,7 +13,7 @@ export const dateConverterInput = (date: Date) => {
   try {
     date = new Date(date)
     const year = date.getFullYear()
-    const month = date.getMonth()
+    const month = date.getMonth() + 1 // Jan = 0
     const day = date.getDate()
     const dateConverted = new CalendarDate(year, month, day)
     return parseDate(dateConverted.toString()).toString()
@@ -28,7 +28,7 @@ export const timeStringToDatetime = (selectedDate: Date, time: string) => {
     const date = new Date(selectedDate)
 
     const year = date.getFullYear()
-    const month = date.getMonth()
+    const month = date.getMonth() + 1 // Jan = 0
     const day = date.getDate()
 
     let calendarDateTime = new CalendarDateTime(
@@ -48,6 +48,30 @@ export const timeStringToDatetime = (selectedDate: Date, time: string) => {
 export const fullDate = (date: Date, locale = 'fr') => {
   try {
     return dayjs(date).format('dddd D MMM YYYY')
+  } catch (error) {
+    console.log(error)
+    return ''
+  }
+}
+
+export const extractHourFromDate = (date: Date) => {
+  try {
+    const hour = dayjs(date).get('hour').toString()
+    if (hour.length < 2) return `0${hour}`
+
+    return hour
+  } catch (error) {
+    console.log(error)
+    return ''
+  }
+}
+
+export const extractMinuteFromDate = (date: Date) => {
+  try {
+    const minute = dayjs(date).get('minute').toString()
+    if (minute.length < 2) return `0${minute}`
+
+    return minute
   } catch (error) {
     console.log(error)
     return ''

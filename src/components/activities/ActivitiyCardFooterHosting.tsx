@@ -17,10 +17,13 @@ import SuccessMessage from '../message/SuccessMessage'
 import ErrorMessage from '../message/ErrorMessage'
 import { useContext } from 'react'
 import { UserContext } from '@/app/member/context/UserContext'
+import { useRouter } from 'next/navigation'
+import { ROUTES } from '@/routes'
 
 export default function ActivitiyCardFooterHosting({
   activityId,
 }: ActivitiyCardFooterProps) {
+  const router = useRouter()
   const { refetchUser } = useContext(UserContext)
 
   const {
@@ -154,7 +157,7 @@ export default function ActivitiyCardFooterHosting({
 
         <Button
           as={Link}
-          href="/member/activities/edit/1"
+          onClick={() => router.push(ROUTES.MEMBER.EDIT_ACTIVITY(activityId))}
           size="sm"
           color="primary"
           radius="full"
