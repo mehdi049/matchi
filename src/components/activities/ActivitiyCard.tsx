@@ -23,13 +23,15 @@ type ActivityProps = {
   activity?: AddedActivityResponseSm
   hosting?: boolean
   attending?: boolean
-  status?: 'Pending' | 'Accepted' | 'Rejected'
+  requestStatus?: 'Pending' | 'Accepted' | 'Rejected'
+  displayFooter?: boolean
 }
 export default function ActivityCard({
   activity,
   hosting,
   attending,
-  status,
+  requestStatus,
+  displayFooter,
 }: ActivityProps) {
   const router = useRouter()
 
@@ -113,14 +115,16 @@ export default function ActivityCard({
                 </>
               )}
             </CardFooter>
-            {hosting && activity?.id && (
-              <ActivitiyCardFooterHosting activityId={activity.id as number} />
-            )}
+            {displayFooter && (
+              <>
+                {hosting && activity?.id && (
+                  <ActivitiyCardFooterHosting activity={activity} />
+                )}
 
-            {attending && activity?.id && (
-              <ActivitiyCardFooterAttending
-                activityId={activity?.id as number}
-              />
+                {attending && activity?.id && (
+                  <ActivitiyCardFooterAttending activity={activity} />
+                )}
+              </>
             )}
           </Card>
         </div>

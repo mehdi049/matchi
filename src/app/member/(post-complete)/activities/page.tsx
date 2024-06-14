@@ -54,6 +54,7 @@ export default function Page() {
                         hosting
                         key={activity.id}
                         activity={activity}
+                        displayFooter
                       />
                     ))}
                 </div>

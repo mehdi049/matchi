@@ -1,5 +1,6 @@
 'use client'
 
+import { AddedActivityResponseSm } from '@/types/User'
 import {
   CardFooter,
   Button,
@@ -12,10 +13,10 @@ import {
 } from '@nextui-org/react'
 
 export type ActivitiyCardFooterProps = {
-  activityId: number
+  activity: AddedActivityResponseSm
 }
 export default function ActivitiyCardFooterAttending({
-  activityId,
+  activity,
 }: ActivitiyCardFooterProps) {
   const {
     isOpen: isOpenCancelAttendance,
