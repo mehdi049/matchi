@@ -18,7 +18,7 @@ export default function ActivitiesByType({ activityType }: ActivitiesProps) {
   if (isPending) return <IsLoadingMessage type="flat" />
   if (isError)
     return (
-      <ErrorMessage>
+      <ErrorMessage isVisible>
         Une erreur est survenu, veuillez réessayer plus tard
       </ErrorMessage>
     )
