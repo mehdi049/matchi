@@ -13,9 +13,9 @@ import { ProgressContext } from '../context/progressContext'
 import { UserContext } from '../../context/UserContext'
 import { UserInterestResponse, UserResponse } from '@/types/User'
 import useUpdateUser from '@/hooks/user/useUpdateUser'
-import useGetInterests from '@/hooks/user/useGetInterests'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
 import { ROUTES } from '@/routes'
+import useGetInterests from '@/hooks/interest/useGetInterests'
 
 export default function InterestStep({ setStep }: StepProps) {
   const { user, setUser } = useContext(UserContext)

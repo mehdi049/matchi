@@ -26,11 +26,11 @@ import { Controller, useForm } from 'react-hook-form'
 import { UploadProfile } from '@/components/upload/UploadProfile'
 import { UserContext } from '../../context/UserContext'
 import { dateConverterInput } from '@/utils/date'
-import useGetInterests from '@/hooks/user/useGetInterests'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
 import { UserInterestResponse } from '@/types/User'
 import useUpdateUser from '@/hooks/user/useUpdateUser'
 import SuccessMessage from '@/components/message/SuccessMessage'
+import useGetInterests from '@/hooks/interest/useGetInterests'
 
 const formInputs = z.object({
   name: zodCheck(['required']),

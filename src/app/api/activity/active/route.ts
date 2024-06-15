@@ -4,19 +4,18 @@ import { ApiResponse } from '@/types/apiResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
 
-// get activity by User Id
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = params.id
-
+// get active activities
+export async function GET() {
   const addedActivities = await prisma.addedActivity.findMany({
     where: {
-      userId: id,
+      status: 'Active',
+      start: {
+        gt: new Date(),
+      },
     },
     select: {
       id: true,
+      title: true,
       description: true,
       country: true,
       city: true,

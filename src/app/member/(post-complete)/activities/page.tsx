@@ -40,9 +40,7 @@ export default function Page() {
               {user.addedActivities?.filter(
                 (activity) => new Date(activity.date) >= new Date()
               ).length === 0 ? (
-                <InfoMessage>
-                  <p>Aucune activités créé.</p>
-                </InfoMessage>
+                <InfoMessage>Aucune activités créé.</InfoMessage>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                   {user.addedActivities
@@ -63,7 +61,7 @@ export default function Page() {
             <Tab key="attending" title="Que je vais assiter">
               {randomNumber === 0 ? (
                 <InfoMessage>
-                  <p>Pas d&apos;activités trouvés en ce moment.</p>
+                  Pas d&apos;activités trouvés en ce moment.
                 </InfoMessage>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
@@ -79,9 +77,7 @@ export default function Page() {
               {user.addedActivities?.filter(
                 (activity) => new Date(activity.date) < new Date()
               ).length === 0 ? (
-                <InfoMessage>
-                  <p>Aucune activités trouvé.</p>
-                </InfoMessage>
+                <InfoMessage>Aucune activités trouvé.</InfoMessage>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                   {user.addedActivities

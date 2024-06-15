@@ -7,13 +7,16 @@ import { NextResponse } from 'next/server'
 // get activity by Id
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { activityId: string } }
 ) {
-  const id = params.id
+  const activityId = params.activityId
 
-  const addedActivity = await prisma.addedActivity.findUnique({
+  const addedActivities = await prisma.addedActivity.findMany({
     where: {
-      id: parseInt(id),
+      activityId: parseInt(activityId),
+      start: {
+        gt: new Date(),
+      },
     },
     select: {
       id: true,
@@ -63,19 +66,11 @@ export async function GET(
     },
   })
 
-  if (addedActivity)
-    return NextResponse.json<ApiResponse<AddedActivityResponse>>(
-      {
-        body: addedActivity as unknown as AddedActivityResponse,
-      },
-      { status: StatusCodes.OK }
-    )
-
-  return NextResponse.json<ApiResponse<string>>(
+  return NextResponse.json<ApiResponse<AddedActivityResponse[]>>(
     {
-      message: `Activité introuvable ${id}`,
+      body: addedActivities as unknown as AddedActivityResponse[],
     },
-    { status: StatusCodes.NOT_FOUND }
+    { status: StatusCodes.OK }
   )
 }
 

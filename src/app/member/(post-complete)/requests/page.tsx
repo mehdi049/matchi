@@ -20,15 +20,13 @@ export default function Page() {
           <Tabs aria-label="Options" size="lg">
             <Tab key="new" title="En cours">
               {randomNumber === 0 ? (
-                <InfoMessage>
-                  <p>Pas de demandes trouvés.</p>
-                </InfoMessage>
+                <InfoMessage>Pas de demandes trouvés.</InfoMessage>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                   {[...Array(randomNumber).keys()].map((x, key) => {
                     return (
                       <div key={key}>
-                        <ActivityCard status="Accepted" />
+                        <ActivityCard requestStatus="Accepted" />
                       </div>
                     )
                   })}
@@ -37,15 +35,13 @@ export default function Page() {
             </Tab>
             <Tab key="past" title="Anciennes">
               {randomNumber === 0 ? (
-                <InfoMessage>
-                  <p>Pas de demandes trouvés.</p>
-                </InfoMessage>
+                <InfoMessage>Pas de demandes trouvés.</InfoMessage>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                   {[...Array(randomNumber).keys()].map((x, key) => {
                     return (
                       <div key={key}>
-                        <ActivityCard status="Accepted" />
+                        <ActivityCard requestStatus="Accepted" />
                       </div>
                     )
                   })}

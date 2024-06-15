@@ -4,6 +4,12 @@ import { ActivityResponse } from '@/types/User'
 
 export const getInterests = () => {
   return fetcherGet<ActivityResponse[]>({
-    url: API_ROUTES.INTERESTS,
+    url: API_ROUTES.INTERESTS.GET_ALL,
+  })
+}
+
+export const getInterestBySlug = (slug: string) => {
+  return fetcherGet<ActivityResponse>({
+    url: API_ROUTES.INTERESTS.GET_BY_SLUG(slug),
   })
 }

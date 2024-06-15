@@ -22,7 +22,7 @@ import { UserContext } from '@/app/member/context/UserContext'
 import { useContext, useState } from 'react'
 import ErrorMessage from '../message/ErrorMessage'
 import SuccessMessage from '../message/SuccessMessage'
-import useGetInterests from '@/hooks/user/useGetInterests'
+import useGetInterests from '@/hooks/interest/useGetInterests'
 import IsLoadingMessage from '../message/IsLoadingMessage'
 import {
   dateConverterInput,

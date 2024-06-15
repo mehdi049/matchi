@@ -4,8 +4,16 @@ import { ApiResponse } from '@/types/apiResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
 
-export async function GET() {
-  const activities = await prisma.activity.findMany({
+export async function GET(
+  req: Request,
+  { params }: { params: { slug: string } }
+) {
+  const slug = params.slug
+
+  const activity = await prisma.activity.findFirst({
+    where: {
+      slug: slug,
+    },
     select: {
       id: true,
       name: true,
@@ -14,10 +22,10 @@ export async function GET() {
     },
   })
 
-  if (activities)
-    return NextResponse.json<ApiResponse<ActivityResponse[]>>(
+  if (activity)
+    return NextResponse.json<ApiResponse<ActivityResponse>>(
       {
-        body: activities as ActivityResponse[],
+        body: activity as ActivityResponse,
       },
       { status: StatusCodes.OK }
     )

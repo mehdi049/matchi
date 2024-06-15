@@ -6,7 +6,7 @@ export const ROUTES = {
     '/activities/' + activity + '/' + city,
   ACTIVITIES_A: (activity: string) => '/activities/' + activity,
 
-  PROFILE: (id: number) => '/profiles/' + id,
+  PROFILE: (id: string) => '/profiles/' + id,
 
   MEMBER: {
     COMPLETE_PROFILE: '/member/complete',

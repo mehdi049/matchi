@@ -1,9 +1,21 @@
+'use client'
 import ActivityCardDetails from '@/components/activities/ActivityCardDetails'
+import ErrorMessage from '@/components/message/ErrorMessage'
+import IsLoadingMessage from '@/components/message/IsLoadingMessage'
+import useGetActivityById from '@/hooks/activity/useGetActivityById'
 
-export default function Page({ params }: { params: { id: string[] } }) {
+export default function Page({ params }: { params: { id: string } }) {
+  const { data, isPending, isError } = useGetActivityById(parseInt(params.id))
+  if (isPending) return <IsLoadingMessage type="flat" />
+  if (isError)
+    return (
+      <ErrorMessage>
+        Une erreur est survenu, veuillez réessayer plus tard
+      </ErrorMessage>
+    )
   return (
     <>
-      <ActivityCardDetails />
+      <ActivityCardDetails activity={data.body} />
     </>
   )
 }

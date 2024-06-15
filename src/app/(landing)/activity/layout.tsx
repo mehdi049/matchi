@@ -13,7 +13,7 @@ export default function ActivityLayout({
 }>) {
   return (
     <div className="flex flex-wrap md:flex-nowrap gap-12 lg:gap-24">
-      {children}
+      <div className="w-full">{children}</div>
       <ActivitySidebar />
     </div>
   )

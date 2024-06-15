@@ -11,3 +11,7 @@ export const hashPassword = (pwd: string) => {
 
   return null
 }
+
+export const slugifyString = (string: string) => {
+  return string.replace(' ', '-')
+}

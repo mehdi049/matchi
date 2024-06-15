@@ -77,6 +77,7 @@ model Activity {
     name   String
     image  String?
     status String? @default("Active")
+    slug   String
 
     userInterests UserInterest[]
     addedActivity AddedActivity[]

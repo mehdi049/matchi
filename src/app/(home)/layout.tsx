@@ -23,12 +23,16 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className="bg-gray-50 min-h-screen">
+      <body className="bg-gray-50">
         <Providers>
-          <NavbarTop />
-          <HeroSection />
-          <Container className="mt-10">{children}</Container>
-          <Footer />
+          <div className="flex flex-col justify-between gap-4 min-h-screen">
+            <div>
+              <NavbarTop />
+              <HeroSection />
+              <Container className="mt-10">{children}</Container>
+            </div>
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>
