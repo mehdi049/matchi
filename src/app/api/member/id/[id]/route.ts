@@ -1,3 +1,4 @@
+import { MESSAGES } from '@/const/message'
 import prisma from '@/lib/prisma'
 import { UserResponse } from '@/types/User'
 import { ApiResponse } from '@/types/apiResponse'
@@ -129,7 +130,7 @@ export async function PUT(
     console.log(error)
     return NextResponse.json<ApiResponse<string>>(
       {
-        message: 'Une erreur est survenu, veuillez réessayer plus tard',
+        message: MESSAGES.ERROR.GENERAL,
       },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     )

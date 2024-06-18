@@ -11,7 +11,6 @@ import {
 } from '@nextui-org/react'
 import cities from '../../data/cities.json'
 import H3 from '@/components/typography/H3'
-import { ACTIVITY_TYPE_OPTIONS } from '@/const'
 import { literal, string, union, z } from 'zod'
 import { zodCheck } from '@/utils/common-zod-check'
 import { Controller, useForm } from 'react-hook-form'
@@ -34,6 +33,7 @@ import {
 import { ROUTES } from '@/routes'
 import { useRouter } from 'next/navigation'
 import useUpdateActivity from '@/hooks/activity/useUpdateActivity'
+import { ACTIVITY_TYPE_OPTIONS } from '@/const/activity_type_options'
 
 const formInputs = z
   .object({

@@ -20,6 +20,7 @@ import { UserContext } from '@/app/member/context/UserContext'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/routes'
 import useUpdateActivity from '@/hooks/activity/useUpdateActivity'
+import { MESSAGES } from '@/const/message'
 
 export default function ActivitiyCardFooterHosting({
   activity,
@@ -121,7 +122,7 @@ export default function ActivitiyCardFooterHosting({
                         isVisible={isErrorUpdate && !isPendingUpdate}
                         className="mt-2"
                       >
-                        Une erreur est survenu, veuillez réessayer plus tard.
+                        {MESSAGES.ERROR.GENERAL}
                       </ErrorMessage>
                     </ModalBody>
                     <ModalFooter>
@@ -177,7 +178,7 @@ export default function ActivitiyCardFooterHosting({
                         isVisible={isErrorDelete && !isPendingDelete}
                         className="mt-2"
                       >
-                        Une erreur est survenu, veuillez réessayer plus tard.
+                        {MESSAGES.ERROR.GENERAL}
                       </ErrorMessage>
                     </ModalBody>
                     <ModalFooter>

@@ -1,17 +1,4 @@
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL
-export const MAX_UPLOAD_SIZE_IMG = process.env
-  .NEXT_PUBLIC_MAX_UPLOAD_SIZE_IMG as string
-
-export const ACTIVITY_TYPE_OPTIONS = [
-  {
-    value: 'Public',
-    label: 'Public (Ouvert à tout le monde)',
-  },
-  {
-    value: 'Private',
-    label: 'Privée (Seulement par invitation)',
-  },
-]
 
 export const API_ROUTES = {
   UPLOAD: APP_URL + '/api/upload',
@@ -35,14 +22,4 @@ export const API_ROUTES = {
 
     ADD_ACTIVITY: APP_URL + '/api/activity',
   },
-}
-
-export const QUERY_KEYS = {
-  USER_ID: 'USER_ID',
-  USER_EMAIL: 'USER_EMAIL',
-
-  INTERESTS: 'INTERESTS',
-
-  ACTIVITIES: 'ACTIVITIES',
-  ACTIVITY_ID: 'ACTIVITY_ID',
 }

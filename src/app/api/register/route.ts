@@ -1,3 +1,4 @@
+import { MESSAGES } from '@/const/message'
 import prisma from '@/lib/prisma'
 import { ApiResponse } from '@/types/apiResponse'
 import { hashPassword } from '@/utils/string'
@@ -46,7 +47,7 @@ export async function POST(req: Request) {
   } catch (error) {
     return NextResponse.json<ApiResponse<string>>(
       {
-        message: 'Une erreur est survenu, veuillez réessayer plus tard',
+        message: MESSAGES.ERROR.GENERAL,
       },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     )

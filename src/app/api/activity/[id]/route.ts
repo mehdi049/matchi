@@ -1,3 +1,4 @@
+import { MESSAGES } from '@/const/message'
 import prisma from '@/lib/prisma'
 import { AddedActivityResponse } from '@/types/AddedActivityResponse'
 import { ApiResponse } from '@/types/apiResponse'
@@ -118,7 +119,7 @@ export async function DELETE(
     console.log(error)
     return NextResponse.json<ApiResponse<string>>(
       {
-        message: `Une erreur est survenu, veuillez réessayer plus tard ${id}`,
+        message: `${MESSAGES.ERROR.GENERAL} ${id}`,
       },
       { status: StatusCodes.NOT_FOUND }
     )
@@ -207,7 +208,7 @@ export async function PUT(
     console.log(error)
     return NextResponse.json<ApiResponse<string>>(
       {
-        message: 'Une erreur est survenu, veuillez réessayer plus tard',
+        message: MESSAGES.ERROR.GENERAL,
       },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     )

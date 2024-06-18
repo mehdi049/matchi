@@ -1,4 +1,4 @@
-import { API_ROUTES } from '@/const'
+import { API_ROUTES } from '@/const/api_routes'
 import { AddedActivityUpdateStatus } from '@/hooks/activity/useUpdateActivity'
 import { fetcher, fetcherGet } from '@/lib/fetcher'
 import { AddedActivityResponse } from '@/types/AddedActivityResponse'

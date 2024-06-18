@@ -6,6 +6,7 @@ import ActivityForm from '@/components/activities/ActivityForm'
 import useGetActivityById from '@/hooks/activity/useGetActivityById'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
 import ErrorMessage from '@/components/message/ErrorMessage'
+import { MESSAGES } from '@/const/message'
 
 export default function Page({ params }: { params: { id: string } }) {
   const { data, isLoading, isError } = useGetActivityById(parseInt(params.id))
@@ -14,9 +15,7 @@ export default function Page({ params }: { params: { id: string } }) {
   if (isError)
     return (
       <div>
-        <ErrorMessage isVisible>
-          Une erreur est survenu, veuillez réessayer plus tard.
-        </ErrorMessage>
+        <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
       </div>
     )
 

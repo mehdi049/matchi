@@ -1,6 +1,7 @@
 'use client'
 import ErrorMessage from '@/components/message/ErrorMessage'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
+import { MESSAGES } from '@/const/message'
 import useGetUserByEmail from '@/hooks/user/useGetUserByEmail'
 import { ROUTES } from '@/routes'
 import { UserResponse } from '@/types/User'
@@ -59,11 +60,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   // user not found
   if (isLoading) return <IsLoadingMessage type="flat" />
   if (isError)
-    return (
-      <ErrorMessage isVisible>
-        Une erreur est survenu, veuillez réessayer plus tard.
-      </ErrorMessage>
-    )
+    return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
 
   return (
     <UserContext.Provider

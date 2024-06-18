@@ -7,6 +7,7 @@ import ErrorMessage from '@/components/message/ErrorMessage'
 import H1 from '@/components/typography/H1'
 import ActivityCard from '@/components/activities/ActivitiyCard'
 import { ActivityResponse } from '@/types/ActivityResponse'
+import { MESSAGES } from '@/const/message'
 
 type ActivitiesProps = {
   activityType: ActivityResponse
@@ -17,11 +18,7 @@ export default function ActivitiesByType({ activityType }: ActivitiesProps) {
   )
   if (isPending) return <IsLoadingMessage type="flat" />
   if (isError)
-    return (
-      <ErrorMessage isVisible>
-        Une erreur est survenu, veuillez réessayer plus tard
-      </ErrorMessage>
-    )
+    return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
 
   return (
     <>

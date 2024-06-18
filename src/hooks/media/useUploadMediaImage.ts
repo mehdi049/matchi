@@ -1,6 +1,6 @@
 'use client'
 
-import { QUERY_KEYS } from '@/const'
+import { QUERY_KEYS } from '@/const/query_keys'
 import { getQueryClient } from '@/lib/getQueryClient'
 import { uploadMediaImage } from '@/lib/vercel'
 import { useMutation } from '@tanstack/react-query'

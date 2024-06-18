@@ -1,4 +1,5 @@
-import { API_ROUTES } from '@/const'
+import { API_ROUTES } from '@/const/api_routes'
+import { MESSAGES } from '@/const/message'
 import { validateImage } from '@/utils/validation'
 import { upload } from '@vercel/blob/client'
 
@@ -12,6 +13,6 @@ export const uploadMediaImage = async (file: File) => {
     })
     return response
   } catch (error) {
-    throw Error('Une erreur est survenu, veuillez réessayer plus tard')
+    throw Error(MESSAGES.ERROR.GENERAL)
   }
 }

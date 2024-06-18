@@ -1,6 +1,6 @@
 'use client'
 
-import { QUERY_KEYS } from '@/const'
+import { QUERY_KEYS } from '@/const/query_keys'
 import { getQueryClient } from '@/lib/getQueryClient'
 import { updateUser } from '@/services/member'
 import { UserResponse } from '@/types/User'

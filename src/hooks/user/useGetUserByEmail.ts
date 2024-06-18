@@ -1,6 +1,6 @@
 'use client'
 
-import { QUERY_KEYS } from '@/const'
+import { QUERY_KEYS } from '@/const/query_keys'
 import { getUserByEmail, getUserById } from '@/services/member'
 import { UserResponse } from '@/types/User'
 import { ApiResponse } from '@/types/apiResponse'

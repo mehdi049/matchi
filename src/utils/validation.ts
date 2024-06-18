@@ -1,4 +1,4 @@
-import { MAX_UPLOAD_SIZE_IMG } from '@/const'
+import { MAX_UPLOAD_SIZE_IMG } from '@/const/const'
 
 const allowedFileImageExtension = ['png', 'jpg', 'jpeg', 'webp']
 const getFileExtension = (filename: string) => {

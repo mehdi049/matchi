@@ -1,6 +1,6 @@
 'use client'
 
-import { QUERY_KEYS } from '@/const'
+import { QUERY_KEYS } from '@/const/query_keys'
 import { getInterests } from '@/services/interests'
 import { ActivityResponse } from '@/types/ActivityResponse'
 import { ApiResponse } from '@/types/apiResponse'
