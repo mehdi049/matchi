@@ -15,9 +15,9 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/navigation'
 import ActivitiyCardFooterAttending from './ActivitiyCardFooterAttending'
 import ActivitiyCardFooterHosting from './ActivitiyCardFooterHosting'
-import { AddedActivityResponseSm } from '@/types/User'
 import { ROUTES } from '@/routes'
 import { fullDate } from '@/utils/date'
+import { AddedActivityResponseSm } from '@/types/AddedActivityResponse'
 
 type ActivityProps = {
   activity?: AddedActivityResponseSm

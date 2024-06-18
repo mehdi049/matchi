@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma'
-import { ActivityResponse } from '@/types/User'
+import { ActivityResponse } from '@/types/ActivityResponse'
 import { ApiResponse } from '@/types/apiResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'

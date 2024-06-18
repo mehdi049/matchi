@@ -1,6 +1,6 @@
 'use client'
 
-import { AddedActivityResponseSm } from '@/types/User'
+import { AddedActivityResponseSm } from '@/types/AddedActivityResponse'
 import {
   CardFooter,
   Button,

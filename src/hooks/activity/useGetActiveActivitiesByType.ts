@@ -2,7 +2,7 @@
 
 import { QUERY_KEYS } from '@/const'
 import { getActiveActivitiesByType } from '@/services/activity'
-import { AddedActivityResponse } from '@/types/User'
+import { AddedActivityResponse } from '@/types/AddedActivityResponse'
 import { ApiResponse } from '@/types/apiResponse'
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
 

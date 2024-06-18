@@ -1,12 +1,12 @@
 'use client'
 
 import { Button, Link } from '@nextui-org/react'
-import { ActivityResponse } from '@/types/User'
 import useGetActiveActivitiesByType from '@/hooks/activity/useGetActiveActivitiesByType'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
 import ErrorMessage from '@/components/message/ErrorMessage'
 import H1 from '@/components/typography/H1'
 import ActivityCard from '@/components/activities/ActivitiyCard'
+import { ActivityResponse } from '@/types/ActivityResponse'
 
 type ActivitiesProps = {
   activityType: ActivityResponse

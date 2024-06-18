@@ -1,7 +1,7 @@
 import { API_ROUTES } from '@/const'
 import { AddedActivityUpdateStatus } from '@/hooks/activity/useUpdateActivity'
 import { fetcher, fetcherGet } from '@/lib/fetcher'
-import { AddedActivityResponse } from '@/types/User'
+import { AddedActivityResponse } from '@/types/AddedActivityResponse'
 
 export const addActivity = (activity: AddedActivityResponse) => {
   return fetcher<string>({

@@ -21,7 +21,7 @@ import {
   faMoneyCheckDollar,
 } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/navigation'
-import { AddedActivityResponse } from '@/types/User'
+import { AddedActivityResponse } from '@/types/AddedActivityResponse'
 import { ROUTES } from '@/routes'
 import {
   extractHourFromDate,

@@ -3,7 +3,7 @@
 import { QUERY_KEYS } from '@/const'
 import { getQueryClient } from '@/lib/getQueryClient'
 import { updateActivity } from '@/services/activity'
-import { AddedActivityResponse } from '@/types/User'
+import { AddedActivityResponse } from '@/types/AddedActivityResponse'
 import { useMutation } from '@tanstack/react-query'
 
 export type AddedActivityUpdateStatus = {

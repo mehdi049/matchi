@@ -11,11 +11,12 @@ import { useContext, useMemo, useState } from 'react'
 import ErrorMessage from '@/components/message/ErrorMessage'
 import { ProgressContext } from '../context/progressContext'
 import { UserContext } from '../../context/UserContext'
-import { UserInterestResponse, UserResponse } from '@/types/User'
 import useUpdateUser from '@/hooks/user/useUpdateUser'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
 import { ROUTES } from '@/routes'
 import useGetInterests from '@/hooks/interest/useGetInterests'
+import { UserInterestResponse } from '@/types/UserInterestResponse'
+import { UserResponse } from '@/types/User'
 
 export default function InterestStep({ setStep }: StepProps) {
   const { user, setUser } = useContext(UserContext)
