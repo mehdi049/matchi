@@ -18,7 +18,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import useAddActivity from '@/hooks/activity/useAddActivity'
 import { AddedActivityResponse } from '@/types/AddedActivityResponse'
 import { ActivityResponse } from '@/types/ActivityResponse'
-import { UserContext } from '@/app/member/context/UserContext'
 import { useContext, useState } from 'react'
 import ErrorMessage from '../message/ErrorMessage'
 import SuccessMessage from '../message/SuccessMessage'
@@ -34,6 +33,7 @@ import { ROUTES } from '@/routes'
 import { useRouter } from 'next/navigation'
 import useUpdateActivity from '@/hooks/activity/useUpdateActivity'
 import { ACTIVITY_TYPE_OPTIONS } from '@/const/activity_type_options'
+import { UserContext } from '@/app/member/context/UserContext'
 
 const formInputs = z
   .object({
@@ -108,70 +108,78 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
   const [isMaxAttendeesDisabled, setIsMaxAttendeesDisabled] = useState(false)
   const [isFree, setIsFree] = useState(false)
 
-  const handleAddActivity = handleSubmit((data) => {
-    const selectedDate = new Date(data.date)
-    mutateAdd({
-      activity: {
-        title: data.title,
-        description: data.description,
+  const handleAddActivity = handleSubmit(
+    async (data: z.infer<typeof formInputs>) => {
+      const selectedDate = new Date(data.date)
+      mutateAdd({
+        activity: {
+          title: data.title,
+          description: data.description,
 
-        country: 'Tunisia',
-        city: data.city,
-        municipality: data.municipality,
+          country: 'Tunisia',
+          city: data.city,
+          municipality: data.municipality,
 
-        place: data.place,
-        googleMap: data.googleMap,
+          place: data.place,
+          googleMap: data.gmap as string | undefined,
 
-        date: selectedDate,
-        start: new Date(timeStringToDatetime(selectedDate, data.start) as any),
-        end: new Date(timeStringToDatetime(selectedDate, data.end) as any),
+          date: selectedDate,
+          start: new Date(
+            timeStringToDatetime(selectedDate, data.start) as any
+          ),
+          end: new Date(timeStringToDatetime(selectedDate, data.end) as any),
 
-        maxAttendees: isMaxAttendeesDisabled ? null : data.maxAttendees,
+          maxAttendees: isMaxAttendeesDisabled ? null : data.maxAttendees,
 
-        price: isFree || data.price === 0 ? null : data.price,
-        currency: 'TND',
+          price: isFree || data.price === 0 ? null : data.price,
+          currency: 'TND',
 
-        type: data.type,
+          type: data.type,
 
-        activityId: parseInt(data.activity),
-        userId: user.id,
-        status: 'Active',
-      },
-    })
-  })
+          activityId: parseInt(data.activity),
+          userId: user.id,
+          status: 'Active',
+        },
+      })
+    }
+  )
 
-  const handleUpdateActivity = handleSubmit((data) => {
-    const selectedDate = new Date(data.date)
-    mutateUpdate({
-      id: activity?.id as number,
-      activity: {
-        title: data.title,
-        description: data.description,
+  const handleUpdateActivity = handleSubmit(
+    async (data: z.infer<typeof formInputs>) => {
+      const selectedDate = new Date(data.date)
+      mutateUpdate({
+        id: activity?.id as number,
+        activity: {
+          title: data.title,
+          description: data.description,
 
-        country: 'Tunisia',
-        city: data.city,
-        municipality: data.municipality,
+          country: 'Tunisia',
+          city: data.city,
+          municipality: data.municipality,
 
-        place: data.place,
-        googleMap: data.googleMap,
+          place: data.place,
+          googleMap: data.gmap as string | undefined,
 
-        date: selectedDate,
-        start: new Date(timeStringToDatetime(selectedDate, data.start) as any),
-        end: new Date(timeStringToDatetime(selectedDate, data.end) as any),
+          date: selectedDate,
+          start: new Date(
+            timeStringToDatetime(selectedDate, data.start) as any
+          ),
+          end: new Date(timeStringToDatetime(selectedDate, data.end) as any),
 
-        maxAttendees: isMaxAttendeesDisabled ? null : data.maxAttendees,
+          maxAttendees: isMaxAttendeesDisabled ? null : data.maxAttendees,
 
-        price: isFree || data.price === 0 ? null : data.price,
-        currency: 'TND',
+          price: isFree || data.price === 0 ? null : data.price,
+          currency: 'TND',
 
-        type: data.type,
+          type: data.type,
 
-        activityId: parseInt(data.activity),
-        userId: user.id,
-        status: 'Active',
-      },
-    })
-  })
+          activityId: parseInt(data.activity),
+          userId: user.id,
+          status: 'Active',
+        },
+      })
+    }
+  )
 
   return (
     <>

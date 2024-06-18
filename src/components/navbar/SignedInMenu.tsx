@@ -5,8 +5,11 @@ import NotificationsBadge from './NotificationsBadge'
 import { getInitials } from '../../utils/string'
 import { useContext } from 'react'
 import { UserContext } from '@/app/member/context/UserContext'
+import { useRouter } from 'next/navigation'
+import { ROUTES } from '@/routes'
 
 export default function SignedInMenu() {
+  const router = useRouter()
   const { user } = useContext(UserContext)
 
   return (
@@ -17,7 +20,9 @@ export default function SignedInMenu() {
       <NavbarItem>
         <Badge size="sm" content="+5" color="danger">
           <Link
-            href="/member/messages"
+            onClick={() => {
+              router.push(ROUTES.MEMBER.MESSAGES)
+            }}
             color="foreground"
             className="cursor-pointer pt-2 sm:pt-1 text-xs sm:text-base"
           >
@@ -27,7 +32,7 @@ export default function SignedInMenu() {
       </NavbarItem>
       <NavbarItem>
         <Link
-          href="/member/profile"
+          onClick={() => router.push(ROUTES.MEMBER.PROFILE)}
           color="foreground"
           className="cursor-pointer"
         >

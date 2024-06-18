@@ -143,8 +143,12 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
           <Divider className="my-4" />
 
           <H2>
-            {activity?.attendees?.length}{' '}
-            {activity?.maxAttendees && '/' + activity.maxAttendees}{' '}
+            {activity?.attendees?.length}
+            {activity?.maxAttendees && activity?.maxAttendees > 0 ? (
+              <>/ {activity.maxAttendees}</>
+            ) : (
+              <></>
+            )}{' '}
             Participant(s)
           </H2>
           {activity?.attendees && activity?.attendees?.length > 0 && (

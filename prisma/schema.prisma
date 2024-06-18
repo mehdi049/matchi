@@ -50,26 +50,29 @@ model VerificationToken {
 }
 
 model User {
-    id              String           @id @default(cuid())
-    name            String?
-    email           String           @unique
-    password        String?
-    emailVerified   DateTime?
-    image           String?
-    birthDay        DateTime?
-    bio             String?
-    gender          String?
-    country         String?
-    city            String?
-    municipality    String?
+    id            String    @id @default(cuid())
+    name          String?
+    email         String    @unique
+    password      String?
+    emailVerified DateTime?
+    image         String?
+    birthDay      DateTime?
+    bio           String?
+    gender        String?
+    country       String?
+    city          String?
+    municipality  String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
     accounts        Account[]
     sessions        Session[]
     interests       UserInterest[]
     addedActivities AddedActivity[]
     userAttendance  UserAttendance[]
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    Feedback        Feedback[]
+    Notification    Notification[]
 }
 
 model Activity {
@@ -119,6 +122,7 @@ model AddedActivity {
     activity   Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
 
     attendees UserAttendance[]
+    feedbacks Feedback[]
 }
 
 model UserAttendance {
@@ -128,7 +132,32 @@ model UserAttendance {
     addedActivity   AddedActivity @relation(fields: [addedActivityId], references: [id])
     addedActivityId Int
 
+    status          String   @default("Approved")
+    statusUpdatedAt DateTime @default(now())
+
     @@id([userId, addedActivityId])
+}
+
+model Feedback {
+    id        Int      @id @default(autoincrement())
+    content   String
+    rating    Float
+    createdAt DateTime @default(now())
+
+    createdBy User   @relation(fields: [userId], references: [id])
+    userId    String
+
+    AddedActivity   AddedActivity? @relation(fields: [addedActivityId], references: [id])
+    addedActivityId Int?
+}
+
+model Notification {
+    id        Int      @id @default(autoincrement())
+    content   String
+    createdAt DateTime @default(now())
+
+    createdFor User   @relation(fields: [userId], references: [id])
+    userId     String
 }
 
 // Optional for WebAuthn support

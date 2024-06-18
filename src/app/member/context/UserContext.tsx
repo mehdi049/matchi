@@ -33,11 +33,16 @@ export const UserContext = createContext({
 
 type UserContextProviderProps = {
   children: React.ReactNode
+  isPrivate?: boolean
 }
-export const UserContextProvider = ({ children }: UserContextProviderProps) => {
+export const UserContextProvider = ({
+  children,
+  isPrivate,
+}: UserContextProviderProps) => {
   const router = useRouter()
 
   const { data: session } = useSession()
+
   const { data, isError, isLoading, refetch } = useGetUserByEmail(
     session?.user?.email as string
   )
@@ -53,14 +58,16 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     if (data) setUser(data?.body as UserResponse)
   }, [data])
 
-  // unauthenticated
-  if (status === 'loading') return <IsLoadingMessage type="flat" />
-  if (status === 'unauthenticated') router.push(ROUTES.HOME)
+  if (isPrivate) {
+    // unauthenticated
+    if (status === 'loading') return <IsLoadingMessage type="flat" />
+    if (status === 'unauthenticated') router.push(ROUTES.HOME)
 
-  // user not found
-  if (isLoading) return <IsLoadingMessage type="flat" />
-  if (isError)
-    return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
+    // user not found
+    if (isLoading) return <IsLoadingMessage type="flat" />
+    if (isError)
+      return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
+  }
 
   return (
     <UserContext.Provider

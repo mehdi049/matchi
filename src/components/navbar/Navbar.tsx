@@ -16,26 +16,29 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import SignInMenu from './SignInMenu'
 import SignedInMenu from './SignedInMenu'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { ROUTES } from '@/routes'
 
 export default function NavbarTop() {
+  const router = useRouter()
   const { data: session } = useSession()
 
   return (
     <Navbar maxWidth="full" className="bg-white shadow-md">
       <NavbarContent>
         <NavbarBrand>
-          <Link href="/" className="font-bold text-inherit">
+          <Link
+            onClick={() => {
+              router.push(ROUTES.HOME)
+            }}
+            className="font-bold text-inherit cursor-pointer"
+          >
             MATCHI
           </Link>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent
-        as="div"
-        //className="hidden md:flex gap-0 w-full max-w-md"
-        className="hidden"
-        justify="center"
-      >
+      <NavbarContent as="div" className="hidden" justify="center">
         <Select
           label="Activité"
           placeholder="Séléctionnez une activité"

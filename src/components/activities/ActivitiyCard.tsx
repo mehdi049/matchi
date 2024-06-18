@@ -69,19 +69,19 @@ export default function ActivityCard({
                   <Chip color="primary" size="sm" variant="flat">
                     {activity.activity?.name}
                   </Chip>
-                  {status && (
+                  {requestStatus && (
                     <>
-                      {status === 'Accepted' && (
+                      {requestStatus === 'Accepted' && (
                         <Chip color="success" size="sm" variant="flat">
                           Accepté
                         </Chip>
                       )}
-                      {status === 'Rejected' && (
+                      {requestStatus === 'Rejected' && (
                         <Chip color="danger" size="sm">
                           Rejeté
                         </Chip>
                       )}
-                      {status === 'Pending' && (
+                      {requestStatus === 'Pending' && (
                         <Chip size="sm">En attente</Chip>
                       )}
                     </>
@@ -100,7 +100,12 @@ export default function ActivityCard({
             <CardFooter className="flex justify-between gap-2">
               <div className="flex gap-1">
                 <p className="font-semibold text-default-400 text-small">
-                  {activity.attendees?.length}/{activity.maxAttendees}
+                  {activity?.attendees?.length}
+                  {activity?.maxAttendees && activity?.maxAttendees > 0 ? (
+                    <>/ {activity.maxAttendees}</>
+                  ) : (
+                    <></>
+                  )}
                 </p>
                 <p className=" text-default-400 text-small">Participant(s)</p>
               </div>

@@ -16,11 +16,11 @@ import useDeleteActivity from '@/hooks/activity/useDeleteActivity'
 import SuccessMessage from '../message/SuccessMessage'
 import ErrorMessage from '../message/ErrorMessage'
 import { useContext } from 'react'
-import { UserContext } from '@/app/member/context/UserContext'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/routes'
 import useUpdateActivity from '@/hooks/activity/useUpdateActivity'
 import { MESSAGES } from '@/const/message'
+import { UserContext } from '@/app/member/context/UserContext'
 
 export default function ActivitiyCardFooterHosting({
   activity,

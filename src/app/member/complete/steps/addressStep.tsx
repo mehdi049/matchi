@@ -51,23 +51,25 @@ export default function MyAddressStep({ setStep }: StepProps) {
   })
   const context = useContext(ProgressContext)
 
-  const handleNextStep = handleSubmit((data) => {
-    setUser((prevState: UserResponse) => ({
-      ...prevState,
-      country: 'Tunisia',
-      city: selectedCity,
-      municipality: data.municipality,
-    }))
-    mutate({
-      id: user.id,
-      user: {
-        ...user,
+  const handleNextStep = handleSubmit(
+    async (data: z.infer<typeof formInputs>) => {
+      setUser((prevState: UserResponse) => ({
+        ...prevState,
         country: 'Tunisia',
         city: selectedCity,
         municipality: data.municipality,
-      },
-    })
-  })
+      }))
+      mutate({
+        id: user.id,
+        user: {
+          ...user,
+          country: 'Tunisia',
+          city: selectedCity,
+          municipality: data.municipality,
+        },
+      })
+    }
+  )
 
   return (
     <CardBody className="flex gap-4 flex-col">

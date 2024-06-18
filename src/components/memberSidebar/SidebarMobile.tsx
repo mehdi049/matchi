@@ -16,6 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { signOut } from 'next-auth/react'
 import { ROUTES } from '@/routes'
+import { useRouter } from 'next/navigation'
 
 const menu = [
   {
@@ -44,6 +45,7 @@ const menu = [
   },
 ]
 export default function SidebarMobileMember() {
+  const router = useRouter()
   const handleSignOut = () => {
     signOut({ callbackUrl: ROUTES.HOME, redirect: true })
   }
@@ -54,7 +56,7 @@ export default function SidebarMobileMember() {
         return (
           <Link
             key={i}
-            href={item.url}
+            onClick={() => router.push(item.url)}
             className="flex gap-1 flex-col text-xs text-center grow py-4"
             color="foreground"
           >

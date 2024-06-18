@@ -23,7 +23,9 @@ export const updateUser = (
 }
 
 export const getUserByEmail = (email: string) => {
-  return fetcherGet<UserResponse>({
-    url: API_ROUTES.USER.GET_BY_EMAIL(email),
-  })
+  if (email)
+    return fetcherGet<UserResponse>({
+      url: API_ROUTES.USER.GET_BY_EMAIL(email),
+    })
+  return null
 }

@@ -9,7 +9,7 @@ export type AddedActivityResponse = {
   city: string
   municipality: string
   place: string
-  googleMap: string
+  googleMap?: string
   date: Date
   start: Date
   end: Date

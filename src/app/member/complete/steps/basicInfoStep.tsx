@@ -44,21 +44,23 @@ export default function BasicInfoStep({ setStep }: StepProps) {
 
   const context = useContext(ProgressContext)
 
-  const handleNextStep = handleSubmit((data) => {
-    setUser((prevState: UserResponse) => ({
-      ...prevState,
-      birthDay: new Date(data.birthday),
-      gender: data.gender,
-    }))
-    mutate({
-      id: user.id,
-      user: {
-        ...user,
+  const handleNextStep = handleSubmit(
+    async (data: z.infer<typeof formInputs>) => {
+      setUser((prevState: UserResponse) => ({
+        ...prevState,
         birthDay: new Date(data.birthday),
         gender: data.gender,
-      },
-    })
-  })
+      }))
+      mutate({
+        id: user.id,
+        user: {
+          ...user,
+          birthDay: new Date(data.birthday),
+          gender: data.gender,
+        },
+      })
+    }
+  )
 
   return (
     <CardBody className="flex gap-4 flex-col">

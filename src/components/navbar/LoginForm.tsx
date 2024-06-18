@@ -22,6 +22,8 @@ const formInputs = z.object({
 export default function LoginForm() {
   const router = useRouter()
   const [error, setError] = useState<string>('')
+  const [isLoadingFb, setIsLoadingFb] = useState<boolean>(false)
+  const [isLoadingGoogle, setIsLoadingGoogle] = useState<boolean>(false)
 
   const {
     register,
@@ -88,11 +90,13 @@ export default function LoginForm() {
           color="primary"
           size="md"
           startContent={<FontAwesome icon={faFacebook} />}
-          onClick={() =>
+          onClick={() => {
+            setIsLoadingFb(true)
             signIn('facebook', {
               callbackUrl: ROUTES.MEMBER.PROFILE,
             })
-          }
+          }}
+          isLoading={isLoadingFb}
         >
           Me connecter avec Facebook
         </Button>
@@ -101,11 +105,13 @@ export default function LoginForm() {
           color="primary"
           size="md"
           startContent={<FontAwesome icon={faGoogle} />}
-          onClick={() =>
+          onClick={() => {
+            setIsLoadingGoogle(true)
             signIn('google', {
               callbackUrl: ROUTES.MEMBER.PROFILE,
             })
-          }
+          }}
+          isLoading={isLoadingGoogle}
         >
           Me connecter avec Google
         </Button>

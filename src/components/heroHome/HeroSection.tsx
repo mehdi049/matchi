@@ -32,7 +32,9 @@ export default function HeroSection() {
     resolver: zodResolver(formInputs),
   })
 
-  const handleSearchActivity = handleSubmit((data) => {})
+  const handleSearchActivity = handleSubmit(
+    async (data: z.infer<typeof formInputs>) => {}
+  )
 
   return (
     <div

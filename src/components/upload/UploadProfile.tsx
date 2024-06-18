@@ -3,8 +3,8 @@ import ErrorMessage from '../message/ErrorMessage'
 import { useContext, useEffect, useRef } from 'react'
 import useUploadMediaImage from '@/hooks/media/useUploadMediaImage'
 import useUpdateUser from '@/hooks/user/useUpdateUser'
-import { UserContext } from '@/app/member/context/UserContext'
 import SuccessMessage from '../message/SuccessMessage'
+import { UserContext } from '@/app/member/context/UserContext'
 
 type UploadProfileProps = {
   currentImg: string
