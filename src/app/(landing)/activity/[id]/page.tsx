@@ -2,15 +2,15 @@
 import ActivityCardDetails from '@/components/activities/ActivityCardDetails'
 import ErrorMessage from '@/components/message/ErrorMessage'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
+import IsLoadingSkeleton from '@/components/skeleton/IsLoadingSkeleton'
 import { MESSAGES } from '@/const/message'
 import useGetActivityById from '@/hooks/activity/useGetActivityById'
 
 export default function Page({ params }: { params: { id: string } }) {
   const { data, isPending, isError } = useGetActivityById(parseInt(params.id))
-  if (isPending) return <IsLoadingMessage type="flat" />
+  if (isPending) return <IsLoadingSkeleton type="activity-details-card" />
   if (isError)
     return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
 
-  console.log('data.body: ', data.body)
   return <ActivityCardDetails activity={data.body} />
 }

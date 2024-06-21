@@ -13,7 +13,7 @@ import {
   slugifyString,
   unSlugifyString,
 } from '@/utils/string'
-import IsLoadingSkeleton from '@/components/message/IsLoadingSkeleton'
+import IsLoadingSkeleton from '@/components/skeleton/IsLoadingSkeleton'
 
 export default function Page({ params }: { params: { slug: string[] } }) {
   const city = slugifyString(params.slug[0])

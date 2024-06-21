@@ -9,7 +9,7 @@ import ActivityCard from '@/components/activities/ActivitiyCard'
 import { ActivityResponse } from '@/types/ActivityResponse'
 import { MESSAGES } from '@/const/message'
 import { ROUTES } from '@/routes'
-import IsLoadingSkeleton from '@/components/message/IsLoadingSkeleton'
+import IsLoadingSkeleton from '@/components/skeleton/IsLoadingSkeleton'
 
 type ActivitiesProps = {
   activityType: ActivityResponse

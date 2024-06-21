@@ -2,7 +2,7 @@
 
 import ActivitiesByType from './ActivitiesByType'
 import useGetInterests from '@/hooks/interest/useGetInterests'
-import IsLoadingSkeleton from '@/components/message/IsLoadingSkeleton'
+import IsLoadingSkeleton from '@/components/skeleton/IsLoadingSkeleton'
 
 export default function Home() {
   const { data, isPending } = useGetInterests()
