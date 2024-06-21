@@ -9,6 +9,7 @@ import ActivityCard from '@/components/activities/ActivitiyCard'
 import { ActivityResponse } from '@/types/ActivityResponse'
 import { MESSAGES } from '@/const/message'
 import { ROUTES } from '@/routes'
+import IsLoadingSkeleton from '@/components/message/IsLoadingSkeleton'
 
 type ActivitiesProps = {
   activityType: ActivityResponse
@@ -17,7 +18,7 @@ export default function ActivitiesByType({ activityType }: ActivitiesProps) {
   const { data, isPending, isError } = useGetActiveActivitiesByType(
     activityType.id
   )
-  if (isPending) return <IsLoadingMessage type="flat" />
+  if (isPending) return <IsLoadingSkeleton type="activity-list" count={4} />
   if (isError)
     return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
 

@@ -18,6 +18,7 @@ import ActivitiyCardFooterHosting from './ActivitiyCardFooterHosting'
 import { ROUTES } from '@/routes'
 import { fullDate } from '@/utils/date'
 import { AddedActivityResponseSm } from '@/types/AddedActivityResponse'
+import H3 from '../typography/H3'
 
 type ActivityProps = {
   activity?: AddedActivityResponseSm
@@ -47,23 +48,26 @@ export default function ActivityCard({
             <CardHeader className="flex-col items-start">
               <div className="flex w-full justify-between gap-2">
                 <div className="flex gap-5">
-                  <Avatar
-                    isBordered
-                    radius="full"
-                    size="md"
-                    src={activity.createdBy?.image}
-                  />
+                  <div>
+                    <Avatar
+                      isBordered
+                      radius="full"
+                      size="md"
+                      src={activity.createdBy?.image}
+                    />
+                  </div>
+
                   <div className="flex flex-col gap-1 items-start justify-center">
                     <h4 className="text-small font-semibold leading-none text-default-600">
                       {activity.createdBy?.name}
                     </h4>
-                    <h5 className="text-small tracking-tight text-default-400">
+                    <p className="text-small tracking-tight text-default-400">
                       {fullDate(activity.date)}
-                    </h5>
-                    <h5 className="text-small tracking-tight text-default-400">
+                    </p>
+                    <p className="text-small tracking-tight text-default-400">
                       <FontAwesome icon={faLocationDot} /> {activity.city},{' '}
                       {activity.place}
-                    </h5>
+                    </p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -89,7 +93,7 @@ export default function ActivityCard({
                   )}
                 </div>
               </div>
-              <h4 className="font-bold text-large mt-4">{activity.title}</h4>
+              <H3 className="mt-4">{activity.title}</H3>
             </CardHeader>
             <CardBody className="overflow-visible py-2">
               <Image

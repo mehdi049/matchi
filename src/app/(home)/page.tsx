@@ -1,13 +1,13 @@
 'use client'
 
-import IsLoadingMessage from '@/components/message/IsLoadingMessage'
 import ActivitiesByType from './ActivitiesByType'
 import useGetInterests from '@/hooks/interest/useGetInterests'
+import IsLoadingSkeleton from '@/components/message/IsLoadingSkeleton'
 
 export default function Home() {
   const { data, isPending } = useGetInterests()
 
-  if (isPending) return <IsLoadingMessage type="flat" />
+  if (isPending) return <IsLoadingSkeleton type="activity-list" />
 
   return (
     <>

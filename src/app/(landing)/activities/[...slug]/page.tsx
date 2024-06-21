@@ -13,6 +13,7 @@ import {
   slugifyString,
   unSlugifyString,
 } from '@/utils/string'
+import IsLoadingSkeleton from '@/components/message/IsLoadingSkeleton'
 
 export default function Page({ params }: { params: { slug: string[] } }) {
   const city = slugifyString(params.slug[0])
@@ -41,7 +42,7 @@ export default function Page({ params }: { params: { slug: string[] } }) {
     }
   }
 
-  if (isPending) return <IsLoadingMessage type="flat" />
+  if (isPending) return <IsLoadingSkeleton count={8} type="activity-list" />
   if (isError)
     return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
 
