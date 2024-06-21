@@ -10,7 +10,7 @@ const useGetActiveActivitiesByType = (
   activityId: number
 ): UseQueryResult<ApiResponse<AddedActivityResponse[]>> => {
   return useQuery({
-    queryKey: [QUERY_KEYS.ACTIVITIES, activityId],
+    queryKey: [QUERY_KEYS.ACTIVITIES_BY_TYPE, activityId],
     queryFn: async () => getActiveActivitiesByType(activityId),
   })
 }

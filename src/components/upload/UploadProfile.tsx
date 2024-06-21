@@ -5,6 +5,8 @@ import useUploadMediaImage from '@/hooks/media/useUploadMediaImage'
 import useUpdateUser from '@/hooks/user/useUpdateUser'
 import SuccessMessage from '../message/SuccessMessage'
 import { UserContext } from '@/app/member/context/UserContext'
+import { QUERY_KEYS } from '@/const/query_keys'
+import { getQueryClient } from '@/lib/getQueryClient'
 
 type UploadProfileProps = {
   currentImg: string
@@ -16,7 +18,16 @@ export const UploadProfile = ({ currentImg }: UploadProfileProps) => {
     mutate: mutateUpdateUser,
     isSuccess: isSuccessUpdateUser,
     isPending: isPendingUpdateUser,
-  } = useUpdateUser({})
+  } = useUpdateUser({
+    onSuccess: () => {
+      getQueryClient().invalidateQueries({
+        queryKey: [QUERY_KEYS.USER_ID, user.id],
+      })
+      getQueryClient().invalidateQueries({
+        queryKey: [QUERY_KEYS.USER_EMAIL, user.email],
+      })
+    },
+  })
 
   const { mutate, data, isError, isPending, error, isSuccess } =
     useUploadMediaImage({})

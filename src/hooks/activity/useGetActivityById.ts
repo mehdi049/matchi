@@ -10,7 +10,7 @@ const useGetActivityById = (
   id: number
 ): UseQueryResult<ApiResponse<AddedActivityResponse>> => {
   return useQuery({
-    queryKey: [QUERY_KEYS.ACTIVITIES, id],
+    queryKey: [QUERY_KEYS.ACTIVITY_ID, id],
     queryFn: async () => getActivityById(id),
   })
 }

@@ -34,6 +34,8 @@ import { useRouter } from 'next/navigation'
 import useUpdateActivity from '@/hooks/activity/useUpdateActivity'
 import { ACTIVITY_TYPE_OPTIONS } from '@/const/activity_type_options'
 import { UserContext } from '@/app/member/context/UserContext'
+import { getQueryClient } from '@/lib/getQueryClient'
+import { QUERY_KEYS } from '@/const/query_keys'
 
 const formInputs = z
   .object({
@@ -69,9 +71,10 @@ type ActivityFormProps = {
 export default function ActivityForm({ activity }: ActivityFormProps) {
   const router = useRouter()
   const { user, refetchUser } = useContext(UserContext)
-  const [selectedCity, setSelectedCity] = useState(
+  /*const [selectedCity, setSelectedCity] = useState(
     activity ? activity.city : ''
-  )
+  )*/
+  const selectedCity = activity ? activity.city : ''
 
   const {
     mutate: mutateAdd,
@@ -90,7 +93,16 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
     error: errorUpdate,
     isSuccess: isSuccessUpdate,
   } = useUpdateActivity({
-    onSuccess: () => refetchUser(),
+    onSuccess: () => {
+      getQueryClient().invalidateQueries({
+        queryKey: [QUERY_KEYS.ACTIVITY_ID, activity?.id],
+      })
+      getQueryClient().invalidateQueries({ queryKey: [QUERY_KEYS.ACTIVITIES] })
+      getQueryClient().invalidateQueries({
+        queryKey: [QUERY_KEYS.ACTIVITIES_BY_TYPE],
+      })
+      refetchUser()
+    },
   })
 
   const { data, isLoading } = useGetInterests()
@@ -269,9 +281,9 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
                   : false
               }
               defaultSelectedKeys={activity ? [activity.city] : []}
-              onChange={(event) => {
+              /*onChange={(event) => {
                 setSelectedCity(event.target.value)
-              }}
+              }}*/
             >
               {cities.map((city) => (
                 <SelectItem key={city.name} value={city.name}>

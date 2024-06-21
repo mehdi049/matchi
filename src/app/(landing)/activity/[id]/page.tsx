@@ -10,9 +10,7 @@ export default function Page({ params }: { params: { id: string } }) {
   if (isPending) return <IsLoadingMessage type="flat" />
   if (isError)
     return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
-  return (
-    <>
-      <ActivityCardDetails activity={data.body} />
-    </>
-  )
+
+  console.log('data.body: ', data.body)
+  return <ActivityCardDetails activity={data.body} />
 }

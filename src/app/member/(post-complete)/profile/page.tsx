@@ -31,6 +31,8 @@ import { UserInterestResponse } from '@/types/UserInterestResponse'
 import useUpdateUser from '@/hooks/user/useUpdateUser'
 import SuccessMessage from '@/components/message/SuccessMessage'
 import useGetInterests from '@/hooks/interest/useGetInterests'
+import { getQueryClient } from '@/lib/getQueryClient'
+import { QUERY_KEYS } from '@/const/query_keys'
 
 const formInputs = z.object({
   name: zodCheck(['required']),
@@ -55,6 +57,12 @@ export default function Page() {
     data: dataUpdate,
   } = useUpdateUser({
     onSuccess: () => {
+      getQueryClient().invalidateQueries({
+        queryKey: [QUERY_KEYS.USER_ID, user.id],
+      })
+      getQueryClient().invalidateQueries({
+        queryKey: [QUERY_KEYS.USER_EMAIL, user.email],
+      })
       refetchUser()
     },
   })

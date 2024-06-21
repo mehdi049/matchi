@@ -13,6 +13,9 @@ const useDeleteActivity = ({ onSuccess }: useMutationProps) => {
     onSuccess: () => {
       onSuccess ? onSuccess() : {}
       getQueryClient().invalidateQueries({ queryKey: [QUERY_KEYS.ACTIVITIES] })
+      getQueryClient().invalidateQueries({
+        queryKey: [QUERY_KEYS.ACTIVITIES_BY_TYPE],
+      })
     },
   })
 }

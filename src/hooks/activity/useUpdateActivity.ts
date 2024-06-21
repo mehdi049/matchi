@@ -21,7 +21,6 @@ const useUpdateActivity = ({ onSuccess }: useMutationProps) => {
     },
     onSuccess: () => {
       onSuccess ? onSuccess() : {}
-      getQueryClient().invalidateQueries({ queryKey: [QUERY_KEYS.ACTIVITIES] })
     },
   })
 }

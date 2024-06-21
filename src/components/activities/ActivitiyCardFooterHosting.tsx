@@ -21,6 +21,8 @@ import { ROUTES } from '@/routes'
 import useUpdateActivity from '@/hooks/activity/useUpdateActivity'
 import { MESSAGES } from '@/const/message'
 import { UserContext } from '@/app/member/context/UserContext'
+import { getQueryClient } from '@/lib/getQueryClient'
+import { QUERY_KEYS } from '@/const/query_keys'
 
 export default function ActivitiyCardFooterHosting({
   activity,
@@ -34,6 +36,13 @@ export default function ActivitiyCardFooterHosting({
     isSuccess: isSuccessUpdate,
   } = useUpdateActivity({
     onSuccess: () => {
+      getQueryClient().invalidateQueries({
+        queryKey: [QUERY_KEYS.ACTIVITY_ID, activity.id],
+      })
+      getQueryClient().invalidateQueries({ queryKey: [QUERY_KEYS.ACTIVITIES] })
+      getQueryClient().invalidateQueries({
+        queryKey: [QUERY_KEYS.ACTIVITIES_BY_TYPE],
+      })
       setTimeout(() => {
         refetchUser()
         onOpenChangeCancel()
