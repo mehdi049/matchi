@@ -61,7 +61,8 @@ export default function ActivityCard({
                       {fullDate(activity.date)}
                     </h5>
                     <h5 className="text-small tracking-tight text-default-400">
-                      <FontAwesome icon={faLocationDot} /> {activity.place}
+                      <FontAwesome icon={faLocationDot} /> {activity.city},{' '}
+                      {activity.place}
                     </h5>
                   </div>
                 </div>

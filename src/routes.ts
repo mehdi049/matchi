@@ -2,9 +2,11 @@ export const ROUTES = {
   HOME: '/',
 
   ACTIVITY: (id: number) => '/activity/' + id,
-  ACTIVITIES_AC: (activity: string, city: string) =>
-    '/activities/' + activity + '/' + city,
-  ACTIVITIES_A: (activity: string) => '/activities/' + activity,
+  ACTIVITIES_SEARCH: (
+    city: string,
+    activity: string = 'all',
+    date: string = ''
+  ) => '/activities/' + city + '/' + activity + '/' + date,
 
   PROFILE: (id: string) => '/profiles/' + id,
 

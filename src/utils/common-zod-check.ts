@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 type ZodCheckTypes =
+  | 'optional'
   | 'string'
   | 'url'
   | 'number'
@@ -41,6 +42,7 @@ export const zodCheck = (checks: ZodCheckTypes[]) => {
     zodCheck = zodCheck.email({ message: 'Email invalid.' })
   if (checks.includes('url'))
     zodCheck = zodCheck.url({ message: 'Lien invalid.' })
+  if (checks.includes('optional')) zodCheck = zodCheck.optional()
 
   return zodCheck
 }

@@ -10,7 +10,6 @@ import {
   SelectItem,
 } from '@nextui-org/react'
 import cities from '../../data/cities.json'
-import activities from '../../data/activities.json'
 import FontAwesome from '../fontAwesome/FontAwesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import SignInMenu from './SignInMenu'
@@ -18,8 +17,13 @@ import SignedInMenu from './SignedInMenu'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/routes'
+import { ActivityResponse } from '@/types/ActivityResponse'
+import IsLoadingMessage from '../message/IsLoadingMessage'
+import useGetInterests from '@/hooks/interest/useGetInterests'
 
 export default function NavbarTop() {
+  const { data, isLoading } = useGetInterests()
+
   const router = useRouter()
   const { data: session } = useSession()
 
@@ -39,18 +43,23 @@ export default function NavbarTop() {
       </NavbarContent>
 
       <NavbarContent as="div" className="hidden" justify="center">
-        <Select
-          label="Activité"
-          placeholder="Séléctionnez une activité"
-          size="sm"
-          radius="none"
-        >
-          {activities.map((activity) => (
-            <SelectItem key={activity.value} value={activity.value}>
-              {activity.label}
-            </SelectItem>
-          ))}
-        </Select>
+        {isLoading && <IsLoadingMessage type="flat" />}
+        {data?.body && (
+          <Select
+            label="Activité"
+            placeholder="Séléctionnez une activité"
+            size="sm"
+            radius="none"
+          >
+            {(data?.body as ActivityResponse[]).map((activity) => {
+              return (
+                <SelectItem key={activity.id} value={activity.name}>
+                  {activity.name}
+                </SelectItem>
+              )
+            })}
+          </Select>
+        )}
         <Select
           label="Ville"
           placeholder="Selectionnez une ville"

@@ -8,6 +8,7 @@ import H1 from '@/components/typography/H1'
 import ActivityCard from '@/components/activities/ActivitiyCard'
 import { ActivityResponse } from '@/types/ActivityResponse'
 import { MESSAGES } from '@/const/message'
+import { ROUTES } from '@/routes'
 
 type ActivitiesProps = {
   activityType: ActivityResponse
@@ -30,10 +31,10 @@ export default function ActivitiesByType({ activityType }: ActivitiesProps) {
             {data?.body && data?.body?.length > 0 && activityType.slug && (
               <Button
                 as={Link}
-                href={
-                  '/activities/type/' +
-                  encodeURI(activityType.slug.toLocaleLowerCase())
-                }
+                href={ROUTES.ACTIVITIES_SEARCH(
+                  'all',
+                  activityType.slug.toLowerCase()
+                )}
                 color="primary"
                 variant="flat"
               >

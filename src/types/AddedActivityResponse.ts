@@ -32,6 +32,9 @@ export type AddedActivityResponse = {
 export type AddedActivityResponseSm = {
   id?: number
   title: string
+  country: string
+  city: string
+  municipality: string
   place: string
   date: Date
   start: Date

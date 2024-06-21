@@ -12,6 +12,19 @@ export const hashPassword = (pwd: string) => {
   return null
 }
 
-export const slugifyString = (string: string) => {
-  return string.replace(' ', '-')
+export const slugifyString = (string: string | undefined) => {
+  if (string) return string.replace(' ', '-').toLowerCase()
+
+  return undefined
+}
+
+export const unSlugifyString = (string: string | undefined) => {
+  if (string) return string.replace('-', ' ')
+
+  return undefined
+}
+
+export const capitalizeFirstLetter = (string: string | undefined) => {
+  if (string) return string.charAt(0).toUpperCase() + string.slice(1)
+  return undefined
 }
