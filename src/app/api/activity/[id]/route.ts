@@ -41,6 +41,16 @@ export async function GET(
               id: true,
               name: true,
               image: true,
+              userAttendance: {
+                where: {
+                  addedActivityId: parseInt(id),
+                },
+                select: {
+                  status: true,
+                  addedActivityId: true,
+                  statusUpdatedAt: true,
+                },
+              },
             },
           },
         },

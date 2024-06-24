@@ -28,12 +28,19 @@ import {
   extractMinuteFromDate,
   fullDate,
 } from '@/utils/date'
+import { CTAJoin } from './CTAJoin'
+import { UserContext } from '@/app/member/context/UserContext'
+import { useContext } from 'react'
 
-type ActivityProps = {
+export type ActivityProps = {
   activity?: AddedActivityResponse
 }
 export default function ActivityCardDetails({ activity }: ActivityProps) {
   const router = useRouter()
+  const { user } = useContext(UserContext)
+
+  const isMyActivity = activity?.createdBy?.id === user?.id
+
   return (
     <div>
       {activity && (
@@ -60,19 +67,20 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
                   </Chip>
                 </div>
               </div>
-              <div className="flex gap-1 flex-col justify-end">
-                <Button size="sm" color="primary">
-                  Rejoindre
-                </Button>
-                <Button
-                  as={Link}
-                  href="/profiles"
-                  size="sm"
-                  variant="flat"
-                  color="primary"
-                >
-                  Inviter des participants
-                </Button>
+              <div className="flex gap-1 flex-col">
+                <CTAJoin activity={activity} />
+                {!isMyActivity && (
+                  <Button
+                    onClick={() => {
+                      router.push(ROUTES.PROFILES)
+                    }}
+                    size="sm"
+                    variant="flat"
+                    color="primary"
+                  >
+                    Inviter des participants
+                  </Button>
+                )}
               </div>
             </div>
             <Divider className="my-4" />
@@ -80,7 +88,7 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
             <div className="flex items-center flex-wrap gap-4 mb-4">
               <div>
                 <Image
-                  alt="Padel"
+                  alt={activity?.activity?.name}
                   className="object-cover rounded-xl w-full max-w-xs"
                   src={activity?.activity?.image}
                 />
@@ -158,7 +166,7 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
             {activity?.attendees && activity?.attendees?.length > 0 && (
               <AvatarGroup size="md" isBordered className="justify-start mt-4">
                 {activity?.attendees.map((attendee) => (
-                  <Avatar src={attendee.image} key={attendee.id} />
+                  <Avatar src={attendee.user.image} key={attendee.user.id} />
                 ))}
               </AvatarGroup>
             )}

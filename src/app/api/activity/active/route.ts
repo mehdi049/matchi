@@ -38,6 +38,13 @@ export async function GET() {
               id: true,
               name: true,
               image: true,
+              userAttendance: {
+                select: {
+                  status: true,
+                  addedActivityId: true,
+                  statusUpdatedAt: true,
+                },
+              },
             },
           },
         },

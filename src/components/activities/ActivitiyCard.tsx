@@ -119,7 +119,12 @@ export default function ActivityCard({
                 <>
                   <AvatarGroup size="sm" isBordered max={3}>
                     {activity.attendees?.map((attendee) => {
-                      return <Avatar src={attendee.image} key={attendee.id} />
+                      return (
+                        <Avatar
+                          src={attendee.user.image}
+                          key={attendee.user.id}
+                        />
+                      )
                     })}
                   </AvatarGroup>
                 </>

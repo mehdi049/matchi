@@ -1,6 +1,8 @@
 export const MESSAGES = {
   ERROR: {
     GENERAL: 'Une erreur est survenu, veuillez réessayer plus tard',
+    NOT_FOUND: (item: string) => `${item} introuvable`,
+    ALREADY_EXIST: (item: string) => `${item} existe deja`,
     FORM: {
       REQUIRED: 'Champ obligatoir',
       INVALID_DATE: 'Date invalide',

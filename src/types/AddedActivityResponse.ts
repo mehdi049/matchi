@@ -1,5 +1,12 @@
 import { ActivityResponse } from './ActivityResponse'
 import { UserResponseSm } from './User'
+import { UserAttendanceStatus } from './UserAttendanceResponse'
+
+type AddedActivityResponseAttendee = {
+  user: UserResponseSm
+}
+export type AddedActivityStatus = 'Active' | 'Cancelled'
+export type AddedActivityType = 'Private' | 'Public'
 
 export type AddedActivityResponse = {
   id?: number
@@ -16,14 +23,14 @@ export type AddedActivityResponse = {
   maxAttendees?: number
   price?: number
   currency: string
-  type: 'Private' | 'Public'
-  status: 'Active' | 'Cancelled'
+  type: AddedActivityType
+  status: AddedActivityStatus
   createdAt?: Date
 
   activity?: ActivityResponse
   activityId?: number
 
-  attendees?: UserResponseSm[]
+  attendees?: AddedActivityResponseAttendee[]
 
   createdBy?: UserResponseSm
   userId?: string
@@ -42,8 +49,8 @@ export type AddedActivityResponseSm = {
   activity?: ActivityResponse
   activityId?: number
   maxAttendees?: number
-  attendees?: UserResponseSm[]
-  status: 'Active' | 'Cancelled'
+  attendees?: AddedActivityResponseAttendee[]
+  status: AddedActivityStatus
   createdAt?: Date
   createdBy?: UserResponseSm
 }

@@ -4,17 +4,7 @@ import { registerUser, RegisterUserProps } from '@/services/public'
 import { zodCheck } from '@/utils/common-zod-check'
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  Button,
-  Divider,
-  Input,
-  Link,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  useDisclosure,
-} from '@nextui-org/react'
+import { Button, Divider, Input, Link, useDisclosure } from '@nextui-org/react'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -23,9 +13,9 @@ import FontAwesome from '../fontAwesome/FontAwesome'
 import InputPassword from '../input/InputPassword'
 import ErrorMessage from '../message/ErrorMessage'
 import SuccessMessage from '../message/SuccessMessage'
-import LoginForm from './LoginForm'
 import { signIn } from 'next-auth/react'
 import { ROUTES } from '@/routes'
+import { ModalLoginForm } from './ModalLoginForm'
 
 const formInputs = z
   .object({
@@ -191,21 +181,7 @@ export default function RegisterForm() {
         </Button>
       </div>
 
-      <Modal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        isDismissable={false}
-        isKeyboardDismissDisabled={true}
-      >
-        <ModalContent>
-          <ModalHeader className="flex flex-col gap-1">
-            Me connecter
-          </ModalHeader>
-          <ModalBody>
-            <LoginForm />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <ModalLoginForm isOpen={isOpen} onOpenChange={onOpenChange} />
     </>
   )
 }

@@ -1,14 +1,7 @@
 'use client'
 
-import {
-  Link,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  useDisclosure,
-} from '@nextui-org/react'
-import LoginForm from './LoginForm'
+import { Link, useDisclosure } from '@nextui-org/react'
+import { ModalLoginForm } from './ModalLoginForm'
 
 export default function LoginButton() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
@@ -19,21 +12,7 @@ export default function LoginButton() {
         Me connecter
       </Link>
 
-      <Modal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        isDismissable={false}
-        isKeyboardDismissDisabled={true}
-      >
-        <ModalContent>
-          <ModalHeader className="flex flex-col gap-1">
-            Me connecter
-          </ModalHeader>
-          <ModalBody>
-            <LoginForm />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <ModalLoginForm isOpen={isOpen} onOpenChange={onOpenChange} />
     </>
   )
 }

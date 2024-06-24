@@ -1,4 +1,5 @@
 import { AddedActivityResponseSm } from './AddedActivityResponse'
+import { UserAttendanceResponse } from './UserAttendanceResponse'
 import { UserInterestResponse } from './UserInterestResponse'
 
 export type UserResponse = {
@@ -17,10 +18,12 @@ export type UserResponse = {
 
   addedActivities?: AddedActivityResponseSm[]
   interests?: UserInterestResponse[]
+  userAttendance?: UserAttendanceResponse[]
 }
 
 export type UserResponseSm = {
   id: string
   name: string
   image: string
+  userAttendance?: UserAttendanceResponse[]
 }

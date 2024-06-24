@@ -22,4 +22,8 @@ export const API_ROUTES = {
 
     ADD_ACTIVITY: APP_URL + '/api/activity',
   },
+  ATTENDANCE: {
+    ADD: APP_URL + '/api/attendance',
+    GET_BY_ID: (id: number) => APP_URL + `/api/attendance/${id}`,
+  },
 }

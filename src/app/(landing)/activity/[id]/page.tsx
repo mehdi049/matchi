@@ -1,7 +1,6 @@
 'use client'
 import ActivityCardDetails from '@/components/activities/ActivityCardDetails'
 import ErrorMessage from '@/components/message/ErrorMessage'
-import IsLoadingMessage from '@/components/message/IsLoadingMessage'
 import IsLoadingSkeleton from '@/components/skeleton/IsLoadingSkeleton'
 import { MESSAGES } from '@/const/message'
 import useGetActivityById from '@/hooks/activity/useGetActivityById'

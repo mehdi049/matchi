@@ -45,6 +45,13 @@ export async function GET(
                   id: true,
                   name: true,
                   image: true,
+                  userAttendance: {
+                    select: {
+                      status: true,
+                      addedActivityId: true,
+                      statusUpdatedAt: true,
+                    },
+                  },
                 },
               },
             },
@@ -63,6 +70,13 @@ export async function GET(
       },
       createdAt: true,
       updatedAt: true,
+      userAttendance: {
+        select: {
+          addedActivityId: true,
+          status: true,
+          statusUpdatedAt: true,
+        },
+      },
     },
   })
 

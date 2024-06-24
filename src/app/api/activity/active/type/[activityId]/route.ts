@@ -5,16 +5,18 @@ import { ApiResponse } from '@/types/apiResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
 
-// get activity by Id
+// get activity by Type
 export async function GET(
   req: Request,
   { params }: { params: { activityId: string } }
 ) {
   const activityId = params.activityId
 
-  const addedActivities = await prisma.addedActivity.findMany({
+  const addedActivitiesByType = await prisma.addedActivity.findMany({
     where: {
-      activityId: parseInt(activityId),
+      activity: {
+        id: parseInt(activityId),
+      },
       start: {
         gt: new Date(),
       },
@@ -44,6 +46,13 @@ export async function GET(
               id: true,
               name: true,
               image: true,
+              userAttendance: {
+                select: {
+                  status: true,
+                  addedActivityId: true,
+                  statusUpdatedAt: true,
+                },
+              },
             },
           },
         },
@@ -69,7 +78,7 @@ export async function GET(
 
   return NextResponse.json<ApiResponse<AddedActivityResponse[]>>(
     {
-      body: addedActivities as unknown as AddedActivityResponse[],
+      body: addedActivitiesByType as unknown as AddedActivityResponse[],
     },
     { status: StatusCodes.OK }
   )

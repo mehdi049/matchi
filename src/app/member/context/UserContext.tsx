@@ -24,6 +24,7 @@ const initUser: UserResponse = {
   updatedAt: new Date(),
   addedActivities: [],
   interests: [],
+  userAttendance: [],
 }
 export const UserContext = createContext({
   user: initUser,

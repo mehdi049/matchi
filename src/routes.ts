@@ -9,6 +9,7 @@ export const ROUTES = {
   ) => '/activities/' + city + '/' + activity + '/' + date,
 
   PROFILE: (id: string) => '/profiles/' + id,
+  PROFILES: '/profiles',
 
   MEMBER: {
     COMPLETE_PROFILE: '/member/complete',
