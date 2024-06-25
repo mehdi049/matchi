@@ -2,7 +2,6 @@
 
 import { Button, Link } from '@nextui-org/react'
 import useGetActiveActivitiesByType from '@/hooks/activity/useGetActiveActivitiesByType'
-import IsLoadingMessage from '@/components/message/IsLoadingMessage'
 import ErrorMessage from '@/components/message/ErrorMessage'
 import H1 from '@/components/typography/H1'
 import ActivityCard from '@/components/activities/ActivitiyCard'
@@ -10,11 +9,13 @@ import { ActivityResponse } from '@/types/ActivityResponse'
 import { MESSAGES } from '@/const/message'
 import { ROUTES } from '@/routes'
 import IsLoadingSkeleton from '@/components/skeleton/IsLoadingSkeleton'
+import useMediaQuery from '@/hooks/useMediaQuery'
 
 type ActivitiesProps = {
   activityType: ActivityResponse
 }
 export default function ActivitiesByType({ activityType }: ActivitiesProps) {
+  const [isMobile] = useMediaQuery('mobile')
   const { data, isPending, isError } = useGetActiveActivitiesByType(
     activityType.id
   )
@@ -26,7 +27,7 @@ export default function ActivitiesByType({ activityType }: ActivitiesProps) {
     <>
       {data?.body && data?.body?.length > 0 && (
         <div>
-          <div className="flex justify-between gap-4 items-start mt-8">
+          <div className="flex justify-between items-start mt-8">
             <H1 className="mb-4">{activityType.name}</H1>
 
             {data?.body && data?.body?.length > 0 && activityType.slug && (
@@ -37,9 +38,10 @@ export default function ActivitiesByType({ activityType }: ActivitiesProps) {
                   activityType.slug.toLowerCase()
                 )}
                 color="primary"
-                variant="flat"
+                variant="ghost"
+                size={isMobile ? 'sm' : 'md'}
               >
-                Afficher tous les activités de {activityType.name}
+                Afficher plus
               </Button>
             )}
           </div>

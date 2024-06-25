@@ -27,6 +27,7 @@ const initUser: UserResponse = {
   userAttendance: [],
 }
 export const UserContext = createContext({
+  isLoggedIn: false,
   user: initUser,
   setUser: (payload: any) => {},
   refetchUser: () => {},
@@ -73,6 +74,7 @@ export const UserContextProvider = ({
   return (
     <UserContext.Provider
       value={{
+        isLoggedIn: session?.user !== undefined,
         user,
         setUser,
         refetchUser,

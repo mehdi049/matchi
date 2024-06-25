@@ -9,7 +9,7 @@ import { QUERY_KEYS } from '@/const/query_keys'
 import { fullDate } from '@/utils/date'
 
 export const CTAJoin = ({ activity }: ActivityProps) => {
-  const { user } = useContext(UserContext)
+  const { user, isLoggedIn } = useContext(UserContext)
 
   const { mutate, isPending, isSuccess } = useAddAttendance({
     onSuccess: () => {
@@ -22,14 +22,14 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
   const { isOpen, onOpenChange } = useDisclosure()
 
   const handleJoinCta = () => {
-    if (user) {
+    if (isLoggedIn)
       mutate({
         attendance: {
           addedActivityId: activity?.id as number,
           userId: user.id,
         },
       })
-    } else return onOpenChange()
+    else return onOpenChange()
   }
 
   const currentAttendance = user.userAttendance?.find(

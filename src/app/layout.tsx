@@ -19,11 +19,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-gray-50">
         <Providers>
-          <UserContextProvider isPrivate={false}>
-            <div className="flex flex-col justify-between gap-4 min-h-screen">
-              {children}
-            </div>
-          </UserContextProvider>
+          <div className="flex flex-col justify-between gap-4 min-h-screen">
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

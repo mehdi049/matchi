@@ -37,7 +37,7 @@ export type ActivityProps = {
 }
 export default function ActivityCardDetails({ activity }: ActivityProps) {
   const router = useRouter()
-  const { user } = useContext(UserContext)
+  const { isLoggedIn, user } = useContext(UserContext)
 
   const isMyActivity = activity?.createdBy?.id === user?.id
 
@@ -69,7 +69,7 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
               </div>
               <div className="flex gap-1 flex-col">
                 <CTAJoin activity={activity} />
-                {!isMyActivity && (
+                {isLoggedIn && !isMyActivity && (
                   <Button
                     onClick={() => {
                       router.push(ROUTES.PROFILES)

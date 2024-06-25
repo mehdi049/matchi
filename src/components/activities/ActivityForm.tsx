@@ -329,9 +329,10 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         <Input
           {...register('place')}
           size="sm"
+          isRequired
           variant="flat"
           type="text"
-          label="Lieux de l'activité"
+          label="Lieu d'activité"
           placeholder="Nom du terrain, point de rassemblement, etc."
           errorMessage={errors.place?.message as string}
           isInvalid={

@@ -9,13 +9,17 @@ import {
   useDisclosure,
 } from '@nextui-org/react'
 import RegisterForm from './RegisterForm'
+import useMediaQuery from '@/hooks/useMediaQuery'
 
 export default function RegisterButton() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [isMobileScreen] = useMediaQuery('mobile')
 
   return (
     <>
-      <Button onPress={onOpen}>Créer un compte</Button>
+      <Button onPress={onOpen} size={isMobileScreen ? 'sm' : 'md'}>
+        Créer un compte
+      </Button>
 
       <Modal
         isOpen={isOpen}
