@@ -12,7 +12,7 @@ type ZodCheckTypes =
   | 'email'
   | 'gender'
 export const zodCheck = (checks: ZodCheckTypes[]) => {
-  if (checks.includes('gender')) return z.enum(['M', 'F'])
+  if (checks.includes('gender')) return z.enum(['Male', 'Female'])
   if (checks.includes('number')) return z.coerce.number()
 
   let zodCheck: any = z.string(

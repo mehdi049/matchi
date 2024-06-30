@@ -16,7 +16,7 @@ import { zodCheck } from '@/utils/common-zod-check'
 import { z } from 'zod'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { ProgressContext } from '../context/progressContext'
 import { UserContext } from '../../context/UserContext'
 import { UserResponse } from '@/types/User'
@@ -31,8 +31,6 @@ const formInputs = z.object({
 
 export default function MyAddressStep({ setStep }: StepProps) {
   const { user, setUser } = useContext(UserContext)
-  const [selectedCity, setSelectedCity] = useState(user.city)
-
   const { mutate, isPending, isError, error } = useUpdateUser({
     onSuccess: () => {
       setStep(3)
@@ -44,7 +42,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
     register,
     handleSubmit,
     control,
-    //watch,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(formInputs),
@@ -56,7 +54,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
       setUser((prevState: UserResponse) => ({
         ...prevState,
         country: 'Tunisia',
-        city: selectedCity,
+        city: data.city,
         municipality: data.municipality,
       }))
       mutate({
@@ -64,7 +62,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
         user: {
           ...user,
           country: 'Tunisia',
-          city: selectedCity,
+          city: data.city,
           municipality: data.municipality,
         },
       })
@@ -104,9 +102,6 @@ export default function MyAddressStep({ setStep }: StepProps) {
                   : false
               }
               defaultSelectedKeys={user.city ? [user.city] : []}
-              onChange={(event) => {
-                setSelectedCity(event.target.value)
-              }}
             >
               {cities.map((city) => (
                 <SelectItem key={city.name} value={city.name}>
@@ -137,7 +132,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
               defaultSelectedKeys={user.municipality ? [user.municipality] : []}
             >
               {(
-                cities.find((city) => city.name === selectedCity) as any
+                cities.find((city) => city.name === watch('city')) as any
               )?.municipalities.map((municipality: string) => (
                 <SelectItem key={municipality} value={municipality}>
                   {municipality}

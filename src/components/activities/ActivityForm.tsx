@@ -71,10 +71,6 @@ type ActivityFormProps = {
 export default function ActivityForm({ activity }: ActivityFormProps) {
   const router = useRouter()
   const { user, refetchUser } = useContext(UserContext)
-  /*const [selectedCity, setSelectedCity] = useState(
-    activity ? activity.city : ''
-  )*/
-  const selectedCity = activity ? activity.city : ''
 
   const {
     mutate: mutateAdd,
@@ -281,9 +277,6 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
                   : false
               }
               defaultSelectedKeys={activity ? [activity.city] : []}
-              /*onChange={(event) => {
-                setSelectedCity(event.target.value)
-              }}*/
             >
               {cities.map((city) => (
                 <SelectItem key={city.name} value={city.name}>
@@ -313,10 +306,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
               defaultSelectedKeys={activity ? [activity.municipality] : []}
             >
               {(
-                cities.find(
-                  (city) =>
-                    city.name === (selectedCity ? selectedCity : watch('city'))
-                ) as any
+                cities.find((city) => city.name === watch('city')) as any
               )?.municipalities.map((municipality: string) => (
                 <SelectItem key={municipality} value={municipality}>
                   {municipality}

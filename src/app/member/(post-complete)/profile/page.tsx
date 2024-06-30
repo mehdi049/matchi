@@ -47,7 +47,6 @@ const formInputs = z.object({
 
 export default function Page() {
   const { user, refetchUser } = useContext(UserContext)
-  const [selectedCity, setSelectedCity] = useState(user.city)
   const {
     mutate,
     isPending,
@@ -72,7 +71,7 @@ export default function Page() {
     register,
     handleSubmit,
     control,
-    //watch,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(formInputs),
@@ -117,6 +116,7 @@ export default function Page() {
         })
       })
 
+      console.log(data)
       mutate({
         id: user.id,
         user: {
@@ -125,7 +125,8 @@ export default function Page() {
           birthDay: new Date(data.birthday),
           bio: data.bio,
           gender: data.gender,
-          city: selectedCity,
+          country: 'Tunisia',
+          city: data.city,
           municipality: data.municipality,
         },
       })
@@ -189,11 +190,11 @@ export default function Page() {
           <Controller
             control={control}
             name="gender"
-            defaultValue={user.gender ?? 'M'}
+            defaultValue={user.gender ?? 'Male'}
             render={({ field }) => (
               <RadioGroup label="Sexe" {...field} defaultValue={user.gender}>
-                <Radio value="M">Homme</Radio>
-                <Radio value="F">Femme</Radio>
+                <Radio value="Male">Homme</Radio>
+                <Radio value="Female">Femme</Radio>
               </RadioGroup>
             )}
           />
@@ -230,9 +231,6 @@ export default function Page() {
                     : false
                 }
                 defaultSelectedKeys={user.city ? [user.city] : []}
-                onChange={(event) => {
-                  setSelectedCity(event.target.value)
-                }}
               >
                 {cities.map((city) => (
                   <SelectItem key={city.name} value={city.name}>
@@ -264,7 +262,7 @@ export default function Page() {
                 }
               >
                 {(
-                  cities.find((city) => city.name === selectedCity) as any
+                  cities.find((city) => city.name === watch('city')) as any
                 )?.municipalities.map((municipality: string) => (
                   <SelectItem key={municipality} value={municipality}>
                     {municipality}

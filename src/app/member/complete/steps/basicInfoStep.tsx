@@ -103,11 +103,11 @@ export default function BasicInfoStep({ setStep }: StepProps) {
         <Controller
           control={control}
           name="gender"
-          defaultValue={user.gender ?? 'M'}
+          defaultValue={user.gender ?? 'Male'}
           render={({ field }) => (
             <RadioGroup label="Sexe" {...field}>
-              <Radio value="M">Homme</Radio>
-              <Radio value="F">Femme</Radio>
+              <Radio value="Male">Homme</Radio>
+              <Radio value="Female">Femme</Radio>
             </RadioGroup>
           )}
         />
