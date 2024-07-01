@@ -1,6 +1,5 @@
 import { ActivityResponse } from './ActivityResponse'
 import { UserResponseSm } from './User'
-import { UserAttendanceStatus } from './UserAttendanceResponse'
 
 type AddedActivityResponseAttendee = {
   user: UserResponseSm
