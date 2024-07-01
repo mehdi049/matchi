@@ -69,7 +69,7 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
               </div>
               <div className="flex gap-1 flex-col">
                 <CTAJoin activity={activity} />
-                {isLoggedIn && !isMyActivity && (
+                {isLoggedIn && isMyActivity && (
                   <Button
                     onClick={() => {
                       router.push(ROUTES.PROFILES)

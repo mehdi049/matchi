@@ -7,6 +7,8 @@ import { ActivityProps } from './ActivityCardDetails'
 import { getQueryClient } from '@/lib/getQueryClient'
 import { QUERY_KEYS } from '@/const/query_keys'
 import { fullDate } from '@/utils/date'
+import FontAwesome from '../fontAwesome/FontAwesome'
+import { faCheck, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
 
 export const CTAJoin = ({ activity }: ActivityProps) => {
   const { user, isLoggedIn } = useContext(UserContext)
@@ -69,16 +71,24 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
 
   return (
     <>
-      {JSON.stringify(currentAttendance)}
-      <Button
-        size="sm"
-        color="primary"
-        onClick={handleJoinCta}
-        isLoading={isPending}
-      >
-        Rejoindre
-      </Button>
-
+      {!isSuccess ? (
+        <Button
+          size="sm"
+          color="primary"
+          onClick={handleJoinCta}
+          isLoading={isPending}
+        >
+          Rejoindre
+        </Button>
+      ) : activity?.type === 'Public' ? (
+        <Button size="sm" color="success" className="text-white max-w-min">
+          <FontAwesome icon={faCheck} size="1x" />
+        </Button>
+      ) : (
+        <Button size="sm" color="success" value="flat" className="text-white">
+          Demande envoyé
+        </Button>
+      )}
       <ModalLoginForm isOpen={isOpen} onOpenChange={onOpenChange} />
     </>
   )
