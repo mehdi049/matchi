@@ -481,6 +481,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         </div>
 
         <H3>Type de l&apos;activité</H3>
+
         <Controller
           control={control}
           name="type"
@@ -493,6 +494,12 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
               placeholder="Type de l'activité"
               size="sm"
               defaultSelectedKeys={['Public']}
+              errorMessage={errors.type?.message as string}
+              isInvalid={
+                errors.type?.message
+                  ? (errors.type?.message as string).length > 0
+                  : false
+              }
               description={
                 <>
                   <p className="text-gray-900">
