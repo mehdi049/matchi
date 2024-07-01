@@ -16,6 +16,7 @@
       "Djoumime",
       "Bizerte Sud",
       "Bizerte Nord",
+      "Bizerte Centre",
       "Autres Villes"
     ]
   },
@@ -31,8 +32,8 @@
       "El Ksar",
       "Béja Sud",
       "Béja Nord",
+      "Béja Centre",
       "Amdoun",
-      "Béja",
       "Autres Villes"
     ]
   },
@@ -48,7 +49,7 @@
       "Gabès Ouest",
       "Gabès Médina",
       "El Hamma",
-      "Gabès",
+      "Gabès Centre",
       "Autres Villes"
     ]
   },
@@ -63,7 +64,7 @@
       "Mdhila",
       "Gafsa Sud",
       "Gafsa Nord",
-      "Gafsa",
+      "Gafsa Centre",
       "El Ksar",
       "El Guettar",
       "Belkhir",
@@ -186,7 +187,7 @@
       "Tabarka",
       "Oued Meliz",
       "Jendouba Nord",
-      "Jendouba",
+      "Jendouba Centre",
       "Ghardimaou",
       "Fernana",
       "Bou Salem",
@@ -201,7 +202,7 @@
       "Nasrallah",
       "Kairouan Sud",
       "Kairouan Nord",
-      "Kairouan",
+      "Kairouan Centre",
       "Hajeb El Ayoun",
       "Haffouz",
       "El Ouslatia",
@@ -214,62 +215,266 @@
   },
   {
     "name": "Kasserine",
-    "municipalities": []
+    "municipalities": [
+      "Thala",
+      "Sbiba",
+      "Sbeïtla",
+      "Majel Bel Abbès",
+      "Kasserine Sud",
+      "Kasserine Nord",
+      "Kasserine Centre",
+      "Hidra",
+      "Hassi Ferid",
+      "Fériana",
+      "Foussana",
+      "Ezzouhour",
+      "El Ayoun",
+      "Djedeliane",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Kébili",
-    "municipalities": []
-  },
-  {
-    "name": "La Manouba",
-    "municipalities": []
+    "municipalities": [
+      "Souk Lahad",
+      "Kébili Sud",
+      "Kébili Nord",
+      "Kébili Centre",
+      "Faouar",
+      "Douz Sud",
+      "Douz Nord",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Le Kef",
-    "municipalities": []
+    "municipalities": [
+      "Tajerouine",
+      "Sakiet Sidi Youssef",
+      "Nebeur",
+      "Kef Ouest",
+      "Kef Est",
+      "Kef Centre",
+      "Kalâat Snan",
+      "Kalâat Khasbah",
+      "Es Sers",
+      "El Ksour",
+      "Djerissa",
+      "Dahmani",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Mahdia",
-    "municipalities": []
+    "municipalities": [
+      "Sidi Alouane",
+      "Ouled Chamekh",
+      "Melloulèche",
+      "Mahdia Centre",
+      "Ksour Essef",
+      "Hebira",
+      "Essouassi",
+      "El Jem",
+      "Chorbane",
+      "Chebba",
+      "Bou Merdès",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Monastir",
-    "municipalities": []
+    "municipalities": [
+      "Zéramdine",
+      "Téboulba",
+      "Sayada Lamta Bou Hajar",
+      "Sahline",
+      "Ouerdanine",
+      "Monastir Centre",
+      "Moknine",
+      "Ksibet El Médiouni",
+      "Ksar Hellal",
+      "Jemmal",
+      "Beni Hassen",
+      "Bembla",
+      "Bekalta",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Médenine",
-    "municipalities": []
+    "municipalities": [
+      "Zarzis",
+      "Sidi Makhloulf",
+      "Médenine Sud",
+      "Médenine Nord",
+      "Médenine Centre",
+      "Djerba Midoun",
+      "Djerba Houmt Souk",
+      "Beni Khedech",
+      "Ben Gardane",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Nabeul",
-    "municipalities": []
+    "municipalities": [
+      "Takelsa",
+      "Soliman",
+      "Nabeul Centre",
+      "Mrezga",
+      "Menzel Temime",
+      "Menzel Bouzelfa",
+      "Kélibia",
+      "Korba",
+      "Hammamet Nord",
+      "Hammamet Sud",
+      "Hammamet Centre",
+      "Hammam Ghezèze",
+      "Grombalia",
+      "El Mida",
+      "El Haouaria",
+      "Dar Châabane El Fehri",
+      "Béni Khiar",
+      "Béni Khalled",
+      "Bou Argoub",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Sfax",
-    "municipalities": []
+    "municipalities": [
+      "Thyna",
+      "Skhira",
+      "Sfax Ville",
+      "Sfax Médina",
+      "Sfax Centre",
+      "Sakiet Ezzit",
+      "Sakiet Eddaïer",
+      "Route de l'aéroport",
+      "Route de Gabes",
+      "Route Tunis",
+      "Route Taniour",
+      "Route Soukra",
+      "Route Menzel Chaker",
+      "Route Mehdia",
+      "Route Mharza",
+      "Route Manzel Chaker",
+      "Route Gremda",
+      "Route El Ain",
+      "Route El Afrane",
+      "Route Saltania",
+      "Menzel Chaker",
+      "Mahrès",
+      "Kerkennah",
+      "Jebiniana",
+      "Ghraiba",
+      "El Hencha",
+      "El Amra",
+      "Bir Ali Ben Khalifa",
+      "Agareb",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Sidi Bouzid",
-    "municipalities": []
+    "municipalities": [
+      "Souk Jedid",
+      "Sidi Bouzid Ouest",
+      "Sidi Bouzid Est",
+      "Sidi Bouzid",
+      "Sidi Ali Ben Aoun",
+      "Regueb",
+      "Ouled Haffouz",
+      "Mezzouna",
+      "Menzel Bouzaiane",
+      "Meknassy",
+      "Jilma",
+      "Cebbala Ouled Asker",
+      "Bir El Hafey",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Siliana",
-    "municipalities": []
+    "municipalities": [
+      "Siliana Sud",
+      "Siliana Nord",
+      "Siliana Centre",
+      "Sidi Bou Rouis",
+      "Rouhia",
+      "Makthar",
+      "Kesra",
+      "Gaâfour",
+      "El Krib",
+      "El Aroussa",
+      "Bou Arada",
+      "Bargou",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Sousse",
-    "municipalities": []
+    "municipalities": [
+      "Zaouit Ksibat Thrayett",
+      "Sousse corniche",
+      "Sousse Sidi Abdelhamid",
+      "Sousse Riadh",
+      "Sousse Médina",
+      "Sousse Jawhara",
+      "Sousse Centre",
+      "Sidi El Héni",
+      "Sidi Bou Ali",
+      "Sahloul",
+      "Msaken",
+      "Kondar",
+      "Khzema",
+      "Kantaoui",
+      "Kalaâ Sghira",
+      "Kalaâ Kebira",
+      "Hergla",
+      "Hammam Sousse",
+      "Enfidha",
+      "Chatt mariem",
+      "Bouficha",
+      "Akouda",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Tataouine",
-    "municipalities": []
+    "municipalities": [
+      "Tataouine Sud",
+      "Tataouine Nord",
+      "Tataouine Centre",
+      "Smâr",
+      "Remada",
+      "Ghomrassen",
+      "Dehiba",
+      "Bir Lahmar",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Tozeur",
-    "municipalities": []
+    "municipalities": [
+      "Tozeur Centre",
+      "Tameghza",
+      "Nefta",
+      "Hazoua",
+      "Degache",
+      "Autres Villes"
+    ]
   },
   {
     "name": "Zaghouan",
-    "municipalities": []
+    "municipalities": [
+      "Zaghouan Centre",
+      "Saouaf",
+      "Ez Zeriba",
+      "En Nadhour",
+      "El Fahs",
+      "Bir Mchergua",
+      "Autres Villes"
+    ]
   }
 ]

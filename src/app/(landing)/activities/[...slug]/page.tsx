@@ -16,8 +16,8 @@ import {
 import IsLoadingSkeleton from '@/components/skeleton/IsLoadingSkeleton'
 
 export default function Page({ params }: { params: { slug: string[] } }) {
-  const city = slugifyString(params.slug[0])
-  const activitySlug = slugifyString(params.slug[1])
+  const city = slugifyString(decodeURI(params.slug[0]))
+  const activitySlug = slugifyString(decodeURI(params.slug[1]))
   const date = slugifyString(params.slug[2])
 
   const { data, isPending, isError } = useGetActiveActivities()
@@ -60,13 +60,9 @@ export default function Page({ params }: { params: { slug: string[] } }) {
 
       {filteredData && filteredData.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-          {filteredData.map((activity, key) => {
-            return (
-              <div key={key}>
-                <ActivityCard activity={activity} />
-              </div>
-            )
-          })}
+          {filteredData.map((activity, key) => (
+            <ActivityCard key={key} activity={activity} />
+          ))}
         </div>
       ) : (
         <InfoMessage>

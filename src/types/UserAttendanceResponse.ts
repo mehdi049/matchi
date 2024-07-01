@@ -1,4 +1,4 @@
-export type UserAttendanceStatus =
+export type UserAttendanceRequestStatus =
   | 'Accepted'
   | 'Rejected'
   | 'Cancelled'
@@ -7,6 +7,6 @@ export type UserAttendanceStatus =
 export type UserAttendanceResponse = {
   addedActivityId: number
   userId?: string
-  status?: UserAttendanceStatus
+  status?: UserAttendanceRequestStatus
   statusUpdatedAt?: Date
 }

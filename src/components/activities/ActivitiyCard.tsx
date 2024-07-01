@@ -19,12 +19,13 @@ import { ROUTES } from '@/routes'
 import { fullDate } from '@/utils/date'
 import { AddedActivityResponseSm } from '@/types/AddedActivityResponse'
 import H3 from '../typography/H3'
+import { UserAttendanceRequestStatus } from '@/types/UserAttendanceResponse'
 
 type ActivityProps = {
   activity?: AddedActivityResponseSm
   hosting?: boolean
   attending?: boolean
-  requestStatus?: 'Pending' | 'Accepted' | 'Rejected'
+  requestStatus?: UserAttendanceRequestStatus
   displayFooter?: boolean
 }
 export default function ActivityCard({
@@ -44,8 +45,31 @@ export default function ActivityCard({
             router.push(ROUTES.ACTIVITY(activity?.id as number))
           }}
         >
-          <Card className="py-4 cursor-pointer grow">
+          <Card className="py-4 cursor-pointer grow h-full">
             <CardHeader className="flex-col items-start">
+              <div className="flex gap-2 mb-4 w-full">
+                <Chip color="primary" size="sm" variant="flat">
+                  {activity.activity?.name}
+                </Chip>
+
+                {requestStatus && (
+                  <>
+                    {requestStatus === 'Accepted' && (
+                      <Chip color="success" size="sm" variant="flat">
+                        Accepté
+                      </Chip>
+                    )}
+                    {requestStatus === 'Rejected' && (
+                      <Chip color="danger" size="sm">
+                        Rejeté
+                      </Chip>
+                    )}
+                    {requestStatus === 'Pending' && (
+                      <Chip size="sm">En attente</Chip>
+                    )}
+                  </>
+                )}
+              </div>
               <div className="flex w-full justify-between gap-2">
                 <div className="flex gap-5">
                   <div>
@@ -64,36 +88,16 @@ export default function ActivityCard({
                     <p className="text-small tracking-tight text-default-400">
                       {fullDate(activity.date)}
                     </p>
-                    <p className="text-small tracking-tight text-default-400">
+                    <p className="text-small tracking-tight text-default-400 sm:h-10 sm:overflow-hidden">
                       <FontAwesome icon={faLocationDot} /> {activity.city},{' '}
                       {activity.place}
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <Chip color="primary" size="sm" variant="flat">
-                    {activity.activity?.name}
-                  </Chip>
-                  {requestStatus && (
-                    <>
-                      {requestStatus === 'Accepted' && (
-                        <Chip color="success" size="sm" variant="flat">
-                          Accepté
-                        </Chip>
-                      )}
-                      {requestStatus === 'Rejected' && (
-                        <Chip color="danger" size="sm">
-                          Rejeté
-                        </Chip>
-                      )}
-                      {requestStatus === 'Pending' && (
-                        <Chip size="sm">En attente</Chip>
-                      )}
-                    </>
-                  )}
-                </div>
               </div>
-              <H3 className="mt-4">{activity.title}</H3>
+              <H3 className="mt-4 sm:h-[56px] sm:overflow-hidden">
+                {activity.title}
+              </H3>
             </CardHeader>
             <CardBody className="overflow-visible py-2">
               <Image

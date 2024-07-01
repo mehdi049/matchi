@@ -47,12 +47,8 @@ export default function ActivitiesByType({ activityType }: ActivitiesProps) {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-            {data?.body?.map((activity, key) => {
-              return (
-                <div key={key}>
-                  <ActivityCard activity={activity} />
-                </div>
-              )
+            {data?.body?.slice(0, 8).map((activity, key) => {
+              return <ActivityCard key={key} activity={activity} />
             })}
           </div>
         </div>
