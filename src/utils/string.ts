@@ -1,3 +1,4 @@
+import { DEFAULT_AVATAR } from '@/const/const'
 import { SHA256 } from 'crypto-js'
 
 export const getInitials = (name: string) => {
@@ -27,4 +28,15 @@ export const unSlugifyString = (string: string | undefined) => {
 export const capitalizeFirstLetter = (string: string | undefined) => {
   if (string) return string.charAt(0).toUpperCase() + string.slice(1)
   return undefined
+}
+
+export const generateImageUrlForUser = (
+  image: string | undefined,
+  gender: string
+) => {
+  if (image) return image
+
+  if (gender === 'Male') return DEFAULT_AVATAR.MALE
+
+  return DEFAULT_AVATAR.FEMALE
 }

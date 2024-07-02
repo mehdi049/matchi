@@ -3,12 +3,17 @@
 import { User, CardBody, Card, Chip, Button } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import ProfileRating from '../rating/Rating'
+import { UserResponse } from '@/types/User'
+import useGetInterests from '@/hooks/interest/useGetInterests'
+import IsLoadingMessage from '../message/IsLoadingMessage'
 
 type ProfileProps = {
-  profile?: unknown
+  profile?: UserResponse
 }
 export default function ProfileCard({ profile }: ProfileProps) {
   const router = useRouter()
+  const { data, isLoading } = useGetInterests()
+
   return (
     <div onClick={() => router.push('/profiles/1')}>
       <Card className="w-full cursor-pointer">
@@ -27,17 +32,20 @@ export default function ProfileCard({ profile }: ProfileProps) {
             </div>
           </div>
 
-          <div className="flex gap-1 flex-wrap">
-            <Chip color="primary" size="sm" variant="solid">
-              Basket
-            </Chip>
-            <Chip color="primary" size="sm" variant="solid">
-              Football
-            </Chip>
-            <Chip color="primary" size="sm" variant="solid">
-              Sortie en Moto
-            </Chip>
-          </div>
+          {isLoading && <IsLoadingMessage type="flat" />}
+          {data && (
+            <div className="flex gap-1 flex-wrap">
+              <Chip color="primary" size="sm" variant="solid">
+                Basket
+              </Chip>
+              <Chip color="primary" size="sm" variant="solid">
+                Football
+              </Chip>
+              <Chip color="primary" size="sm" variant="solid">
+                Sortie en Moto
+              </Chip>
+            </div>
+          )}
           <div className="text-right">
             <Button
               color="danger"

@@ -77,3 +77,16 @@ export const extractMinuteFromDate = (date: Date) => {
     return ''
   }
 }
+
+export const getAgeFromBirthdate = (birthdate: Date) => {
+  try {
+    const dayjsBirthdate = dayjs(birthdate)
+    const dayjsNow = dayjs()
+    const age = dayjsNow.diff(dayjsBirthdate, 'year')
+
+    return age
+  } catch (error) {
+    console.log(error)
+    return ''
+  }
+}

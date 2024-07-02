@@ -8,7 +8,7 @@ import Rating from '../rating/Rating'
 export default function ProfileFeedback() {
   const router = useRouter()
   return (
-    <Card className="w-full mt-4">
+    <Card className="w-full">
       <CardBody>
         <div className="flex gap-2 items-end justify-between">
           <H2>Avis</H2>
