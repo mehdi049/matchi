@@ -19,6 +19,7 @@ export const API_ROUTES = {
     GET_BY_TYPE_ACTIVE: (activityId: number) =>
       APP_URL + `/api/activity/active/type/${activityId}`,
     GET_ALL_ACTIVE: APP_URL + '/api/activity/active',
+    GET_ALL_INACTIVE: APP_URL + '/api/activity/inactive',
 
     ADD_ACTIVITY: APP_URL + '/api/activity',
   },

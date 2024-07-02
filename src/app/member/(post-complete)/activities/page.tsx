@@ -8,15 +8,16 @@ import { useContext } from 'react'
 import { UserContext } from '../../context/UserContext'
 import { ROUTES } from '@/routes'
 import { useRouter } from 'next/navigation'
+import useGetActiveActivities from '@/hooks/activity/useGetActiveActivities'
+import IsLoadingMessage from '@/components/message/IsLoadingMessage'
+import { AddedActivityResponse } from '@/types/AddedActivityResponse'
 
 export default function Page() {
   const { user } = useContext(UserContext)
-  const router = useRouter()
+  const { data: dataActive, isLoading: isLoadingActive } =
+    useGetActiveActivities()
 
-  const getRandomInt = (max: number) => {
-    return Math.floor(Math.random() * max)
-  }
-  const randomNumber = getRandomInt(8)
+  const router = useRouter()
 
   return (
     <Card className="w-full">
@@ -59,18 +60,34 @@ export default function Page() {
               )}
             </Tab>
             <Tab key="attending" title="Que je vais assiter">
-              {randomNumber === 0 ? (
-                <InfoMessage>
-                  Pas d&apos;activités trouvés en ce moment.
-                </InfoMessage>
+              {isLoadingActive ? (
+                <IsLoadingMessage type="flat" />
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                  {[...Array(randomNumber).keys()].map((x, key) => {
-                    return (
-                      <div key={key}>{/*  <ActivityCard attending />*/}</div>
-                    )
-                  })}
-                </div>
+                <>
+                  {user.userAttendance && user.userAttendance.length === 0 ? (
+                    <InfoMessage>
+                      Pas d&apos;activités trouvés en ce moment.
+                    </InfoMessage>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                      {user.userAttendance?.map((attendance) => {
+                        const req = dataActive?.body?.find(
+                          (activity) =>
+                            activity.id === attendance.addedActivityId &&
+                            attendance.status === 'Accepted'
+                        )
+                        return (
+                          <ActivityCard
+                            activity={req as AddedActivityResponse}
+                            key={attendance.addedActivityId}
+                            attending
+                            displayFooter
+                          />
+                        )
+                      })}
+                    </div>
+                  )}
+                </>
               )}
             </Tab>
             <Tab key="past" title="Ancienne">

@@ -17,16 +17,20 @@ import ActivitiyCardFooterAttending from './ActivitiyCardFooterAttending'
 import ActivitiyCardFooterHosting from './ActivitiyCardFooterHosting'
 import { ROUTES } from '@/routes'
 import { fullDate } from '@/utils/date'
-import { AddedActivityResponseSm } from '@/types/AddedActivityResponse'
+import {
+  AddedActivityResponse,
+  AddedActivityResponseSm,
+} from '@/types/AddedActivityResponse'
 import H3 from '../typography/H3'
 import { UserAttendanceRequestStatus } from '@/types/UserAttendanceResponse'
 
 type ActivityProps = {
-  activity?: AddedActivityResponseSm
+  activity: AddedActivityResponseSm | AddedActivityResponse
   hosting?: boolean
   attending?: boolean
   requestStatus?: UserAttendanceRequestStatus
   displayFooter?: boolean
+  display?: 'full' | 'minimal'
 }
 export default function ActivityCard({
   activity,
@@ -34,6 +38,7 @@ export default function ActivityCard({
   attending,
   requestStatus,
   displayFooter,
+  display = 'full',
 }: ActivityProps) {
   const router = useRouter()
 
@@ -95,45 +100,53 @@ export default function ActivityCard({
                   </div>
                 </div>
               </div>
-              <H3 className="mt-4 sm:h-[56px] sm:overflow-hidden">
-                {activity.title}
-              </H3>
-            </CardHeader>
-            <CardBody className="overflow-visible py-2">
-              <Image
-                alt="Card background"
-                className="object-cover rounded-xl w-full sm:max-w-sm"
-                src={activity.activity?.image}
-              />
-            </CardBody>
-            <CardFooter className="flex justify-between gap-2">
-              <div className="flex gap-1">
-                <p className="font-semibold text-default-400 text-small">
-                  {activity?.attendees?.length}
-                  {activity?.maxAttendees && activity?.maxAttendees > 0 ? (
-                    <>/ {activity.maxAttendees}</>
-                  ) : (
-                    <></>
-                  )}
-                </p>
-                <p className=" text-default-400 text-small">Participant(s)</p>
-              </div>
-
-              {activity.attendees && activity.attendees?.length > 0 && (
-                <>
-                  <AvatarGroup size="sm" isBordered max={3}>
-                    {activity.attendees?.map((attendee) => {
-                      return (
-                        <Avatar
-                          src={attendee.user.image}
-                          key={attendee.user.id}
-                        />
-                      )
-                    })}
-                  </AvatarGroup>
-                </>
+              {display === 'full' && (
+                <H3 className="mt-4 sm:h-[56px] sm:overflow-hidden">
+                  {activity.title}
+                </H3>
               )}
-            </CardFooter>
+            </CardHeader>
+            {display === 'full' && (
+              <>
+                <CardBody className="overflow-visible py-2">
+                  <Image
+                    alt="Card background"
+                    className="object-cover rounded-xl w-full sm:max-w-sm"
+                    src={activity.activity?.image}
+                  />
+                </CardBody>
+                <CardFooter className="flex justify-between gap-2">
+                  <div className="flex gap-1">
+                    <p className="font-semibold text-default-400 text-small">
+                      {activity?.attendees?.length}
+                      {activity?.maxAttendees && activity?.maxAttendees > 0 ? (
+                        <>/ {activity.maxAttendees}</>
+                      ) : (
+                        <></>
+                      )}
+                    </p>
+                    <p className=" text-default-400 text-small">
+                      Participant(s)
+                    </p>
+                  </div>
+
+                  {activity.attendees && activity.attendees?.length > 0 && (
+                    <>
+                      <AvatarGroup size="sm" isBordered max={3}>
+                        {activity.attendees?.map((attendee) => {
+                          return (
+                            <Avatar
+                              src={attendee.user.image}
+                              key={attendee.user.id}
+                            />
+                          )
+                        })}
+                      </AvatarGroup>
+                    </>
+                  )}
+                </CardFooter>
+              </>
+            )}
             {displayFooter && (
               <>
                 {hosting && activity?.id && (

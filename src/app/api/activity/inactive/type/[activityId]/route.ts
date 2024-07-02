@@ -4,7 +4,7 @@ import { ApiResponse } from '@/types/apiResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
 
-// get activity by Type
+// get inactive activities by Type
 export async function GET(
   req: Request,
   { params }: { params: { activityId: string } }
@@ -16,8 +16,9 @@ export async function GET(
       activity: {
         id: parseInt(activityId),
       },
+      status: 'Active',
       start: {
-        gt: new Date(),
+        lt: new Date(),
       },
     },
     select: {

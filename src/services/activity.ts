@@ -35,6 +35,12 @@ export const getActiveActivities = () => {
   })
 }
 
+export const getInactiveActivities = () => {
+  return fetcherGet<AddedActivityResponse[]>({
+    url: API_ROUTES.ACTIVITY.GET_ALL_INACTIVE,
+  })
+}
+
 export const getActiveActivitiesByType = (activityId: number) => {
   return fetcherGet<AddedActivityResponse[]>({
     url: API_ROUTES.ACTIVITY.GET_BY_TYPE_ACTIVE(activityId),
