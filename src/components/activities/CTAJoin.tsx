@@ -1,6 +1,14 @@
 import { UserContext } from '@/app/member/context/UserContext'
 import useAddAttendance from '@/hooks/attendance/useAddAttendance'
-import { Button, useDisclosure } from '@nextui-org/react'
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from '@nextui-org/react'
 import { useContext } from 'react'
 import { ModalLoginForm } from '../navbar/ModalLoginForm'
 import { ActivityProps } from './ActivityCardDetails'
@@ -8,12 +16,17 @@ import { getQueryClient } from '@/lib/getQueryClient'
 import { QUERY_KEYS } from '@/const/query_keys'
 import { fullDate } from '@/utils/date'
 import FontAwesome from '../fontAwesome/FontAwesome'
-import { faCheck, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import useUpdateAttendance from '@/hooks/attendance/useUpdateAttendance'
 
 export const CTAJoin = ({ activity }: ActivityProps) => {
   const { user, isLoggedIn } = useContext(UserContext)
 
-  const { mutate, isPending, isSuccess } = useAddAttendance({
+  const {
+    mutate: mutateAdd,
+    isPending: isPendingAdd,
+    isSuccess: isSuccessAdd,
+  } = useAddAttendance({
     onSuccess: () => {
       getQueryClient().invalidateQueries({
         queryKey: [QUERY_KEYS.ACTIVITY_ID, activity?.id],
@@ -21,17 +34,44 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
     },
   })
 
-  const { isOpen, onOpenChange } = useDisclosure()
+  const {
+    mutate: mutateUpdate,
+    isPending: isPendingUpdate,
+    isSuccess: isSuccessUpdate,
+  } = useUpdateAttendance({
+    onSuccess: () => {
+      getQueryClient().invalidateQueries({
+        queryKey: [QUERY_KEYS.ACTIVITY_ID, activity?.id],
+      })
+    },
+  })
+
+  const { isOpen: isOpenLoginForm, onOpenChange: onOpenChangeLoginForm } =
+    useDisclosure()
+
+  const {
+    isOpen: isOpenCancelAttendance,
+    onOpen: onOpenCancelAttendance,
+    onOpenChange: onOpenChangeCancelAttendance,
+  } = useDisclosure()
 
   const handleJoinCta = () => {
     if (isLoggedIn)
-      mutate({
+      mutateAdd({
         attendance: {
           addedActivityId: activity?.id as number,
           userId: user.id,
         },
       })
-    else return onOpenChange()
+    else return onOpenChangeLoginForm()
+  }
+
+  const handleCancelCta = () => {
+    mutateUpdate({
+      userId: user.id,
+      activityId: activity?.id as number,
+      status: 'Cancelled',
+    })
   }
 
   const currentAttendance = user.userAttendance?.find(
@@ -43,23 +83,73 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
 
   const isAlreadyAttending = currentAttendance?.status === 'Accepted'
   const isRequestPending = currentAttendance?.status === 'Pending'
+  const isRequestCancelled = currentAttendance?.status === 'Cancelled'
 
   if (isAlreadyAttending)
     return (
-      <Button
-        size="sm"
-        color="danger"
-        onClick={handleJoinCta}
-        isLoading={isPending}
-      >
-        Annuler ma presence
-      </Button>
+      <>
+        {!isSuccessUpdate ? (
+          <>
+            <Button size="sm" color="danger" onPress={onOpenCancelAttendance}>
+              Annuler ma presence
+            </Button>
+
+            <Modal
+              size="lg"
+              isOpen={isOpenCancelAttendance}
+              onOpenChange={onOpenChangeCancelAttendance}
+            >
+              <ModalContent>
+                {(onClose) => (
+                  <>
+                    <ModalHeader className="flex flex-col gap-1">
+                      Vous êtes sûre de vouloir annuler votre présence?
+                    </ModalHeader>
+                    <ModalBody>
+                      <p>
+                        Une fois annulé, l&apos;organisateur de cette activité
+                        va être notifié par email.
+                      </p>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button variant="light" onPress={onClose}>
+                        Fermer
+                      </Button>
+                      <Button
+                        color="danger"
+                        isLoading={isPendingUpdate}
+                        onPress={handleCancelCta}
+                      >
+                        Annuler
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
+            </Modal>
+          </>
+        ) : (
+          <Button
+            size="sm"
+            color="danger"
+            variant="bordered"
+            className="cursor-default"
+          >
+            Demande de rejoint annulé
+          </Button>
+        )}
+      </>
     )
 
   if (isRequestPending)
     return (
       <>
-        <Button size="sm" color="warning" variant="flat">
+        <Button
+          size="sm"
+          color="warning"
+          variant="flat"
+          className="cursor-default"
+        >
           Demande en attente
         </Button>
         <p className="text-xs text-gray-400">
@@ -69,27 +159,51 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
       </>
     )
 
+  if (isRequestCancelled)
+    return (
+      <Button
+        size="sm"
+        color="danger"
+        variant="bordered"
+        className="cursor-default"
+      >
+        Demande de rejoint annulé
+      </Button>
+    )
+
   return (
     <>
-      {!isSuccess ? (
+      {!isSuccessAdd ? (
         <Button
           size="sm"
           color="primary"
           onClick={handleJoinCta}
-          isLoading={isPending}
+          isLoading={isPendingAdd}
         >
           Rejoindre
         </Button>
       ) : activity?.type === 'Public' ? (
-        <Button size="sm" color="success" className="text-white max-w-min">
+        <Button
+          size="sm"
+          color="success"
+          className="text-white max-w-min cursor-default"
+        >
           <FontAwesome icon={faCheck} size="1x" />
         </Button>
       ) : (
-        <Button size="sm" color="success" value="flat" className="text-white">
+        <Button
+          size="sm"
+          color="success"
+          variant="flat"
+          className="text-white cursor-default"
+        >
           Demande envoyé
         </Button>
       )}
-      <ModalLoginForm isOpen={isOpen} onOpenChange={onOpenChange} />
+      <ModalLoginForm
+        isOpen={isOpenLoginForm}
+        onOpenChange={onOpenChangeLoginForm}
+      />
     </>
   )
 }

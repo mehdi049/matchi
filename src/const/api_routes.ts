@@ -25,6 +25,7 @@ export const API_ROUTES = {
   },
   ATTENDANCE: {
     ADD: APP_URL + '/api/attendance',
-    GET_BY_ID: (id: number) => APP_URL + `/api/attendance/${id}`,
+    GET_BY_ID: (userId: string, activityId: number) =>
+      APP_URL + `/api/attendance/user/${userId}/activity/${activityId}`,
   },
 }
