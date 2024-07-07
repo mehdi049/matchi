@@ -21,6 +21,7 @@ import IsLoadingMessage from '../message/IsLoadingMessage'
 import { ROUTES } from '@/routes'
 import InfoMessage from '../message/InfoMessage'
 import { generateImageUrlForUser } from '@/utils/string'
+import { ActivityCardHorizontal } from '../activities/ActivityCardHorizontal'
 
 type ProfileProps = {
   profile: UserResponse
@@ -86,39 +87,9 @@ export default function ProfileCardDetails({ profile }: ProfileProps) {
           <H2>Evenements organisés</H2>
           <div className="mt-4 divide-y">
             {profile?.addedActivities && profile.addedActivities.length > 0 ? (
-              profile?.addedActivities?.map((activity) => {
-                return (
-                  <div
-                    key={activity.id}
-                    className="flex gap-2 py-2 justify-between hover:bg-gray-100 duration-100 cursor-pointer px-1.5"
-                    onClick={() => {
-                      router.push(ROUTES.ACTIVITY(activity.id as number))
-                    }}
-                  >
-                    <div className="lg:w-1/2">
-                      <User
-                        name={profile.name}
-                        description={
-                          activity.attendees?.length + ' participants'
-                        }
-                        avatarProps={{
-                          src: profile.image,
-                        }}
-                        className="flex md:hidden lg:flex justify-start"
-                      />
-                    </div>
-                    <div>
-                      <p className="text-sm">
-                        <strong>{activity.activity?.name}</strong> -{' '}
-                        {activity.place}
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {fullDate(activity.date)}
-                      </p>
-                    </div>
-                  </div>
-                )
-              })
+              profile?.addedActivities?.map((activity) => (
+                <ActivityCardHorizontal key={activity.id} activity={activity} />
+              ))
             ) : (
               <InfoMessage>Aucune activités créés</InfoMessage>
             )}

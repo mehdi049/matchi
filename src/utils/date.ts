@@ -6,6 +6,7 @@ import {
 
 import dayjs from 'dayjs'
 import 'dayjs/locale/fr'
+import { capitalizeFirstLetter } from './string'
 
 dayjs.locale('fr')
 
@@ -47,7 +48,7 @@ export const timeStringToDatetime = (selectedDate: Date, time: string) => {
 
 export const fullDate = (date: Date, locale = 'fr') => {
   try {
-    return dayjs(date).format('dddd D MMM YYYY')
+    return capitalizeFirstLetter(dayjs(date).format('dddd D MMM YYYY'))
   } catch (error) {
     console.log(error)
     return ''

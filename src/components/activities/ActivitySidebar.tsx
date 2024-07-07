@@ -1,76 +1,48 @@
 'use client'
 
-import { Card, CardBody, User } from '@nextui-org/react'
+import { Card, CardBody } from '@nextui-org/react'
 import H2 from '../typography/H2'
-import { useRouter } from 'next/navigation'
+import useGetActiveActivities from '@/hooks/activity/useGetActiveActivities'
+import IsLoadingSkeleton from '../skeleton/IsLoadingSkeleton'
+import ErrorMessage from '../message/ErrorMessage'
+import { MESSAGES } from '@/const/message'
+import { ActivityCardHorizontal } from './ActivityCardHorizontal'
 
-export default function ActivitySidebar() {
-  const router = useRouter()
-  const getRandomInt = (max: number) => {
-    return Math.floor(Math.random() * max)
-  }
-  const randomNumber = getRandomInt(8)
+type ActivitySidebarProps = {
+  city: string
+  activitySlug: string
+}
+export default function ActivitySidebar({
+  city,
+  activitySlug,
+}: ActivitySidebarProps) {
+  const { data, isPending, isError } = useGetActiveActivities()
+
+  if (isPending)
+    return <IsLoadingSkeleton count={6} type="activity-list-horizontal" />
+  if (isError)
+    return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
+
+  const filtredByCity = data.body?.filter((activity) => activity.city === city)
+  const filtredBySlug = data.body?.filter(
+    (activity) => activity.activity?.slug === activitySlug
+  )
+
   return (
     <Card className="w-full md:max-w-sm">
       <CardBody>
-        <H2>Activités similaires</H2>
+        <H2>Autre activités à {city}</H2>
         <div className="mt-4 divide-y">
-          {[...Array(randomNumber).keys()].map((x, key) => {
-            return (
-              <div
-                key={key}
-                className="flex gap-2 py-2 justify-between hover:bg-gray-100 duration-100 cursor-pointer px-1.5"
-                onClick={() => {
-                  router.push('/activity/1')
-                }}
-              >
-                <User
-                  name="Jane Doe"
-                  description="6/10 participant(s)"
-                  avatarProps={{
-                    src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-                  }}
-                />
-                <div>
-                  <p>
-                    <strong>Padel</strong>
-                    <span className="text-xs"> / Club Gammarth</span>
-                  </p>
-                  <p className="text-xs">Jeudi, 17 Avril 2024, 19h-20h</p>
-                </div>
-              </div>
-            )
-          })}
+          {filtredByCity?.slice(0, 3).map((activity) => (
+            <ActivityCardHorizontal key={activity.id} activity={activity} />
+          ))}
         </div>
 
-        <H2 className="mt-8">Autre activités sur grand Tunis</H2>
+        <H2 className="mt-8">Activités similaires</H2>
         <div className="mt-4 divide-y">
-          {[...Array(randomNumber).keys()].map((x, key) => {
-            return (
-              <div
-                key={key}
-                className="flex gap-2 py-2 justify-between hover:bg-gray-100 duration-100 cursor-pointer px-1.5"
-                onClick={() => {
-                  router.push('/activity/1')
-                }}
-              >
-                <User
-                  name="Jane Doe"
-                  description="6/10 participant(s)"
-                  avatarProps={{
-                    src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-                  }}
-                />
-                <div>
-                  <p>
-                    <strong>Padel</strong>
-                    <span className="text-xs"> / Club Gammarth</span>
-                  </p>
-                  <p className="text-xs">Jeudi, 17 Avril 2024, 19h-20h</p>
-                </div>
-              </div>
-            )
-          })}
+          {filtredBySlug?.slice(0, 3).map((activity) => (
+            <ActivityCardHorizontal key={activity.id} activity={activity} />
+          ))}
         </div>
       </CardBody>
     </Card>

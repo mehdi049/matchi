@@ -9,7 +9,7 @@ import { UserResponse } from '@/types/User'
 
 export default function Page({ params }: { params: { id: string } }) {
   const { data, isPending, isError } = useGetUserById(params.id)
-  if (isPending) return <IsLoadingSkeleton type="activity-details-card" />
+  if (isPending) return <IsLoadingSkeleton type="profile-details-card" />
   if (isError)
     return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
 

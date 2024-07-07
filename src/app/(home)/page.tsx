@@ -27,7 +27,7 @@ export default function Home() {
       onOpenChange()
   }, [authError])
 
-  if (isPending) return <IsLoadingSkeleton type="activity-list" />
+  if (isPending) return <IsLoadingSkeleton type="activity-list-vertical" />
 
   return (
     <>

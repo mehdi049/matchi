@@ -42,7 +42,8 @@ export default function Page({ params }: { params: { slug: string[] } }) {
     }
   }
 
-  if (isPending) return <IsLoadingSkeleton count={8} type="activity-list" />
+  if (isPending)
+    return <IsLoadingSkeleton count={8} type="activity-list-vertical" />
   if (isError)
     return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
 

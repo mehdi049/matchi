@@ -42,6 +42,7 @@ export type AddedActivityResponseSm = {
   city: string
   municipality: string
   place: string
+  type: AddedActivityType
   date: Date
   start: Date
   end: Date

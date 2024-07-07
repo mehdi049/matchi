@@ -11,7 +11,7 @@ import {
   AvatarGroup,
 } from '@nextui-org/react'
 import FontAwesome from '../fontAwesome/FontAwesome'
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { faLocationDot, faLock } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/navigation'
 import ActivitiyCardFooterAttending from './ActivitiyCardFooterAttending'
 import ActivitiyCardFooterHosting from './ActivitiyCardFooterHosting'
@@ -23,6 +23,7 @@ import {
 } from '@/types/AddedActivityResponse'
 import H3 from '../typography/H3'
 import { UserAttendanceRequestStatus } from '@/types/UserAttendanceResponse'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 type ActivityProps = {
   activity: AddedActivityResponseSm | AddedActivityResponse
@@ -56,6 +57,11 @@ export default function ActivityCard({
                 <Chip color="primary" size="sm" variant="flat">
                   {activity.activity?.name}
                 </Chip>
+                {activity.type === 'Private' && (
+                  <Chip color="warning" size="sm" variant="flat">
+                    <FontAwesomeIcon icon={faLock} /> Privé
+                  </Chip>
+                )}
 
                 {requestStatus && (
                   <>

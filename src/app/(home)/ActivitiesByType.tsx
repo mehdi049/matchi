@@ -19,7 +19,8 @@ export default function ActivitiesByType({ activityType }: ActivitiesProps) {
   const { data, isPending, isError } = useGetActiveActivitiesByType(
     activityType.id
   )
-  if (isPending) return <IsLoadingSkeleton type="activity-list" count={4} />
+  if (isPending)
+    return <IsLoadingSkeleton type="activity-list-vertical" count={4} />
   if (isError)
     return <ErrorMessage isVisible>{MESSAGES.ERROR.GENERAL}</ErrorMessage>
 

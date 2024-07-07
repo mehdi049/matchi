@@ -14,13 +14,14 @@ const useMediaQuery = (size: MediaSizeProps) => {
     default:
       break
   }
-  const [match, setMatch] = useState([window.innerWidth <= sizePx])
+  const [match, setMatch] = useState([
+    typeof window !== 'undefined' ? window.innerWidth <= sizePx : null,
+  ])
 
   useLayoutEffect(() => {
     const listener = () => {
       setMatch([window.innerWidth <= sizePx])
     }
-    console.log(sizePx)
     window.addEventListener('resize', listener)
     listener()
     return () => window.removeEventListener('resize', listener)

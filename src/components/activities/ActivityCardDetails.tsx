@@ -18,6 +18,7 @@ import {
   faCalendarDay,
   faClock,
   faLocationDot,
+  faLock,
   faMoneyCheckDollar,
 } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/navigation'
@@ -61,11 +62,13 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
                     )
                   }
                 />
-                <div className="pl-12">
-                  <Chip color="primary" size="sm" variant="flat">
-                    {activity?.type}
-                  </Chip>
-                </div>
+                {activity.type === 'Private' && (
+                  <div className="pl-12">
+                    <Chip color="warning" size="sm" variant="flat">
+                      <FontAwesomeIcon icon={faLock} /> Privé
+                    </Chip>
+                  </div>
+                )}
               </div>
               <div className="flex gap-1 flex-col">
                 <CTAJoin activity={activity} />
