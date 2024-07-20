@@ -1,17 +1,26 @@
 'use client'
 
-import React from 'react'
-import { Avatar, Chip, Input, Tooltip } from '@nextui-org/react'
+import React, { useEffect, useState } from 'react'
+import { Avatar, Input, Tooltip } from '@nextui-org/react'
 
 export default function MessageBox() {
-  const getRandomInt = (max: number) => {
-    return Math.floor(Math.random() * max)
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    // scroll bottom message area
+    const msgArea = document.getElementById('msg-area')
+    if (msgArea) msgArea.scrollTop = msgArea.scrollHeight
+  }, [])
+
+  const sendMessage = () => {
+    if (message.length > 0) {
+      setMessage('')
+    }
   }
-  const randomNumber = getRandomInt(8)
 
   return (
     <div className="flex flex-col gap-4 justify-between">
-      <div className="flex flex-col gap-4 h-96 overflow-scroll">
+      <div className="flex flex-col gap-4 h-96 overflow-scroll" id="msg-area">
         {[...Array(20).keys()].map((x, key) => {
           return (
             <div key={key} className="flex flex-col gap-1">
@@ -51,7 +60,15 @@ export default function MessageBox() {
           )
         })}
       </div>
-      <Input radius="none" type="text" placeholder="Tapez votre message..." />
+      <Input
+        radius="none"
+        type="text"
+        placeholder="Tapez votre message..."
+        onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') sendMessage()
+        }}
+      />
     </div>
   )
 }

@@ -59,7 +59,7 @@ export default function ActivityCard({
                 </Chip>
                 {activity.type === 'Private' && (
                   <Chip color="warning" size="sm" variant="flat">
-                    <FontAwesomeIcon icon={faLock} /> Privé
+                    <FontAwesomeIcon icon={faLock} /> Privée
                   </Chip>
                 )}
 
@@ -73,6 +73,11 @@ export default function ActivityCard({
                     {requestStatus === 'Rejected' && (
                       <Chip color="danger" size="sm">
                         Rejeté
+                      </Chip>
+                    )}
+                    {requestStatus === 'Cancelled' && (
+                      <Chip color="danger" size="sm">
+                        Annulée
                       </Chip>
                     )}
                     {requestStatus === 'Pending' && (

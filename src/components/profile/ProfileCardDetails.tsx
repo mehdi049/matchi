@@ -1,14 +1,6 @@
 'use client'
 
-import {
-  Image,
-  User,
-  CardBody,
-  Card,
-  Chip,
-  Divider,
-  user,
-} from '@nextui-org/react'
+import { Image, CardBody, Card, Chip, Divider } from '@nextui-org/react'
 import H2 from '../typography/H2'
 import H1 from '../typography/H1'
 import { useRouter } from 'next/navigation'
@@ -18,7 +10,6 @@ import { UserResponse } from '@/types/User'
 import { fullDate, getAgeFromBirthdate } from '@/utils/date'
 import useGetInterests from '@/hooks/interest/useGetInterests'
 import IsLoadingMessage from '../message/IsLoadingMessage'
-import { ROUTES } from '@/routes'
 import InfoMessage from '../message/InfoMessage'
 import { generateImageUrlForUser } from '@/utils/string'
 import { ActivityCardHorizontal } from '../activities/ActivityCardHorizontal'

@@ -6,3 +6,5 @@ export const DEFAULT_AVATAR = {
   FEMALE:
     'https://iklsbmdx7uxraqfa.public.blob.vercel-storage.com/avatar-female-8A5wtjHYUYGsnugYy8LdU5wcDfxUNA.webp',
 }
+
+export const SENDER_EMAIL = process.env.RESEND_SENDER_EMAIL

@@ -35,6 +35,9 @@ export default function RegisterForm() {
 
   const [error, setError] = useState<string>('')
 
+  const [isLoadingFb, setIsLoadingFb] = useState<boolean>(false)
+  const [isLoadingGoogle, setIsLoadingGoogle] = useState<boolean>(false)
+
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: (data: RegisterUserProps) => {
       return registerUser({
@@ -158,11 +161,13 @@ export default function RegisterForm() {
           color="primary"
           size="md"
           startContent={<FontAwesome icon={faFacebook} />}
-          onClick={() =>
+          onClick={() => {
+            setIsLoadingFb(true)
             signIn('facebook', {
               callbackUrl: ROUTES.MEMBER.PROFILE,
             })
-          }
+          }}
+          isLoading={isLoadingFb}
         >
           Continuer avec Facebook
         </Button>
@@ -171,11 +176,13 @@ export default function RegisterForm() {
           color="primary"
           size="md"
           startContent={<FontAwesome icon={faGoogle} />}
-          onClick={() =>
+          onClick={() => {
+            setIsLoadingGoogle(true)
             signIn('google', {
               callbackUrl: ROUTES.MEMBER.PROFILE,
             })
-          }
+          }}
+          isLoading={isLoadingGoogle}
         >
           Continuer avec Google
         </Button>

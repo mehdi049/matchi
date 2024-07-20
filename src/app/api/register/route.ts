@@ -1,4 +1,6 @@
+import { EmailTemplateWelcome } from '@/components/emailTemplate/Welcome'
 import { MESSAGES } from '@/const/message'
+import { sendEmail } from '@/lib/email'
 import prisma from '@/lib/prisma'
 import { ApiResponse } from '@/types/apiResponse'
 import { hashPassword } from '@/utils/string'
@@ -36,6 +38,13 @@ export async function POST(req: Request) {
       },
     })
 
+    const sendResponse = await sendEmail({
+      subject: 'Bienvenue chez Matchi',
+      receivers: [/*email,*/ 'mehdi.marouani.049@gmail.com'],
+      template: EmailTemplateWelcome({ firstName: name }),
+    })
+    if (sendResponse.rejected) console.log(sendResponse.response)
+
     return NextResponse.json<ApiResponse<string>>(
       {
         message: 'Compte créé avec succés',
@@ -45,6 +54,7 @@ export async function POST(req: Request) {
       }
     )
   } catch (error) {
+    console.log(error)
     return NextResponse.json<ApiResponse<string>>(
       {
         message: MESSAGES.ERROR.GENERAL,

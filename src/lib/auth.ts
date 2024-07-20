@@ -39,7 +39,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             password: password as string,
           })
 
-          console.log(res.body)
           // user not found
           if (res.message) return null
 
