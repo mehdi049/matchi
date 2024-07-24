@@ -154,6 +154,7 @@ model Feedback {
 model Notification {
     id        Int      @id @default(autoincrement())
     content   String
+    viewed    Boolean  @default(false)
     createdAt DateTime @default(now())
 
     createdFor User   @relation(fields: [userId], references: [id])

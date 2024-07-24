@@ -2,7 +2,7 @@ import { Card, CardBody, CircularProgress } from '@nextui-org/react'
 
 type IsLoadingMessageProps = {
   className?: string
-  type?: 'card' | 'flat' | 'full-page'
+  type?: 'card' | 'flat' | 'full-page' | 'only-loading-icon'
 }
 export default function IsLoadingMessage({
   className,
@@ -18,6 +18,9 @@ export default function IsLoadingMessage({
   }
   return (
     <>
+      {type === 'only-loading-icon' && (
+        <CircularProgress aria-label="Chargement..." size="sm" />
+      )}
       {type === 'card' && (
         <Card className={className}>
           <CardBody>

@@ -1,4 +1,4 @@
-import { EmailTemplateWelcome } from '@/components/emailTemplate/Welcome'
+import { EmailTemplateWelcome } from '@/components/templates/emailTemplate/Welcome'
 import { MESSAGES } from '@/const/message'
 import { sendEmail } from '@/lib/email'
 import prisma from '@/lib/prisma'

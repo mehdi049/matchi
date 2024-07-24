@@ -1,7 +1,4 @@
-import type { PutBlobResult } from '@vercel/blob'
-import { API_ROUTES } from '@/const/api_routes'
 import { ApiResponse } from '@/types/apiResponse'
-import { upload } from '@vercel/blob/client'
 
 type fetcherProps = {
   method: 'POST' | 'PUT' | 'DELETE'

@@ -19,3 +19,8 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+/* notifications */
+.opacity-100-f img {
+  opacity: 1 !important;
+}

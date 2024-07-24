@@ -28,4 +28,8 @@ export const API_ROUTES = {
     GET_BY_ID: (userId: string, activityId: number) =>
       APP_URL + `/api/attendance/user/${userId}/activity/${activityId}`,
   },
+  NOTIFICATIONS: {
+    GET_BY_USER_ID: (id: string) => `/api/notifications/user/${id}`,
+    GET_BY_ID: (id: number) => `/api/notifications/${id}`,
+  },
 }

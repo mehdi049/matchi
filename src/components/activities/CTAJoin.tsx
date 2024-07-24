@@ -18,6 +18,11 @@ import { fullDate } from '@/utils/date'
 import FontAwesome from '../fontAwesome/FontAwesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import useUpdateAttendance from '@/hooks/attendance/useUpdateAttendance'
+import { createNotification } from '@/app/actions'
+import ReactDOMServer from 'react-dom/server'
+import { NewJoinActivityTemplate } from '../templates/notificationTemplate/NewJoin'
+import { AddedActivityResponse } from '@/types/AddedActivityResponse'
+import { JoinRequestTemplate } from '../templates/notificationTemplate/JoinRequest'
 
 export const CTAJoin = ({ activity }: ActivityProps) => {
   const { user, isLoggedIn } = useContext(UserContext)
@@ -30,6 +35,22 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
     onSuccess: () => {
       getQueryClient().invalidateQueries({
         queryKey: [QUERY_KEYS.ACTIVITY_ID, activity?.id],
+      })
+      createNotification({
+        template: ReactDOMServer.renderToStaticMarkup(
+          activity?.type === 'Public' ? (
+            <NewJoinActivityTemplate
+              user={user}
+              activity={activity as AddedActivityResponse}
+            />
+          ) : (
+            <JoinRequestTemplate
+              user={user}
+              activity={activity as AddedActivityResponse}
+            />
+          )
+        ),
+        userId: activity?.createdBy?.id as string,
       })
     },
   })
@@ -84,6 +105,7 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
   const isAlreadyAttending = currentAttendance?.status === 'Accepted'
   const isRequestPending = currentAttendance?.status === 'Pending'
   const isRequestCancelled = currentAttendance?.status === 'Cancelled'
+  const isRequestRejected = currentAttendance?.status === 'Rejected'
 
   if (isAlreadyAttending)
     return (
@@ -171,6 +193,18 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
       </Button>
     )
 
+  if (isRequestRejected)
+    return (
+      <Button
+        size="sm"
+        color="danger"
+        variant="bordered"
+        className="cursor-default"
+      >
+        Demande de rejoint non accépté
+      </Button>
+    )
+
   return (
     <>
       {!isSuccessAdd ? (
@@ -191,12 +225,7 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
           <FontAwesome icon={faCheck} size="1x" />
         </Button>
       ) : (
-        <Button
-          size="sm"
-          color="success"
-          variant="flat"
-          className="text-white cursor-default"
-        >
+        <Button size="sm" color="success" className="text-white cursor-default">
           Demande envoyé
         </Button>
       )}
