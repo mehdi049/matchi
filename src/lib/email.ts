@@ -1,6 +1,6 @@
 import { render } from '@react-email/components'
 import nodemailer from 'nodemailer'
-import { SENDER_EMAIL } from '@/const/const'
+import { ENV, SENDER_EMAIL, TEST_RECEIVER_EMAIL } from '@/const/const'
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -26,7 +26,7 @@ export const sendEmail = async ({
 
   const response = await transporter.sendMail({
     from: '"Matchi " <' + SENDER_EMAIL + '>', // sender address
-    to: receivers.join(','), // list of receivers
+    to: ENV === 'DEV' ? TEST_RECEIVER_EMAIL : receivers.join(','), // list of receivers
     subject: subject,
     html: emailHtml,
   })

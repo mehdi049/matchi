@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     const sendResponse = await sendEmail({
       subject: 'Bienvenue chez Matchi',
-      receivers: [/*email,*/ 'mehdi.marouani.049@gmail.com'],
+      receivers: [email],
       template: EmailTemplateWelcome({ firstName: name }),
     })
     if (sendResponse.rejected) console.log(sendResponse.response)

@@ -57,7 +57,17 @@ export const UserContextProvider = ({
   }
 
   useMemo(() => {
-    if (data) setUser(data?.body as UserResponse)
+    if (data) {
+      setUser(data?.body as UserResponse)
+      // check if basic profil info are set
+      if (
+        !data.body?.birthDay ||
+        !data.body?.city ||
+        !data.body?.municipality ||
+        data.body?.interests?.length === 0
+      )
+        router.push(ROUTES.MEMBER.COMPLETE_PROFILE)
+    }
   }, [data])
 
   if (isPrivate) {

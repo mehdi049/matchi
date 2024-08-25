@@ -8,6 +8,8 @@ import facebook from 'next-auth/providers/facebook'
 import Google from 'next-auth/providers/google'
 
 import prisma from './prisma'
+import { sendEmail } from './email'
+import { EmailTemplateWelcome } from '@/components/templates/emailTemplate/Welcome'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   debug: true,
@@ -19,11 +21,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token && session.user) session.user.id = token.id as string
       return session
     },
-    async jwt({ token, account, profile }) {
+    async jwt({ token, account, profile, isNewUser }) {
       if (account) {
         token.accessToken = account.access_token
         token.id = profile?.id
       }
+
+      if (isNewUser) {
+        const sendResponse = await sendEmail({
+          subject: 'Bienvenue chez Matchi',
+          receivers: [profile?.email as string],
+          template: EmailTemplateWelcome({
+            firstName: profile?.name as string,
+          }),
+        })
+        if (sendResponse.rejected) console.log(sendResponse.response)
+      }
+
       return token
     },
   },
