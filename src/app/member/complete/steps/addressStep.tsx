@@ -87,7 +87,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
         <Controller
           control={control}
           name="city"
-          defaultValue={user.city}
+          defaultValue={user.city ?? ''}
           render={({ field }) => (
             <Select
               {...field}
@@ -115,7 +115,7 @@ export default function MyAddressStep({ setStep }: StepProps) {
         <Controller
           control={control}
           name="municipality"
-          defaultValue={user.municipality}
+          defaultValue={user.municipality ?? ''}
           render={({ field }) => (
             <Select
               {...field}

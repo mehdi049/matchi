@@ -142,6 +142,7 @@ export default function ActivitiyCardFooterHosting({
                         color="danger"
                         onClick={onCancel}
                         isLoading={isPendingUpdate}
+                        isDisabled={isSuccessUpdate && !isPendingUpdate}
                       >
                         Annuler
                       </Button>
@@ -198,6 +199,7 @@ export default function ActivitiyCardFooterHosting({
                         color="danger"
                         onPress={onDelete}
                         isLoading={isPendingDelete}
+                        isDisabled={isSuccessDelete && !isPendingDelete}
                       >
                         Supprimer
                       </Button>

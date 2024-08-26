@@ -46,13 +46,14 @@ export default function ActivityCard({
   return (
     <>
       {activity && (
-        <div
-          onClick={() => {
-            router.push(ROUTES.ACTIVITY(activity?.id as number))
-          }}
-        >
+        <div>
           <Card className="py-4 cursor-pointer grow h-full">
-            <CardHeader className="flex-col items-start">
+            <CardHeader
+              className="flex-col items-start"
+              onClick={() => {
+                router.push(ROUTES.ACTIVITY(activity?.id as number))
+              }}
+            >
               <div className="flex gap-2 mb-4 w-full">
                 <Chip color="primary" size="sm" variant="flat">
                   {activity.activity?.name}
@@ -119,14 +120,24 @@ export default function ActivityCard({
             </CardHeader>
             {display === 'full' && (
               <>
-                <CardBody className="overflow-visible py-2">
+                <CardBody
+                  className="overflow-visible py-2"
+                  onClick={() => {
+                    router.push(ROUTES.ACTIVITY(activity?.id as number))
+                  }}
+                >
                   <Image
                     alt="Card background"
                     className="object-cover rounded-xl w-full sm:max-w-sm"
                     src={activity.activity?.image}
                   />
                 </CardBody>
-                <CardFooter className="flex justify-between gap-2">
+                <CardFooter
+                  className="flex justify-between gap-2"
+                  onClick={() => {
+                    router.push(ROUTES.ACTIVITY(activity?.id as number))
+                  }}
+                >
                   <div className="flex gap-1">
                     <p className="font-semibold text-default-400 text-small">
                       {activity?.attendees?.length}

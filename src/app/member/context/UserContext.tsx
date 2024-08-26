@@ -52,13 +52,14 @@ export const UserContextProvider = ({
 
   const { status } = useSession()
 
-  const refetchUser = () => {
-    refetch()
-  }
+  const refetchUser = () => refetch()
+
+  useMemo(() => {
+    if (data) setUser(data?.body as UserResponse)
+  }, [data])
 
   useMemo(() => {
     if (data) {
-      setUser(data?.body as UserResponse)
       // check if basic profil info are set
       if (
         !data.body?.birthDay ||
@@ -68,7 +69,7 @@ export const UserContextProvider = ({
       )
         router.push(ROUTES.MEMBER.COMPLETE_PROFILE)
     }
-  }, [data])
+  }, [])
 
   if (isPrivate) {
     // unauthenticated

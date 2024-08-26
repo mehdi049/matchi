@@ -61,7 +61,7 @@ const formInputs = z
     type: zodCheck(['required']),
   })
   .refine((data) => data.start < data.end, {
-    message: 'Date de fin invalid.',
+    message: 'Date de fin invalide.',
     path: ['start_end'],
   })
 
@@ -79,7 +79,10 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
     error: errorAdd,
     isSuccess: isSuccessAdd,
   } = useAddActivity({
-    onSuccess: () => refetchUser(),
+    onSuccess: () => {
+      refetchUser()
+      reset()
+    },
   })
 
   const {
@@ -108,6 +111,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
     handleSubmit,
     control,
     watch,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(formInputs),
@@ -322,7 +326,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
           isRequired
           variant="flat"
           type="text"
-          label="Lieu d'activité"
+          label="Lieu de l'activité"
           placeholder="Nom du terrain, point de rassemblement, etc."
           errorMessage={errors.place?.message as string}
           isInvalid={
