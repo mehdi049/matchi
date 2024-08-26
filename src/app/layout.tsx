@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import { Providers } from '@/providers/providers'
-import { UserContextProvider } from './member/context/UserContext'
 import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Matchi',
   description: 'Matchi',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
 }
 
 export default function RootLayout({
