@@ -37,6 +37,7 @@ export async function GET(
           start: true,
           end: true,
           place: true,
+          type: true,
           maxAttendees: true,
           attendees: {
             select: {

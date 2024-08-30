@@ -497,7 +497,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
               label="Type"
               placeholder="Type de l'activité"
               size="sm"
-              defaultSelectedKeys={['Public']}
+              defaultSelectedKeys={activity ? [activity.type] : ['Public']}
               errorMessage={errors.type?.message as string}
               isInvalid={
                 errors.type?.message

@@ -26,34 +26,43 @@ export default function ActivitiesByType({ activityType }: ActivitiesProps) {
 
   return (
     <>
-      {data?.body && data?.body?.length > 0 && (
-        <div>
-          <div className="flex justify-between items-start mt-8">
-            <H1 className="mb-4">{activityType.name}</H1>
+      {data?.body &&
+        data?.body?.filter((activity) => new Date(activity.date) >= new Date())
+          .length > 0 && (
+          <div>
+            <div className="flex justify-between items-start mt-8">
+              <H1 className="mb-4">{activityType.name}</H1>
 
-            {data?.body && data?.body?.length > 0 && activityType.slug && (
-              <Button
-                as={Link}
-                href={ROUTES.ACTIVITIES_SEARCH(
-                  'all',
-                  activityType.slug.toLowerCase()
+              {data?.body &&
+                data?.body.filter(
+                  (activity) => new Date(activity.date) >= new Date()
+                )?.length > 0 &&
+                activityType.slug && (
+                  <Button
+                    as={Link}
+                    href={ROUTES.ACTIVITIES_SEARCH(
+                      'all',
+                      activityType.slug.toLowerCase()
+                    )}
+                    color="primary"
+                    variant="ghost"
+                    size={isMobile ? 'sm' : 'md'}
+                  >
+                    Afficher plus
+                  </Button>
                 )}
-                color="primary"
-                variant="ghost"
-                size={isMobile ? 'sm' : 'md'}
-              >
-                Afficher plus
-              </Button>
-            )}
-          </div>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-            {data?.body?.slice(0, 8).map((activity, key) => {
-              return <ActivityCard key={key} activity={activity} />
-            })}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+              {data?.body
+                ?.filter((activity) => new Date(activity.date) >= new Date())
+                .slice(0, 8)
+                .map((activity, key) => {
+                  return <ActivityCard key={key} activity={activity} />
+                })}
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </>
   )
 }

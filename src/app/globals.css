@@ -24,3 +24,9 @@ body {
 .opacity-100-f img {
   opacity: 1 !important;
 }
+
+input[type='email'],
+input[type='text'],
+input[type='password'] {
+  font-size: 16px;
+}

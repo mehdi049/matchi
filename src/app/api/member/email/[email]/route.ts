@@ -39,6 +39,7 @@ export async function GET(
           end: true,
           maxAttendees: true,
           city: true,
+          type: true,
           attendees: {
             select: {
               user: {
