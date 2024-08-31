@@ -16,7 +16,11 @@ import { zodCheck } from '@/utils/common-zod-check'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useAddActivity from '@/hooks/activity/useAddActivity'
-import { AddedActivityResponse } from '@/types/AddedActivityResponse'
+import {
+  ADDED_ACTIVITY_STATUS,
+  ADDED_ACTIVITY_TYPE,
+  AddedActivityResponse,
+} from '@/types/AddedActivityResponse'
 import { ActivityResponse } from '@/types/ActivityResponse'
 import { useContext, useState } from 'react'
 import ErrorMessage from '../message/ErrorMessage'
@@ -150,7 +154,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
 
           activityId: parseInt(data.activity),
           userId: user.id,
-          status: 'Active',
+          status: ADDED_ACTIVITY_STATUS.ACTIVE,
         },
       })
     }
@@ -187,7 +191,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
 
           activityId: parseInt(data.activity),
           userId: user.id,
-          status: 'Active',
+          status: ADDED_ACTIVITY_STATUS.ACTIVE,
         },
       })
     }
@@ -489,7 +493,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
         <Controller
           control={control}
           name="type"
-          defaultValue={activity ? activity.type : 'Public'}
+          defaultValue={activity ? activity.type : ADDED_ACTIVITY_TYPE.PUBLIC}
           render={({ field }) => (
             <Select
               {...field}
@@ -497,7 +501,9 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
               label="Type"
               placeholder="Type de l'activité"
               size="sm"
-              defaultSelectedKeys={activity ? [activity.type] : ['Public']}
+              defaultSelectedKeys={
+                activity ? [activity.type] : [ADDED_ACTIVITY_TYPE.PUBLIC]
+              }
               errorMessage={errors.type?.message as string}
               isInvalid={
                 errors.type?.message

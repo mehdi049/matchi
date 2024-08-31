@@ -21,8 +21,12 @@ import useUpdateAttendance from '@/hooks/attendance/useUpdateAttendance'
 import { createNotification } from '@/app/actions'
 import ReactDOMServer from 'react-dom/server'
 import { NewJoinActivityTemplate } from '../templates/notificationTemplate/NewJoin'
-import { AddedActivityResponse } from '@/types/AddedActivityResponse'
+import {
+  ADDED_ACTIVITY_TYPE,
+  AddedActivityResponse,
+} from '@/types/AddedActivityResponse'
 import { JoinRequestTemplate } from '../templates/notificationTemplate/JoinRequest'
+import { ATTENDANCE_STATUS } from '@/types/UserAttendanceResponse'
 
 export const CTAJoin = ({ activity }: ActivityProps) => {
   const { user, isLoggedIn } = useContext(UserContext)
@@ -38,7 +42,7 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
       })
       createNotification({
         template: ReactDOMServer.renderToStaticMarkup(
-          activity?.type === 'Public' ? (
+          activity?.type === ADDED_ACTIVITY_TYPE.PUBLIC ? (
             <NewJoinActivityTemplate
               user={user}
               activity={activity as AddedActivityResponse}
@@ -91,7 +95,7 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
     mutateUpdate({
       userId: user.id,
       activityId: activity?.id as number,
-      status: 'Cancelled',
+      status: ATTENDANCE_STATUS.CANCELLED,
     })
   }
 
@@ -102,10 +106,14 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
   const isMyActivity = activity?.createdBy?.id === user?.id
   if (isMyActivity) return null
 
-  const isAlreadyAttending = currentAttendance?.status === 'Accepted'
-  const isRequestPending = currentAttendance?.status === 'Pending'
-  const isRequestCancelled = currentAttendance?.status === 'Cancelled'
-  const isRequestRejected = currentAttendance?.status === 'Rejected'
+  const isAlreadyAttending =
+    currentAttendance?.status === ATTENDANCE_STATUS.ACCEPTED
+  const isRequestPending =
+    currentAttendance?.status === ATTENDANCE_STATUS.PENDING
+  const isRequestCancelled =
+    currentAttendance?.status === ATTENDANCE_STATUS.CANCELLED
+  const isRequestRejected =
+    currentAttendance?.status === ATTENDANCE_STATUS.REJECTED
 
   if (isAlreadyAttending)
     return (
@@ -216,7 +224,7 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
         >
           Rejoindre
         </Button>
-      ) : activity?.type === 'Public' ? (
+      ) : activity?.type === ADDED_ACTIVITY_TYPE.PUBLIC ? (
         <Button
           size="sm"
           color="success"

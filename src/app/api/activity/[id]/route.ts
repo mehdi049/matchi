@@ -1,7 +1,10 @@
+import { ActivityUpdateTemplate } from '@/components/templates/emailTemplate/ActivityUpdate'
 import { MESSAGES } from '@/const/message'
+import { sendEmail } from '@/lib/email'
 import prisma from '@/lib/prisma'
 import { AddedActivityResponse } from '@/types/AddedActivityResponse'
 import { ApiResponse } from '@/types/apiResponse'
+import { ATTENDANCE_STATUS } from '@/types/UserAttendanceResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
 
@@ -183,7 +186,7 @@ export async function PUT(
         { status: StatusCodes.NOT_FOUND }
       )
 
-    await prisma.addedActivity.update({
+    const updatedActivity = await prisma.addedActivity.update({
       where: {
         id: parseInt(id),
       },
@@ -204,6 +207,38 @@ export async function PUT(
         type: type,
         activityId: activityId,
       },
+      select: {
+        id: true,
+        title: true,
+        attendees: {
+          select: {
+            status: true,
+            user: {
+              select: {
+                name: true,
+                email: true,
+              },
+            },
+          },
+        },
+      },
+    })
+
+    // notify attendees
+    let acceptedAttendees = updatedActivity.attendees.filter(
+      (attendee) => attendee.status == ATTENDANCE_STATUS.ACCEPTED
+    )
+
+    acceptedAttendees.map((attendee) => {
+      return sendEmail({
+        subject: `Important: L'activité ${updatedActivity.title} a été modifié`,
+        receivers: [attendee.user.email],
+        template: ActivityUpdateTemplate({
+          firstName: attendee.user.name as string,
+          activityTitle: updatedActivity.title,
+          activityId: updatedActivity.id,
+        }),
+      })
     })
 
     return NextResponse.json<ApiResponse<string>>(

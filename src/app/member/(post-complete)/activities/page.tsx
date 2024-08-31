@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import useGetActiveActivities from '@/hooks/activity/useGetActiveActivities'
 import IsLoadingMessage from '@/components/message/IsLoadingMessage'
 import { AddedActivityResponse } from '@/types/AddedActivityResponse'
+import { ATTENDANCE_STATUS } from '@/types/UserAttendanceResponse'
 
 export default function Page() {
   const { user } = useContext(UserContext)
@@ -74,7 +75,7 @@ export default function Page() {
                         const req = dataActive?.body?.find(
                           (activity) =>
                             activity.id === attendance.addedActivityId &&
-                            attendance.status === 'Accepted'
+                            attendance.status === ATTENDANCE_STATUS.ACCEPTED
                         )
                         return (
                           <ActivityCard

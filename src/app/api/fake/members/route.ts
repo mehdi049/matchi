@@ -10,16 +10,12 @@ import { faker } from '@faker-js/faker'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
 import cities from '../../../../data/cities.json'
+import { ADDED_ACTIVITY_TYPE } from '@/types/AddedActivityResponse'
 
 const defaultFakeUser = 20
 const defaultFakeActivities = 200
 
 export async function PUT() {
-  enum ActivityType {
-    Public = 'Public',
-    Private = 'Private',
-  }
-
   // add fake users
 
   let newUsers: any[] = []
@@ -83,7 +79,7 @@ export async function PUT() {
           maxAttendees: faker.number.int({ min: 0, max: 100 }),
           price: faker.number.int({ min: 0, max: 100 }),
           currency: 'TND',
-          type: faker.helpers.enumValue(ActivityType),
+          type: faker.helpers.enumValue(ADDED_ACTIVITY_TYPE),
           activityId: activityId,
           userId: userId,
         })

@@ -18,11 +18,15 @@ import ActivitiyCardFooterHosting from './ActivitiyCardFooterHosting'
 import { ROUTES } from '@/routes'
 import { fullDate } from '@/utils/date'
 import {
+  ADDED_ACTIVITY_TYPE,
   AddedActivityResponse,
   AddedActivityResponseSm,
 } from '@/types/AddedActivityResponse'
 import H3 from '../typography/H3'
-import { UserAttendanceRequestStatus } from '@/types/UserAttendanceResponse'
+import {
+  ATTENDANCE_STATUS,
+  UserAttendanceRequestStatus,
+} from '@/types/UserAttendanceResponse'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 type ActivityProps = {
@@ -58,7 +62,7 @@ export default function ActivityCard({
                 <Chip color="primary" size="sm" variant="flat">
                   {activity.activity?.name}
                 </Chip>
-                {activity.type === 'Private' && (
+                {activity.type === ADDED_ACTIVITY_TYPE.PRIVATE && (
                   <Chip color="warning" size="sm" variant="flat">
                     <FontAwesomeIcon icon={faLock} /> Privée
                   </Chip>
@@ -66,22 +70,22 @@ export default function ActivityCard({
 
                 {requestStatus && (
                   <>
-                    {requestStatus === 'Accepted' && (
+                    {requestStatus === ATTENDANCE_STATUS.ACCEPTED && (
                       <Chip color="success" size="sm" variant="flat">
                         Accepté
                       </Chip>
                     )}
-                    {requestStatus === 'Rejected' && (
+                    {requestStatus === ATTENDANCE_STATUS.REJECTED && (
                       <Chip color="danger" size="sm">
                         Rejeté
                       </Chip>
                     )}
-                    {requestStatus === 'Cancelled' && (
+                    {requestStatus === ATTENDANCE_STATUS.CANCELLED && (
                       <Chip color="danger" size="sm">
                         Annulée
                       </Chip>
                     )}
-                    {requestStatus === 'Pending' && (
+                    {requestStatus === ATTENDANCE_STATUS.PENDING && (
                       <Chip size="sm">En attente</Chip>
                     )}
                   </>

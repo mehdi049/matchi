@@ -1,4 +1,6 @@
 export const ENV = process.env.ENV as 'DEV' | 'PROD'
+export const APP_URL = process.env.NEXT_PUBLIC_APP_URL
+
 export const MAX_UPLOAD_SIZE_IMG = process.env
   .NEXT_PUBLIC_MAX_UPLOAD_SIZE_IMG as string
 

@@ -1,8 +1,15 @@
+export enum ATTENDANCE_STATUS {
+  ACCEPTED = 'Accepted',
+  REJECTED = 'Rejected',
+  CANCELLED = 'Cancelled',
+  PENDING = 'Pending',
+}
+
 export type UserAttendanceRequestStatus =
-  | 'Accepted'
-  | 'Rejected'
-  | 'Cancelled'
-  | 'Pending'
+  | ATTENDANCE_STATUS.ACCEPTED
+  | ATTENDANCE_STATUS.REJECTED
+  | ATTENDANCE_STATUS.CANCELLED
+  | ATTENDANCE_STATUS.PENDING
 
 export type UserAttendanceResponse = {
   addedActivityId: number

@@ -1,4 +1,4 @@
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL
+import { APP_URL } from './const'
 
 export const API_ROUTES = {
   UPLOAD: APP_URL + '/api/upload',

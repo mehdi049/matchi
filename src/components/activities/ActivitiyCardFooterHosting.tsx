@@ -23,6 +23,7 @@ import { MESSAGES } from '@/const/message'
 import { UserContext } from '@/app/member/context/UserContext'
 import { getQueryClient } from '@/lib/getQueryClient'
 import { QUERY_KEYS } from '@/const/query_keys'
+import { ATTENDANCE_STATUS } from '@/types/UserAttendanceResponse'
 
 export default function ActivitiyCardFooterHosting({
   activity,
@@ -83,7 +84,7 @@ export default function ActivitiyCardFooterHosting({
     mutateUpdate({
       id: activity.id as number,
       activity: {
-        status: 'Cancelled',
+        status: ATTENDANCE_STATUS.CANCELLED,
         activityId: activity?.activity?.id as number,
       },
     })

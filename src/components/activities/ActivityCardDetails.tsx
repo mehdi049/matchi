@@ -22,7 +22,10 @@ import {
   faMoneyCheckDollar,
 } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/navigation'
-import { AddedActivityResponse } from '@/types/AddedActivityResponse'
+import {
+  ADDED_ACTIVITY_TYPE,
+  AddedActivityResponse,
+} from '@/types/AddedActivityResponse'
 import { ROUTES } from '@/routes'
 import {
   extractHourFromDate,
@@ -62,7 +65,7 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
                     )
                   }
                 />
-                {activity.type === 'Private' && (
+                {activity.type === ADDED_ACTIVITY_TYPE.PRIVATE && (
                   <div className="pl-12">
                     <Chip color="warning" size="sm" variant="flat">
                       <FontAwesomeIcon icon={faLock} /> Privé

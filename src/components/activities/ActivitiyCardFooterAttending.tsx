@@ -19,6 +19,7 @@ import { useContext } from 'react'
 import SuccessMessage from '../message/SuccessMessage'
 import ErrorMessage from '../message/ErrorMessage'
 import { MESSAGES } from '@/const/message'
+import { ATTENDANCE_STATUS } from '@/types/UserAttendanceResponse'
 
 export type ActivitiyCardFooterProps = {
   activity: AddedActivityResponseSm
@@ -58,7 +59,7 @@ export default function ActivitiyCardFooterAttending({
     mutateUpdate({
       userId: user.id,
       activityId: activity?.id as number,
-      status: 'Cancelled',
+      status: ATTENDANCE_STATUS.CANCELLED,
     })
   }
 

@@ -14,15 +14,18 @@ import { JoinRequestAccepted } from '../templates/notificationTemplate/JoinReque
 import { JoinRequestRejected } from '../templates/notificationTemplate/JoinRequestRejected'
 import { SimpleMessageSuccess } from '../templates/notificationTemplate/SimpleMessageSuccess'
 import { SimpleMessageError } from '../templates/notificationTemplate/SimpleMessageError'
+import {
+  ATTENDANCE_STATUS,
+  UserAttendanceRequestStatus,
+} from '@/types/UserAttendanceResponse'
 
 type NotificationProps = {
   notification: NotificationResponse
 }
 export default function NotificationItem({ notification }: NotificationProps) {
   const { user } = useContext(UserContext)
-  const [requestResponse, setRequestResponse] = useState<
-    'Accepted' | 'Rejected'
-  >('Accepted')
+  const [requestResponse, setRequestResponse] =
+    useState<UserAttendanceRequestStatus>(ATTENDANCE_STATUS.ACCEPTED)
   const [selectedActivityId, setSelectedActivityId] = useState('')
   const [selectedActivityTitle, setSelectedActivityTitle] = useState('')
   const [selectedUserId, setSelectedUserId] = useState('')
@@ -33,7 +36,7 @@ export default function NotificationItem({ notification }: NotificationProps) {
         // send notification to the concerned member about the join request response
         createNotification({
           template: ReactDOMServer.renderToStaticMarkup(
-            requestResponse === 'Accepted' ? (
+            requestResponse === ATTENDANCE_STATUS.ACCEPTED ? (
               <JoinRequestAccepted
                 user={user}
                 activityId={parseInt(selectedActivityId)}
@@ -52,7 +55,7 @@ export default function NotificationItem({ notification }: NotificationProps) {
 
         createNotification({
           template: ReactDOMServer.renderToStaticMarkup(
-            requestResponse === 'Accepted' ? (
+            requestResponse === ATTENDANCE_STATUS.ACCEPTED ? (
               <SimpleMessageSuccess message="Demande accépté avec succés" />
             ) : (
               <SimpleMessageError message="Demande Rejété avec succés" />
@@ -84,9 +87,9 @@ export default function NotificationItem({ notification }: NotificationProps) {
             mutateUpdate({
               userId: userId as string,
               activityId: parseInt(activityId),
-              status: 'Accepted',
+              status: ATTENDANCE_STATUS.ACCEPTED,
             })
-            setRequestResponse('Accepted')
+            setRequestResponse(ATTENDANCE_STATUS.ACCEPTED)
             setSelectedUserId(userId)
             setSelectedActivityId(activityId)
             setSelectedActivityTitle(activityTitle)
@@ -101,9 +104,9 @@ export default function NotificationItem({ notification }: NotificationProps) {
             mutateUpdate({
               userId: userId as string,
               activityId: parseInt(activityId),
-              status: 'Rejected',
+              status: ATTENDANCE_STATUS.REJECTED,
             })
-            setRequestResponse('Rejected')
+            setRequestResponse(ATTENDANCE_STATUS.REJECTED)
             setSelectedUserId(userId)
             setSelectedActivityId(activityId)
             setSelectedActivityTitle(activityTitle)

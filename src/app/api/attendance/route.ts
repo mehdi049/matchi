@@ -1,6 +1,8 @@
 import { MESSAGES } from '@/const/message'
 import prisma from '@/lib/prisma'
+import { ADDED_ACTIVITY_TYPE } from '@/types/AddedActivityResponse'
 import { ApiResponse } from '@/types/apiResponse'
+import { ATTENDANCE_STATUS } from '@/types/UserAttendanceResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
 
@@ -45,14 +47,17 @@ export async function POST(req: Request) {
       data: {
         userId: userId,
         addedActivityId: addedActivityId,
-        status: addedActivity.type === 'Public' ? 'Accepted' : 'Pending',
+        status:
+          addedActivity.type === ADDED_ACTIVITY_TYPE.PUBLIC
+            ? ATTENDANCE_STATUS.ACCEPTED
+            : ATTENDANCE_STATUS.PENDING,
       },
     })
 
     return NextResponse.json<ApiResponse<string>>(
       {
         message:
-          addedActivity.type === 'Public'
+          addedActivity.type === ADDED_ACTIVITY_TYPE.PUBLIC
             ? 'Demande de rejoint accépté'
             : 'Demande envoyé avec succés',
       },
