@@ -112,7 +112,7 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
       <>
         {!isSuccessUpdate ? (
           <>
-            <Button size="sm" color="danger" onPress={onOpenCancelAttendance}>
+            <Button size="sm" color="danger" onClick={onOpenCancelAttendance}>
               Annuler ma presence
             </Button>
 
@@ -134,13 +134,13 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
                       </p>
                     </ModalBody>
                     <ModalFooter>
-                      <Button variant="light" onPress={onClose}>
+                      <Button variant="light" onClick={onClose}>
                         Fermer
                       </Button>
                       <Button
                         color="danger"
                         isLoading={isPendingUpdate}
-                        onPress={handleCancelCta}
+                        onClick={handleCancelCta}
                       >
                         Annuler
                       </Button>

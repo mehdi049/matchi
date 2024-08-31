@@ -68,7 +68,7 @@ export default function ActivitiyCardFooterAttending({
         size="sm"
         variant="ghost"
         color="danger"
-        onPress={onOpenCancelAttendance}
+        onClick={onOpenCancelAttendance}
         radius="full"
       >
         Annuler ma presence
@@ -105,13 +105,13 @@ export default function ActivitiyCardFooterAttending({
                 </ErrorMessage>
               </ModalBody>
               <ModalFooter>
-                <Button variant="light" onPress={onClose}>
+                <Button variant="light" onClick={onClose}>
                   Fermer
                 </Button>
                 <Button
                   color="danger"
                   isLoading={isPendingUpdate}
-                  onPress={handleCancelCta}
+                  onClick={handleCancelCta}
                 >
                   Annuler
                 </Button>

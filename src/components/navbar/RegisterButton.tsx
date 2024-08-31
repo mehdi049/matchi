@@ -17,7 +17,7 @@ export default function RegisterButton() {
 
   return (
     <>
-      <Button onPress={onOpen} size={isMobileScreen ? 'sm' : 'md'}>
+      <Button onClick={onOpen} size={isMobileScreen ? 'sm' : 'md'}>
         Créer un compte
       </Button>
 

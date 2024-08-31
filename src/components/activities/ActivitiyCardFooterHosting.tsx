@@ -98,7 +98,7 @@ export default function ActivitiyCardFooterHosting({
               size="sm"
               variant="ghost"
               color="danger"
-              onPress={onOpenCancel}
+              onClick={onOpenCancel}
               radius="full"
             >
               Annuler
@@ -135,7 +135,7 @@ export default function ActivitiyCardFooterHosting({
                       </ErrorMessage>
                     </ModalBody>
                     <ModalFooter>
-                      <Button variant="light" onPress={onClose}>
+                      <Button variant="light" onClick={onClose}>
                         Fermer
                       </Button>
                       <Button
@@ -156,7 +156,7 @@ export default function ActivitiyCardFooterHosting({
               size="sm"
               variant="ghost"
               color="danger"
-              onPress={onOpenDelete}
+              onClick={onOpenDelete}
               radius="full"
             >
               Supprimer
@@ -192,12 +192,12 @@ export default function ActivitiyCardFooterHosting({
                       </ErrorMessage>
                     </ModalBody>
                     <ModalFooter>
-                      <Button variant="light" onPress={onClose}>
+                      <Button variant="light" onClick={onClose}>
                         Fermer
                       </Button>
                       <Button
                         color="danger"
-                        onPress={onDelete}
+                        onClick={onDelete}
                         isLoading={isPendingDelete}
                         isDisabled={isSuccessDelete && !isPendingDelete}
                       >

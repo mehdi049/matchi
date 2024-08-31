@@ -146,7 +146,7 @@ export default function RegisterForm() {
       <SuccessMessage isVisible={isSuccess}>
         <p>Votre compte est créé avec succés.</p>{' '}
         <Link
-          onPress={onOpen}
+          onClick={onOpen}
           className="text-white cursor-pointer"
           underline="always"
           size="sm"

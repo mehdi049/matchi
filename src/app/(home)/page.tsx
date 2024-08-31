@@ -51,7 +51,7 @@ export default function Home() {
                   </p>
                 </ModalBody>
                 <ModalFooter>
-                  <Button variant="light" onPress={onClose}>
+                  <Button variant="light" onClick={onClose}>
                     Fermer
                   </Button>
                 </ModalFooter>

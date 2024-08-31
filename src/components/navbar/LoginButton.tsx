@@ -14,7 +14,7 @@ export default function LoginButton() {
         color="foreground"
         className="cursor-pointer"
         size={isMobileScreen ? 'sm' : 'md'}
-        onPress={onOpen}
+        onClick={onOpen}
       >
         Me connecter
       </Link>
