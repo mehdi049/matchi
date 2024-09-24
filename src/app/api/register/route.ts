@@ -1,6 +1,6 @@
+import { sendEmail } from '@/app/actions'
 import { EmailTemplateWelcome } from '@/components/templates/emailTemplate/Welcome'
 import { MESSAGES } from '@/const/message'
-import { sendEmail } from '@/lib/email'
 import prisma from '@/lib/prisma'
 import { ApiResponse } from '@/types/apiResponse'
 import { hashPassword } from '@/utils/string'

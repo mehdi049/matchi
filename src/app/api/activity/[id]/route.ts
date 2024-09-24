@@ -1,12 +1,14 @@
-import { ActivityUpdateTemplate } from '@/components/templates/emailTemplate/ActivityUpdate'
+import { createNotification, sendEmail } from '@/app/actions'
+import { EmailActivityUpdateTemplate } from '@/components/templates/emailTemplate/ActivityUpdate'
+import { NotificationActivityUpdateTemplate } from '@/components/templates/notificationTemplate/ActivityUpdate'
 import { MESSAGES } from '@/const/message'
-import { sendEmail } from '@/lib/email'
 import prisma from '@/lib/prisma'
 import { AddedActivityResponse } from '@/types/AddedActivityResponse'
 import { ApiResponse } from '@/types/apiResponse'
 import { ATTENDANCE_STATUS } from '@/types/UserAttendanceResponse'
 import { StatusCodes } from 'http-status-codes'
 import { NextResponse } from 'next/server'
+//import ReactDOMServer from 'react-dom/server'
 
 // get activity by Id
 export async function GET(
@@ -215,6 +217,7 @@ export async function PUT(
             status: true,
             user: {
               select: {
+                id: true,
                 name: true,
                 email: true,
               },
@@ -230,14 +233,24 @@ export async function PUT(
     )
 
     acceptedAttendees.map((attendee) => {
-      return sendEmail({
+      // notify attendees by email
+      sendEmail({
         subject: `Important: L'activité ${updatedActivity.title} a été modifié`,
         receivers: [attendee.user.email],
-        template: ActivityUpdateTemplate({
+        template: EmailActivityUpdateTemplate({
           firstName: attendee.user.name as string,
           activityTitle: updatedActivity.title,
           activityId: updatedActivity.id,
         }),
+      })
+
+      // notify attendees by system notification
+      createNotification({
+        template: NotificationActivityUpdateTemplate({
+          activityTitle: addedActivity.title,
+          activityId: addedActivity.id,
+        }),
+        userId: attendee.user.id,
       })
     })
 

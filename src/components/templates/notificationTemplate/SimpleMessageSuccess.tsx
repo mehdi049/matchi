@@ -1,10 +1,10 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { SimpleMessageProps } from './SimpleMessage'
 
-export type SimpleMessageProps = {
-  message: string
-}
-export const SimpleMessageSuccess = ({ message }: SimpleMessageProps) => {
+export const NotificationSimpleMessageSuccess = ({
+  message,
+}: SimpleMessageProps) => {
   return (
     <>
       <div className="text-success">

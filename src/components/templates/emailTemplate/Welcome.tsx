@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text, Tailwind, Heading } from '@react-email/components'
 
-interface EmailTemplateProps {
+type EmailTemplateProps = {
   firstName: string
 }
 

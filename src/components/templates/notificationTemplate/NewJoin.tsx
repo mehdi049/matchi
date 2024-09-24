@@ -8,7 +8,7 @@ type NewJoinActivityTemplateProps = {
   user: UserResponseSm
   activity: AddedActivityResponse
 }
-export const NewJoinActivityTemplate = ({
+export const NotificationNewJoinActivityTemplate = ({
   user,
   activity,
 }: NewJoinActivityTemplateProps) => {

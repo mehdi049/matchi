@@ -8,8 +8,8 @@ import facebook from 'next-auth/providers/facebook'
 import Google from 'next-auth/providers/google'
 
 import prisma from './prisma'
-import { sendEmail } from './email'
 import { EmailTemplateWelcome } from '@/components/templates/emailTemplate/Welcome'
+import { sendEmail } from '@/app/actions'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   debug: true,

@@ -8,7 +8,7 @@ export type JoinRequestResponseProps = {
   activityId: number
   activityTitle: string
 }
-export const JoinRequestAccepted = ({
+export const NotificationJoinRequestAccepted = ({
   user,
   activityId,
   activityTitle,

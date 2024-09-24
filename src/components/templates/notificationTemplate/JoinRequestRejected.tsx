@@ -3,7 +3,7 @@ import { Avatar } from '@nextui-org/react'
 import Link from 'next/link'
 import { JoinRequestResponseProps } from './JoinRequestAccepted'
 
-export const JoinRequestRejected = ({
+export const NotificationJoinRequestRejected = ({
   user,
   activityId,
   activityTitle,

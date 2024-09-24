@@ -228,6 +228,7 @@ export default function ActivityForm({ activity }: ActivityFormProps) {
                     ? (errors.activity?.message as string).length > 0
                     : false
                 }
+                isDisabled={activity && activity.activity ? true : false}
               >
                 {(data?.body as ActivityResponse[]).map((activity) => {
                   return (

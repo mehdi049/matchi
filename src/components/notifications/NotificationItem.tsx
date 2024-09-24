@@ -6,14 +6,13 @@ import { useContext, useEffect, useState } from 'react'
 import useUpdateAttendance from '@/hooks/attendance/useUpdateAttendance'
 import { UserContext } from '@/app/member/context/UserContext'
 import { createNotification } from '@/app/actions'
-import ReactDOMServer from 'react-dom/server'
 import useDeleteNotification from '@/hooks/notifications/useDeleteNotification'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
-import { JoinRequestAccepted } from '../templates/notificationTemplate/JoinRequestAccepted'
-import { JoinRequestRejected } from '../templates/notificationTemplate/JoinRequestRejected'
-import { SimpleMessageSuccess } from '../templates/notificationTemplate/SimpleMessageSuccess'
-import { SimpleMessageError } from '../templates/notificationTemplate/SimpleMessageError'
+import { NotificationJoinRequestAccepted } from '../templates/notificationTemplate/JoinRequestAccepted'
+import { NotificationJoinRequestRejected } from '../templates/notificationTemplate/JoinRequestRejected'
+import { NotificationSimpleMessageSuccess } from '../templates/notificationTemplate/SimpleMessageSuccess'
+import { NotificationSimpleMessageError } from '../templates/notificationTemplate/SimpleMessageError'
 import {
   ATTENDANCE_STATUS,
   UserAttendanceRequestStatus,
@@ -35,36 +34,34 @@ export default function NotificationItem({ notification }: NotificationProps) {
       onSuccess: () => {
         // send notification to the concerned member about the join request response
         createNotification({
-          template: ReactDOMServer.renderToStaticMarkup(
-            requestResponse === ATTENDANCE_STATUS.ACCEPTED ? (
-              <JoinRequestAccepted
-                user={user}
-                activityId={parseInt(selectedActivityId)}
-                activityTitle={selectedActivityTitle}
-              />
-            ) : (
-              <JoinRequestRejected
-                user={user}
-                activityId={parseInt(selectedActivityId)}
-                activityTitle={selectedActivityTitle}
-              />
-            )
-          ),
+          template:
+            requestResponse === ATTENDANCE_STATUS.ACCEPTED
+              ? NotificationJoinRequestAccepted({
+                  user: user,
+                  activityId: parseInt(selectedActivityId),
+                  activityTitle: selectedActivityTitle,
+                })
+              : NotificationJoinRequestRejected({
+                  user: user,
+                  activityId: parseInt(selectedActivityId),
+                  activityTitle: selectedActivityTitle,
+                }),
           userId: selectedUserId,
         })
 
         createNotification({
-          template: ReactDOMServer.renderToStaticMarkup(
-            requestResponse === ATTENDANCE_STATUS.ACCEPTED ? (
-              <SimpleMessageSuccess message="Demande accépté avec succés" />
-            ) : (
-              <SimpleMessageError message="Demande Rejété avec succés" />
-            )
-          ),
+          template:
+            requestResponse === ATTENDANCE_STATUS.ACCEPTED
+              ? NotificationSimpleMessageSuccess({
+                  message: <>Demande accépté avec succés</>,
+                })
+              : NotificationSimpleMessageError({
+                  message: <>Demande Rejété avec succés</>,
+                }),
           userId: user.id,
         })
 
-        // delete notification on success
+        // delete notification after accept / reject request
         OnDeleteNotification()
       },
     })
@@ -77,7 +74,6 @@ export default function NotificationItem({ notification }: NotificationProps) {
     const triggerAction = (element: Element) => {
       if (!isPendingUpdate) {
         const action = element.getAttribute('data-action')
-        console.log(action)
         if (action === 'accept-join-request') {
           element.setAttribute('disabled', 'true')
           const userId = element.getAttribute('data-user-id')
@@ -116,20 +112,19 @@ export default function NotificationItem({ notification }: NotificationProps) {
     }
 
     const elements = document.getElementsByClassName('notif-action')
-    console.log('elements: ', elements)
 
     if (elements) {
-      Array.from(elements).forEach((element) => {
-        console.log(element)
+      Array.from(elements).forEach((element) =>
         element.addEventListener('click', () => triggerAction(element))
-      })
+      )
     }
   }, [])
 
   const OnDeleteNotification = () => {
-    mutate({
-      id: notification.id,
-    })
+    if (!isPendingDelete)
+      mutate({
+        id: notification.id,
+      })
   }
 
   return (

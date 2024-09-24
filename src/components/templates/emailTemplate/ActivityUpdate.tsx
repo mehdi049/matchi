@@ -3,17 +3,17 @@ import { Text, Tailwind, Heading, Link } from '@react-email/components'
 import { ROUTES } from '@/routes'
 import { APP_URL } from '@/const/const'
 
-interface ActivityUpdateTemplateProps {
+type EmailActivityUpdateTemplateProps = {
   firstName: string
   activityTitle: string
   activityId: number
 }
 
-export const ActivityUpdateTemplate = ({
+export const EmailActivityUpdateTemplate = ({
   firstName,
   activityTitle,
   activityId,
-}: ActivityUpdateTemplateProps) => (
+}: EmailActivityUpdateTemplateProps) => (
   <Tailwind
     config={{
       theme: {
