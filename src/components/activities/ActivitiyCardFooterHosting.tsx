@@ -12,7 +12,7 @@ import {
   ModalHeader,
 } from '@nextui-org/react'
 import { ActivitiyCardFooterProps } from './ActivitiyCardFooterAttending'
-import useDeleteActivity from '@/hooks/activity/useDeleteActivity'
+//import useDeleteActivity from '@/hooks/activity/useDeleteActivity'
 import SuccessMessage from '../message/SuccessMessage'
 import ErrorMessage from '../message/ErrorMessage'
 import { useContext } from 'react'
@@ -51,7 +51,7 @@ export default function ActivitiyCardFooterHosting({
     },
   })
 
-  const {
+  /*const {
     mutate: mutateDelete,
     isPending: isPendingDelete,
     isSuccess: isSuccessDelete,
@@ -63,22 +63,22 @@ export default function ActivitiyCardFooterHosting({
         onOpenChangeDelete()
       }, 3000)
     },
-  })
+  })*/
 
   const {
     isOpen: isOpenCancel,
     onOpen: onOpenCancel,
     onOpenChange: onOpenChangeCancel,
   } = useDisclosure()
-  const {
+  /*const {
     isOpen: isOpenDelete,
     onOpen: onOpenDelete,
     onOpenChange: onOpenChangeDelete,
-  } = useDisclosure()
+  } = useDisclosure()*/
 
-  const onDelete = () => {
+  /*const onDelete = () => {
     mutateDelete({ id: activity.id as number })
-  }
+  }*/
 
   const onCancel = () => {
     mutateUpdate({
@@ -153,6 +153,8 @@ export default function ActivitiyCardFooterHosting({
               </ModalContent>
             </Modal>
 
+            {/* 
+// We will keep only cancel button and remove delete button
             <Button
               size="sm"
               variant="ghost"
@@ -209,7 +211,7 @@ export default function ActivitiyCardFooterHosting({
                 )}
               </ModalContent>
             </Modal>
-
+*/}
             <Button
               as={Link}
               onClick={() =>
@@ -221,9 +223,7 @@ export default function ActivitiyCardFooterHosting({
             >
               Modifier
             </Button>
-          </div>
 
-          <div className="text-right">
             <Button
               as={Link}
               href="/profiles"
@@ -239,7 +239,7 @@ export default function ActivitiyCardFooterHosting({
       ) : (
         <div className="text-right">
           <Button size="sm" color="danger" radius="full" variant="flat">
-            Annulé
+            Annulée
           </Button>
         </div>
       )}

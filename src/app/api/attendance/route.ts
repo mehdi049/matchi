@@ -1,3 +1,6 @@
+import { sendEmail } from '@/app/actions'
+import { EmailJoinRequestTemplate } from '@/components/templates/emailTemplate/JoinRequest'
+import { EmailNewJoinActivityTemplate } from '@/components/templates/emailTemplate/NewJoin'
 import { MESSAGES } from '@/const/message'
 import prisma from '@/lib/prisma'
 import { ADDED_ACTIVITY_TYPE } from '@/types/AddedActivityResponse'
@@ -17,7 +20,17 @@ export async function POST(req: Request) {
         id: addedActivityId,
       },
       select: {
+        id: true,
+        title: true,
         type: true,
+        date: true,
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
       },
     })
 
@@ -53,6 +66,55 @@ export async function POST(req: Request) {
             : ATTENDANCE_STATUS.PENDING,
       },
     })
+
+    const attendee = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    })
+
+    // notify attendees by email (new attendance)
+    sendEmail({
+      subject: `Important: Un nouveau participant a rejoint votre activité`,
+      receivers: [addedActivity.createdBy.email],
+      template:
+        addedActivity?.type === ADDED_ACTIVITY_TYPE.PUBLIC
+          ? EmailNewJoinActivityTemplate({
+              hostName: addedActivity.createdBy.name as string,
+              attendeeId: attendee?.id as string,
+              attendeeName: attendee?.name as string,
+              activityTitle: addedActivity?.title as string,
+              activityDate: addedActivity.date,
+            })
+          : EmailJoinRequestTemplate({
+              hostName: addedActivity.createdBy.name as string,
+              attendeeId: attendee?.id as string,
+              attendeeName: attendee?.name as string,
+              activityTitle: addedActivity?.title as string,
+              activityDate: addedActivity.date,
+            }),
+    })
+
+    // notify attendees by system notification (new attendance)
+    /*const react = await createNotification({
+      template:
+        addedActivity?.type === ADDED_ACTIVITY_TYPE.PUBLIC
+          ? NotificationNewJoinActivityTemplate({
+              attendeeId: attendee?.id as string,
+              attendeeName: attendee?.name as string,
+              attendeeImage: attendee?.image as string,
+              activityId: addedActivity?.id as number,
+              activityTitle: addedActivity?.title as string,
+            })
+          : NotificationJoinRequestTemplate({
+              attendeeId: attendee?.id as string,
+              attendeeName: attendee?.name as string,
+              attendeeImage: attendee?.image as string,
+              activityId: addedActivity?.id as number,
+              activityTitle: addedActivity?.title as string,
+            }),
+      userId: addedActivity?.createdBy?.id as string,
+    })*/
 
     return NextResponse.json<ApiResponse<string>>(
       {

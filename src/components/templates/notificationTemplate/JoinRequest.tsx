@@ -1,37 +1,32 @@
 import { ROUTES } from '@/routes'
-import { AddedActivityResponse } from '@/types/AddedActivityResponse'
-import { UserResponseSm } from '@/types/User'
-import { Avatar, Button } from '@nextui-org/react'
-import Link from 'next/link'
+import { Button } from '@nextui-org/react'
+import { Link } from '@react-email/components'
+import { AvatarMessage } from './AvatarMessage'
 
-type NewJoinActivityTemplateProps = {
-  user: UserResponseSm
-  activity: AddedActivityResponse
+type JoinRequestTemplateProps = {
+  attendeeId: string
+  attendeeName: string
+  attendeeImage: string
+  activityId: number
+  activityTitle: string
 }
 export const NotificationJoinRequestTemplate = ({
-  user,
-  activity,
-}: NewJoinActivityTemplateProps) => {
+  attendeeId,
+  attendeeName,
+  attendeeImage,
+  activityId,
+  activityTitle,
+}: JoinRequestTemplateProps) => {
   return (
-    <>
-      <div>
-        <Avatar
-          className="w-8 h-8 opacity-100-f"
-          name={user.name}
-          src={user.image}
-        />
-      </div>
+    <AvatarMessage avatarName={attendeeName} avatarImage={attendeeImage}>
       <div>
         <div className="text-xs text-wrap">
-          <Link href={ROUTES.PROFILE(user?.id)} className="underline">
-            {user.name}
+          <Link href={ROUTES.PROFILE(attendeeId)} className="underline">
+            {attendeeName}
           </Link>{' '}
           vous a envoyé une demande de rejoint pour votre activité{' '}
-          <Link
-            href={ROUTES.ACTIVITY(activity?.id as number)}
-            className="underline"
-          >
-            {activity.title}
+          <Link href={ROUTES.ACTIVITY(activityId)} className="underline">
+            {activityTitle}
           </Link>
         </div>
         <div className="flex gap-1 items-end mt-2">
@@ -42,9 +37,9 @@ export const NotificationJoinRequestTemplate = ({
               color="primary"
               className="notif-action"
               data-action="accept-join-request"
-              data-user-id={user.id}
-              data-activity-id={activity.id}
-              data-activity-title={activity.title}
+              data-user-id={attendeeId}
+              data-activity-id={activityId}
+              data-activity-title={activityTitle}
             >
               Accepter
             </Button>
@@ -56,14 +51,14 @@ export const NotificationJoinRequestTemplate = ({
               color="danger"
               className="notif-action"
               data-action="reject-join-request"
-              data-user-id={user.id}
-              data-activity-id={activity.id}
+              data-user-id={attendeeId}
+              data-activity-id={activityId}
             >
               Rejeter
             </Button>
           </div>
         </div>
       </div>
-    </>
+    </AvatarMessage>
   )
 }

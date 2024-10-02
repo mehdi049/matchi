@@ -49,6 +49,7 @@ export default function NotificationItem({ notification }: NotificationProps) {
           userId: selectedUserId,
         })
 
+        // notification to the current user who accepted / rejected the request
         createNotification({
           template:
             requestResponse === ATTENDANCE_STATUS.ACCEPTED

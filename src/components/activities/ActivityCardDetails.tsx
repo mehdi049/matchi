@@ -23,6 +23,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/navigation'
 import {
+  ADDED_ACTIVITY_STATUS,
   ADDED_ACTIVITY_TYPE,
   AddedActivityResponse,
 } from '@/types/AddedActivityResponse'
@@ -74,18 +75,28 @@ export default function ActivityCardDetails({ activity }: ActivityProps) {
                 )}
               </div>
               <div className="flex gap-1 flex-col">
-                <CTAJoin activity={activity} />
-                {isLoggedIn && isMyActivity && (
-                  <Button
-                    onClick={() => {
-                      router.push(ROUTES.PROFILES)
-                    }}
-                    size="sm"
-                    variant="flat"
-                    color="primary"
-                  >
-                    Inviter des participants
-                  </Button>
+                {activity.status === ADDED_ACTIVITY_STATUS.CANCELLED ? (
+                  <>
+                    <Button size="sm" variant="solid" color="danger">
+                      Activité annulée
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <CTAJoin activity={activity} />
+                    {isLoggedIn && isMyActivity && (
+                      <Button
+                        onClick={() => {
+                          router.push(ROUTES.PROFILES)
+                        }}
+                        size="sm"
+                        variant="flat"
+                        color="primary"
+                      >
+                        Inviter des participants
+                      </Button>
+                    )}
+                  </>
                 )}
               </div>
             </div>

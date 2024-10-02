@@ -18,17 +18,11 @@ import { fullDate } from '@/utils/date'
 import FontAwesome from '../fontAwesome/FontAwesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import useUpdateAttendance from '@/hooks/attendance/useUpdateAttendance'
-import {
-  ADDED_ACTIVITY_TYPE,
-  AddedActivityResponse,
-} from '@/types/AddedActivityResponse'
-import { NotificationJoinRequestTemplate } from '../templates/notificationTemplate/JoinRequest'
+import { ADDED_ACTIVITY_TYPE } from '@/types/AddedActivityResponse'
 import { ATTENDANCE_STATUS } from '@/types/UserAttendanceResponse'
-import { createNotification } from '@/app/actions'
-import { NotificationNewJoinActivityTemplate } from '../templates/notificationTemplate/NewJoin'
 
 export const CTAJoin = ({ activity }: ActivityProps) => {
-  const { user, isLoggedIn } = useContext(UserContext)
+  const { user, refetchUser, isLoggedIn } = useContext(UserContext)
 
   const {
     mutate: mutateAdd,
@@ -39,19 +33,7 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
       getQueryClient().invalidateQueries({
         queryKey: [QUERY_KEYS.ACTIVITY_ID, activity?.id],
       })
-      createNotification({
-        template:
-          activity?.type === ADDED_ACTIVITY_TYPE.PUBLIC
-            ? NotificationNewJoinActivityTemplate({
-                user: user,
-                activity: activity as AddedActivityResponse,
-              })
-            : NotificationJoinRequestTemplate({
-                user: user,
-                activity: activity as AddedActivityResponse,
-              }),
-        userId: activity?.createdBy?.id as string,
-      })
+      refetchUser()
     },
   })
 
@@ -64,6 +46,7 @@ export const CTAJoin = ({ activity }: ActivityProps) => {
       getQueryClient().invalidateQueries({
         queryKey: [QUERY_KEYS.ACTIVITY_ID, activity?.id],
       })
+      refetchUser()
     },
   })
 
